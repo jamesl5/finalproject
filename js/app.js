@@ -5,7 +5,7 @@ myApp.config(function($stateProvider) {
 		.state('home', {
 			url: '/home',
 			templateUrl: 'templates/home.html',
-			controller: 'IntroController'
+			controller: 'HomeController'
 		})
 		.state('one', {
 			url: '/one',
@@ -25,7 +25,7 @@ myApp.config(function($stateProvider) {
 
 });
 
-myApp.controller('IntroController', function($scope) {
+myApp.controller('HomeController', function($scope) {
 
 });
 
