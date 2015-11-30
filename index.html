@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Shepherd Tutorial</title>
+	<link rel="icon" type="image/png" href="img/bluelogo.png" />
+
+	<!-- Shepherd Libraries -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shepherd/1.3.0/css/shepherd-theme-arrows.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/shepherd/1.3.0/js/shepherd.min.js"></script>
+
+	<!-- Bootstrap Library -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- jQuery Library -->
+	<script src="https://code.jquery.com/jquery.min.js"></script>
+
+	<!-- Materialize -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Angular, Angular Router -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.js"></script>
+
+	<!-- Read Scripts -->
+	<script src="js/main.js"></script>
+	<link href="css/main.css" type="text/css" rel="stylesheet"/>
+
+</head>
+<body>
+	<div class="navbar-fixed">
+		<nav class="light-blue darken-2">
+		    <div class="nav-wrapper">
+ 		    <a href="http://github.hubspot.com/shepherd/docs/welcome/" target="_blank" class="white-text" class="brand-logo"><img id="navLogo"src="img/logo.png"></a>
+		    <ul id="nav-mobile" class="right hide-on-med-and-down">
+			    <li><a class="white-text" ui-sref="intro">Introduction</a></li>
+			    <li><a class="white-text" ui-sref="one">Lesson One</a></li>
+			    <li><a class="white-text" ui-sref="two">Lesson Two</a></li>
+			    <li><a class="white-text" ui-sref="three">Lesson Three</a></li>
+			</ul>
+		    </div>
+	    </nav>
+	</div>
+	<div>
+		<!-- This is where your content will display -->
+		<div id="uiView" ui-view></div>
+	</div>
+	<div id="hello">
+<!-- 		This is what shepherd should attach to
+ -->	</div>
+	<footer class="page-footer light-blue darken-2">
+      <div class="footer-copyright">
+        <div class="container">
+        © 2015 group five
+        </div>
+      </div>
+    </footer>
+</body>
+</html>
