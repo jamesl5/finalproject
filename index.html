@@ -47,8 +47,8 @@
 	 		    <a ui-sref="home" class="white-text" class="brand-logo"><img id="navLogo"src="img/amateur-logo.png"></a>
 				<!-- show signup and login when user is not logged in -->
 			    <ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="!userId">
-				    <li><a class="white-text" ng-click="create=true" id="signUp">Sign Up</a></li>
-				    <li><a class="white-text" ng-click="enter=true" id="login">Login</a></li>
+				    <li><a class="white-text" ng-click="create=true; enter=false" id="signUp">Sign Up</a></li>
+				    <li><a class="white-text" ng-click="enter=true; create=false" id="login">Login</a></li>
 				</ul>
 				<!-- show user name when user is logged in -->
 				<ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="userId">
