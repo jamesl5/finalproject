@@ -15,7 +15,7 @@
 	<script src="https://code.jquery.com/jquery.min.js"></script>
 	<!-- Bootstrap Library -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<!-- Materialize -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
@@ -38,10 +38,51 @@
 	<div class="navbar-fixed">
 		<nav class="teal accent-4">
 		    <div class="nav-wrapper">
- 		    <a ui-sref="home" class="white-text" class="brand-logo"><img id="navLogo"src="img/amateur-logo.png"></a>
-		    <ul id="nav-mobile" class="right hide-on-med-and-down">
-				<form ng-show="!userId" name="myForm" novalidate>
-				<!-- Sign-in/sign-up form: show if userId isn't defined -->
+				<a ui-sref="home" class="white-text" class="brand-logo"><img id="navLogo"src="img/amateur-logo.png"></a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<form ng-show="!userId" name="myForm" novalidate>
+					<!-- Sign-in/sign-up form: show if userId isn't defined -->
+
+						<!-- Bind model "email" to this input and make it required -->
+						<div class="form-group">
+							<label>Email:</label>
+							<input name="email" type="email" class="form-control" ng-model="email" required></input>
+
+							<!-- Show an error message if the email is not valid -->	
+							<p ng-show="myForm.email.$error.email">not email</p>
+						</div>
+
+						<!-- Password -->
+						<div class="form-group">
+							<label>Password:</label>
+							<input  name="password" type="password" class="form-control" ng-model="password" required></input>      
+						</div>
+
+						<!-- Submit buttons: should only be active if certain inputs are valid -->
+						<div class="form-group">
+							<button ng-click="signIn()" ng-disabled="myForm.email.$invalid || myForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button>
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newUser">Create Account</button>
+						</div>
+						
+
+					</form>
+				</ul>
+		    </div>
+	    </nav>
+	</div>
+	<!-- modal that pops up to create account-->
+	<div id="newUser" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Create Your Account</h4>
+				</div>
+				<form name="createUser" novalidate>
+					<label>Name:</label>
+					<input name="name" class="form-control" ng-model="name" ng-minlength="2" required>					
+						<!-- Add an error message if the length is too short -->	
+					<p ng-show="createUser.name.$error.minlength">too short</p>
 
 					<!-- Bind model "email" to this input and make it required -->
 					<div class="form-group">
@@ -49,7 +90,7 @@
 						<input name="email" type="email" class="form-control" ng-model="email" required></input>
 
 						<!-- Show an error message if the email is not valid -->	
-						<p ng-show="myForm.email.$error.email">not email</p>
+						<p ng-show="createUser.email.$error.email">not email</p>
 					</div>
 
 					<!-- Password -->
@@ -57,53 +98,14 @@
 						<label>Password:</label>
 						<input  name="password" type="password" class="form-control" ng-model="password" required></input>      
 					</div>
-
-					<!-- Submit buttons: should only be active if certain inputs are valid -->
-					<div class="form-group">
-						<button ng-click="signIn()" ng-disabled="myForm.email.$invalid || myForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button>
-						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newUser">Create Account</button>
-					</div>
-					<!-- modal that pops up to create account-->
-					<div id="newUser" class="modal fade" role="dialog">
-						<div class="modal-dialog">
-							<!-- Modal content-->
-							<div class="content">
-								<div class="modal-header">
-									<h4 class="modal-title">Create Your Account</h4>
-								</div>
-								<form name="createUser" novalidate>
-									<label>Name:</label>
-									<input name="name" class="form-control" ng-model="name" ng-minlength="2" required>					
-										<!-- Add an error message if the length is too short -->	
-									<p ng-show="myForm.name.$error.minlength">too short</p>
-
-									<!-- Bind model "email" to this input and make it required -->
-									<div class="form-group">
-										<label>Email:</label>
-										<input name="email" type="email" class="form-control" ng-model="email" required></input>
-
-										<!-- Show an error message if the email is not valid -->	
-										<p ng-show="myForm.email.$error.email">not email</p>
-									</div>
-
-									<!-- Password -->
-									<div class="form-group">
-										<label>Password:</label>
-										<input  name="password" type="password" class="form-control" ng-model="password" required></input>      
-									</div>
-									<!-- sign up or close -->
-									<div class="modal-footer">
-										<button ng-click="signUp()" ng-disabled="myForm.$invalid" type="submit" class="btn btn-primary" data-dismiss="modal">Sign-up</button>
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									</div>
-								</form>
-							</div>
-						</div>
+					<!-- sign up or close -->
+					<div class="modal-footer">
+						<button ng-click="signUp()" ng-disabled="createUser.$invalid" type="submit" class="btn btn-primary" data-dismiss="modal">Sign-up</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
 				</form>
-			</ul>
-		    </div>
-	    </nav>
+			</div>
+		</div>
 	</div>
 	<div>
 		<!-- This is where your content will display -->
