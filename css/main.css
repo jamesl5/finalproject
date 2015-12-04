@@ -1,3 +1,54 @@
 #navLogo {
 	max-width: 200px;
 }
+
+#signUpPopUp {
+	width: 40%;
+	background-color: white;
+}
+
+.arrow_box {
+	position: relative;
+	background: #ffffff;
+	border: 3px solid #00bfa5;
+	border-radius: 10px;
+	padding: 3%;
+	margin-top: 30px;
+}
+
+.arrow_box:after, .arrow_box:before {
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #ffffff;
+	border-width: 30px;
+	margin-left: -30px;
+	
+}
+
+.arrow_box:before {
+	border-color: rgba(0, 191, 165, 0);
+	border-bottom-color: #00bfa5;
+	border-width: 34px;
+	margin-left: -34px;
+	border-radius: 10px;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
