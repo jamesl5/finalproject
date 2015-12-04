@@ -50,7 +50,7 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 			name: $scope.name,
             email: $scope.email,
             password: $scope.password,
-			list: $scope.playlist
+			//list: $scope.playlist
         })
 
         // Once the user is created, call the logIn function

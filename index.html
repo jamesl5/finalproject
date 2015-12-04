@@ -11,13 +11,11 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shepherd/1.3.0/css/shepherd-theme-arrows.css" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/shepherd/1.3.0/js/shepherd.min.js"></script>
-
-	<!-- Bootstrap Library -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
 	<!-- jQuery Library -->
 	<script src="https://code.jquery.com/jquery.min.js"></script>
-
+	<!-- Bootstrap Library -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<!-- Materialize -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
@@ -63,7 +61,7 @@
 					<!-- Submit buttons: should only be active if certain inputs are valid -->
 					<div class="form-group">
 						<button ng-click="signIn()" ng-disabled="myForm.email.$invalid || myForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button>
-						<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#newUser">Create Account</button>
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#newUser">Create Account</button>
 					</div>
 					<!-- modal that pops up to create account-->
 					<div id="newUser" class="modal fade" role="dialog">
