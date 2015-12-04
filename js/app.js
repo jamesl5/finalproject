@@ -1,32 +1,8 @@
-var myApp = angular.module('myApp', ['ui.router']);
+var myApp = angular.module('myApp', ['ui.router', 'firebase'])
 
-myApp.config(function($stateProvider) {
-	$stateProvider
-		.state('home', {
-			url: '/home',
-			templateUrl: 'templates/home.html',
-			controller: 'HomeController'
-		})
-		.state('one', {
-			url: '/one',
-			templateUrl: 'templates/one.html',
-			controller: 'OneController'
-		})
-		.state('two', {
-			url: '/two',
-			templateUrl: 'templates/two.html',
-			controller: 'TwoController'
-		})
-		.state('three', {
-			url: '/three',
-			templateUrl: 'templates/three.html',
-			controller: 'ThreeController'
-		});
-
-});
-myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
+.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
    // Create a variable 'ref' to reference your firebase storage
-    var ref = new Firebase("https://info343final.firebaseio.com/");
+	var ref = new Firebase("https://info343final.firebaseio.com/");
     var userRef = ref.child("users");
 
     // Create a firebaseObject of your users, and store this as part of $scope
@@ -103,6 +79,37 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 		//$scope.playlist = []
     }
 });
+
+myApp.config(function($stateProvider) {
+	$stateProvider
+		.state('main', {
+			url: '/',
+			templateUrl: './index.html',
+			controller: 'MainController'
+		})
+		.state('home', {
+			url: '/home',
+			templateUrl: 'templates/home.html',
+			controller: 'HomeController'
+		})
+		.state('one', {
+			url: '/one',
+			templateUrl: 'templates/one.html',
+			controller: 'OneController'
+		})
+		.state('two', {
+			url: '/two',
+			templateUrl: 'templates/two.html',
+			controller: 'TwoController'
+		})
+		.state('three', {
+			url: '/three',
+			templateUrl: 'templates/three.html',
+			controller: 'ThreeController'
+		});
+
+});
+
 myApp.controller('HomeController', function($scope) {
 
 });
