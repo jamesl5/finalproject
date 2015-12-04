@@ -1,37 +1,21 @@
 var myApp = angular.module('myApp', ['ui.router', 'firebase'])
 
-
-myApp.config(function($stateProvider) {
-	$stateProvider
-		.state('main', {
-			url: '/',
-			templateUrl: 'index.html',
-			controller: 'MainController'
-		})
-		.state('home', {
-			url: '/home',
-			templateUrl: 'templates/home.html',
-			controller: 'HomeController'
-		})
-		.state('one', {
-			url: '/one',
-			templateUrl: 'templates/one.html',
-			controller: 'OneController'
-		})
-		.state('two', {
-			url: '/two',
-			templateUrl: 'templates/two.html',
-			controller: 'TwoController'
-		})
-		.state('three', {
-			url: '/three',
-			templateUrl: 'templates/three.html',
-			controller: 'ThreeController'
-		});
-
-});
 myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
+   new Tether({
+   		element: "#signUpPopUp",
+   		target: "#signUp",
+   		attachment: 'top center',
+   		targetAttachment: 'bottom center'
+   });
+
+   new Tether({
+   		element: "#loginPopUp",
+   		target: "#login",
+   		attachment: 'top center',
+   		targetAttachment: 'bottom center'
+   });
    // Create a variable 'ref' to reference your firebase storage
+	console.log("hello");
 	var ref = new Firebase("https://info343final.firebaseio.com/");
     var userRef = ref.child("users");
 
@@ -52,6 +36,8 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
     $scope.signUp = function() {
         // Create user
 		// Here, you set default values for users if there is any
+		$scope.create = false;
+		console.log("signin up");
         $scope.authObj.$createUser({
 			name: $scope.name,
             email: $scope.email,
@@ -66,8 +52,7 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
         .then(function(authData) {
             $scope.userId = authData.uid;
             $scope.users[authData.uid] ={
-                name:$scope.name,
-				//list:$scope.playlist
+                name:$scope.name
             }
             $scope.users.$save()
         })
@@ -109,6 +94,35 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 		//$scope.playlist = []
     }
 });
+myApp.config(function($stateProvider) {
+	$stateProvider
+		.state('main', {
+			url: '/',
+			templateUrl: 'index.html',
+			controller: 'MainController'
+		})
+		.state('home', {
+			url: '/home',
+			templateUrl: 'templates/home.html',
+			controller: 'HomeController'
+		})
+		.state('one', {
+			url: '/one',
+			templateUrl: 'templates/one.html',
+			controller: 'OneController'
+		})
+		.state('two', {
+			url: '/two',
+			templateUrl: 'templates/two.html',
+			controller: 'TwoController'
+		})
+		.state('three', {
+			url: '/three',
+			templateUrl: 'templates/three.html',
+			controller: 'ThreeController'
+		});
+
+});
 
 myApp.controller('HomeController', function($scope) {
 
@@ -123,7 +137,6 @@ myApp.controller('TwoController', function($scope) {
 
 myApp.controller('ThreeController', function($scope) {
 });
-
 
 
 

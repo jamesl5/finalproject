@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.router']);
+var myApp = angular.module('myApp', ['ui.router', 'angular-progress-arc']);
 
 myApp.config(function($stateProvider) {
 	$stateProvider
