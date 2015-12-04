@@ -1,6 +1,36 @@
 var myApp = angular.module('myApp', ['ui.router', 'firebase'])
 
-.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
+
+myApp.config(function($stateProvider) {
+	$stateProvider
+		.state('main', {
+			url: '/',
+			templateUrl: 'index.html',
+			controller: 'MainController'
+		})
+		.state('home', {
+			url: '/home',
+			templateUrl: 'templates/home.html',
+			controller: 'HomeController'
+		})
+		.state('one', {
+			url: '/one',
+			templateUrl: 'templates/one.html',
+			controller: 'OneController'
+		})
+		.state('two', {
+			url: '/two',
+			templateUrl: 'templates/two.html',
+			controller: 'TwoController'
+		})
+		.state('three', {
+			url: '/three',
+			templateUrl: 'templates/three.html',
+			controller: 'ThreeController'
+		});
+
+});
+myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
    // Create a variable 'ref' to reference your firebase storage
 	var ref = new Firebase("https://info343final.firebaseio.com/");
     var userRef = ref.child("users");
@@ -37,7 +67,7 @@ var myApp = angular.module('myApp', ['ui.router', 'firebase'])
             $scope.userId = authData.uid;
             $scope.users[authData.uid] ={
                 name:$scope.name,
-				list:$scope.playlist
+				//list:$scope.playlist
             }
             $scope.users.$save()
         })
@@ -78,36 +108,6 @@ var myApp = angular.module('myApp', ['ui.router', 'firebase'])
         $scope.userId = false
 		//$scope.playlist = []
     }
-});
-
-myApp.config(function($stateProvider) {
-	$stateProvider
-		.state('main', {
-			url: '/',
-			templateUrl: './index.html',
-			controller: 'MainController'
-		})
-		.state('home', {
-			url: '/home',
-			templateUrl: 'templates/home.html',
-			controller: 'HomeController'
-		})
-		.state('one', {
-			url: '/one',
-			templateUrl: 'templates/one.html',
-			controller: 'OneController'
-		})
-		.state('two', {
-			url: '/two',
-			templateUrl: 'templates/two.html',
-			controller: 'TwoController'
-		})
-		.state('three', {
-			url: '/three',
-			templateUrl: 'templates/three.html',
-			controller: 'ThreeController'
-		});
-
 });
 
 myApp.controller('HomeController', function($scope) {
