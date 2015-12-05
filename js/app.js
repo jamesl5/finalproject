@@ -1,4 +1,4 @@
-var newusrbadges = [];
+var usrbadges = [];
 var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress'])
 
 myApp.config(function($stateProvider) {
@@ -56,7 +56,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 			name: $scope.name,
             email: $scope.email,
             password: $scope.password,
-			badges: newusrbadges
+			badges: usrbadges
         })
 
         // Once the user is created, call the logIn function
