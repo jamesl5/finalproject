@@ -112,9 +112,6 @@ myApp.controller('HomeController', function($scope) {
 
 });
 
-myApp.controller('MainController', function($scope) {
-
-});
 
 
 
