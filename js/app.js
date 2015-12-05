@@ -1,5 +1,19 @@
 var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress'])
 
+myApp.config(function($stateProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: 'index.html',
+      controller: 'HomeController'
+    })
+    .state('dashboard', {
+      url: '/dashboard',
+      templateUrl: 'templates/dashboard.html',
+      controller: 'DashboardController'
+    })
+});
+
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
    new Tether({
    		element: "#signUpPopUp",
@@ -94,19 +108,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 		//$scope.playlist = []
     }
 });
-myApp.config(function($stateProvider) {
-	$stateProvider
-		.state('home', {
-			url: '/',
-			templateUrl: 'index.html',
-			controller: 'HomeController'
-		})
-		.state('dashboard', {
-			url: '/dashboard',
-			templateUrl: 'templates/dashboard.html',
-			controller: 'DashboardController'
-		})
-});
+
 
 myApp.controller('DashboardController', function($scope) {
 
