@@ -1,6 +1,7 @@
-var myApp = angular.module('myApp', ['ui.router', 'firebase']);
 var newusrbadges = [];
-myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
+var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress'])
+
+myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
    new Tether({
    		element: "#signUpPopUp",
    		target: "#signUp",
@@ -51,7 +52,7 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
         .then(function(authData) {
             $scope.userId = authData.uid;
             $scope.users[authData.uid] ={
-                name:$scope.name
+                name: $scope.name
             }
             $scope.users.$save()
         })
@@ -95,20 +96,15 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 });
 myApp.config(function($stateProvider) {
 	$stateProvider
-		.state('main', {
+		.state('home', {
 			url: '/',
 			templateUrl: 'index.html',
-			controller: 'MainController'
-		})
-		.state('home', {
-			url: '/home',
-			templateUrl: 'templates/home.html',
 			controller: 'HomeController'
 		})
-		.state('one', {
-			url: '/one',
-			templateUrl: 'templates/one.html',
-			controller: 'OneController'
+		.state('dashboard', {
+			url: '/dashboard',
+			templateUrl: 'templates/dashboard.html',
+			controller: 'DashboardController'
 		})
 		.state('two', {
 			url: '/two',
@@ -122,19 +118,11 @@ myApp.config(function($stateProvider) {
 		});
 });
 
-myApp.controller('HomeController', function($scope) {
+myApp.controller('DashboardController', function($scope) {
 
 });
 
-myApp.controller('OneController', function($scope) {
 
-});
-
-myApp.controller('TwoController', function($scope) {
-});
-
-myApp.controller('ThreeController', function($scope) {
-});
 
 
 
