@@ -1,6 +1,20 @@
 var newusrbadges = [];
 var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress'])
 
+myApp.config(function($stateProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: 'index.html',
+      controller: 'HomeController'
+    })
+    .state('dashboard', {
+      url: '/dashboard',
+      templateUrl: 'templates/dashboard.html',
+      controller: 'DashboardController'
+    })
+});
+
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
    new Tether({
    		element: "#signUpPopUp",
@@ -117,6 +131,7 @@ myApp.config(function($stateProvider) {
 			controller: 'ThreeController'
 		});
 });
+
 
 myApp.controller('DashboardController', function($scope) {
 
