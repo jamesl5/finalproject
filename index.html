@@ -45,9 +45,15 @@
 		<nav class="teal accent-4">
 		    <div class="nav-wrapper container">
 	 		    <a ui-sref="home" class="white-text" class="brand-logo"><img id="navLogo"src="img/amateur-logo.png"></a>
-			    <ul id="nav-mobile" class="right hide-on-med-and-down">
-				    <li><a class="white-text" ng-click="create=true" id="signUp">Sign Up</a></li>
-				    <li><a class="white-text" ng-click="enter=true" id="login">Login</a></li>
+				<!-- show signup and login when user is not logged in -->
+			    <ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="!userId">
+				    <li><a class="white-text" ng-click="create=true; enter=false" id="signUp">Sign Up</a></li>
+				    <li><a class="white-text" ng-click="enter=true; create=false" id="login">Login</a></li>
+				</ul>
+				<!-- show user name when user is logged in -->
+				<ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="userId">
+					<li>Welcome! {{users[userId].name}}</li>
+					<li><a class="white-text" ng-click="logOut()" id="logout">Logout</a></li>
 				</ul>
 		    </div>
 	    </nav>
@@ -55,7 +61,7 @@
 	</div>
 	<div ng-init="create=false" ng-show="create" id="signUpPopUp" class="arrow_box">
 		<!-- took out ng-show="!userId" -->
-	    <form name="myForm" novalidate>
+	    <form name="signUpForm" novalidate>
 		<!-- Sign-in/sign-up form: show if userId isn't defined -->
 			<div class="form-group">
 				<label>Name:</label>
@@ -69,7 +75,7 @@
 				<label>Email:</label>
 				<input name="email" type="email" class="form-control" ng-model="email" required></input>
 				<!-- Show an error message if the email is not valid -->	
-				<p ng-show="myForm.email.$error.email">Not a valid email</p>
+				<p ng-show="signUpForm.email.$error.email">Not a valid email</p>
 			</div>
 
 			<!-- Password -->
@@ -81,18 +87,18 @@
 			<!-- Submit buttons: should only be active if certain inputs are valid -->
 			<div class="form-group">
 				<button ng-click="create=false" class="btn btn-primary">Cancel</button>
-				<button ng-click="signUp()"  ng-disabled="createUser.$invalid" type="submit" class="btn btn-primary">Sign-up</button>
+				<button ng-click="signUp()"  ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary">Sign-up</button>
 				<!-- <button ng-click="signIn()" ng-disabled="myForm.email.$invalid || myForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button> -->
 				<!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newUser">Create Account</button> -->
 			</div>
 		</form>
 	</div>
-	<div ng-init="enter=false" ng-show="enter" class="arrow_box" id="loginPopUp">
-		<form name="myForm" novalidate>
+	<div ng-init="enter=false" ng-show="enter" id="loginPopUp" class="arrow_box">
+		<form name="loginForm" novalidate>
 			<div class="form-group">
 				<label>Email:</label>
 				<input name="email" type="email" class="form-control" ng-model="email" required></input>
-				<p ng-show="myForm.email.$error.email">Not a valid email</p>
+				<p ng-show="loginForm.email.$error.email">Not a valid email</p>
 			</div>
 
 			<div class="form-group">
@@ -102,7 +108,7 @@
 
 			<div class="form-group">
 				<button ng-click="enter=false" class="btn btn-primary">Cancel</button>
-				<button ng-click="signIn()" ng-disabled="myForm.email.$invalid || myForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button>
+				<button ng-click="signIn()" ng-disabled="loginForm.email.$invalid || loginForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button>
 			</div>
 		</form>
 	</div>

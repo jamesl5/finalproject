@@ -94,12 +94,11 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 		//$scope.playlist = []
     }
 });
-
 myApp.config(function($stateProvider) {
 	$stateProvider
 		.state('main', {
 			url: '/',
-			templateUrl: './index.html',
+			templateUrl: 'index.html',
 			controller: 'MainController'
 		})
 		.state('home', {
