@@ -101,7 +101,9 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             password: $scope.password
         })
     }
-
+	
+	usrbadges = $scope.badges;
+	
     // LogOut function
     $scope.logOut = function() {
         $scope.authObj.$unauth()
