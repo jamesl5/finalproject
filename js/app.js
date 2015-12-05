@@ -1,4 +1,19 @@
+var newusrbadges = [];
 var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress'])
+
+myApp.config(function($stateProvider) {
+  $stateProvider
+    .state('home', {
+      url: '/',
+      templateUrl: 'index.html',
+      controller: 'HomeController'
+    })
+    .state('dashboard', {
+      url: '/dashboard',
+      templateUrl: 'templates/dashboard.html',
+      controller: 'DashboardController'
+    })
+});
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
    new Tether({
@@ -22,11 +37,10 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 
     // Create a firebaseObject of your users, and store this as part of $scope
     $scope.users = $firebaseObject(userRef);
-
 	
     // Create authorization object that referes to firebase
     $scope.authObj = $firebaseAuth(ref);
-
+	
     // Test if already logged in
     var authData = $scope.authObj.$getAuth();
     if (authData) {
@@ -43,7 +57,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 			name: $scope.name,
             email: $scope.email,
             password: $scope.password,
-			//list: $scope.playlist
+			badges: newusrbadges
         })
 
         // Once the user is created, call the logIn function
@@ -76,7 +90,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         $scope.logIn().then(function(authData){
             $scope.userId = authData.uid
 			var id = $scope.userId;
-			//$scope.playlist = $scope.users[id].list
+			$scope.badges = $scope.users[id].badges
         })
     }
 	
@@ -92,7 +106,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
     $scope.logOut = function() {
         $scope.authObj.$unauth()
         $scope.userId = false
-		//$scope.playlist = []
+		$scope.badges = []
     }
 });
 
@@ -108,7 +122,18 @@ myApp.config(function($stateProvider) {
 			templateUrl: 'templates/dashboard.html',
 			controller: 'DashboardController'
 		})
+		.state('two', {
+			url: '/two',
+			templateUrl: 'templates/two.html',
+			controller: 'TwoController'
+		})
+		.state('three', {
+			url: '/three',
+			templateUrl: 'templates/three.html',
+			controller: 'ThreeController'
+		});
 });
+
 
 myApp.controller('DashboardController', function($scope) {
 
