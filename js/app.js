@@ -1,5 +1,5 @@
-var myApp = angular.module('myApp', ['ui.router', 'firebase'])
-
+var myApp = angular.module('myApp', ['ui.router', 'firebase']);
+var newusrbadges = [];
 myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
    new Tether({
    		element: "#signUpPopUp",
@@ -21,11 +21,10 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 
     // Create a firebaseObject of your users, and store this as part of $scope
     $scope.users = $firebaseObject(userRef);
-
 	
     // Create authorization object that referes to firebase
     $scope.authObj = $firebaseAuth(ref);
-
+	
     // Test if already logged in
     var authData = $scope.authObj.$getAuth();
     if (authData) {
@@ -42,7 +41,7 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
 			name: $scope.name,
             email: $scope.email,
             password: $scope.password,
-			//list: $scope.playlist
+			badges: newusrbadges
         })
 
         // Once the user is created, call the logIn function
@@ -75,7 +74,7 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
         $scope.logIn().then(function(authData){
             $scope.userId = authData.uid
 			var id = $scope.userId;
-			//$scope.playlist = $scope.users[id].list
+			$scope.badges = $scope.users[id].badges
         })
     }
 	
@@ -91,7 +90,7 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
     $scope.logOut = function() {
         $scope.authObj.$unauth()
         $scope.userId = false
-		//$scope.playlist = []
+		$scope.badges = []
     }
 });
 myApp.config(function($stateProvider) {
@@ -121,7 +120,6 @@ myApp.config(function($stateProvider) {
 			templateUrl: 'templates/three.html',
 			controller: 'ThreeController'
 		});
-
 });
 
 myApp.controller('HomeController', function($scope) {

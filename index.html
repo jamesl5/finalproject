@@ -108,7 +108,7 @@
 
 			<div class="form-group">
 				<button ng-click="enter=false" class="btn btn-primary">Cancel</button>
-				<button ng-click="signIn()" ng-disabled="loginForm.email.$invalid || loginForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button>
+				<button ng-click="signIn(); enter=false" ng-disabled="loginForm.email.$invalid || loginForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button>
 			</div>
 		</form>
 	</div>
