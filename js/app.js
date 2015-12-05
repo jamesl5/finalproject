@@ -29,6 +29,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
    		attachment: 'top center',
    		targetAttachment: 'bottom center'
    });
+
    // Create a variable 'ref' to reference your firebase storage
 	console.log("hello");
 	var ref = new Firebase("https://info343final.firebaseio.com/");
@@ -107,29 +108,6 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         $scope.userId = false
 		$scope.badges = []
     }
-});
-myApp.config(function($stateProvider) {
-	$stateProvider
-		.state('home', {
-			url: '/',
-			templateUrl: 'index.html',
-			controller: 'HomeController'
-		})
-		.state('dashboard', {
-			url: '/dashboard',
-			templateUrl: 'templates/dashboard.html',
-			controller: 'DashboardController'
-		})
-		.state('two', {
-			url: '/two',
-			templateUrl: 'templates/two.html',
-			controller: 'TwoController'
-		})
-		.state('three', {
-			url: '/three',
-			templateUrl: 'templates/three.html',
-			controller: 'ThreeController'
-		});
 });
 
 
