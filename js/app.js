@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.router', 'firebase'])
+var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress'])
 
 myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
    new Tether({
@@ -52,7 +52,7 @@ myApp.controller('MainController', function($scope, $firebaseAuth, $firebaseArra
         .then(function(authData) {
             $scope.userId = authData.uid;
             $scope.users[authData.uid] ={
-                name:$scope.name
+                name: $scope.name
             }
             $scope.users.$save()
         })
@@ -107,37 +107,16 @@ myApp.config(function($stateProvider) {
 			templateUrl: 'templates/home.html',
 			controller: 'HomeController'
 		})
-		.state('one', {
-			url: '/one',
-			templateUrl: 'templates/one.html',
-			controller: 'OneController'
-		})
-		.state('two', {
-			url: '/two',
-			templateUrl: 'templates/two.html',
-			controller: 'TwoController'
-		})
-		.state('three', {
-			url: '/three',
-			templateUrl: 'templates/three.html',
-			controller: 'ThreeController'
-		});
-
 });
 
 myApp.controller('HomeController', function($scope) {
 
 });
 
-myApp.controller('OneController', function($scope) {
+myApp.controller('MainController', function($scope) {
 
 });
 
-myApp.controller('TwoController', function($scope) {
-});
-
-myApp.controller('ThreeController', function($scope) {
-});
 
 
 
