@@ -71,6 +71,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             }
             $scope.users.$save()
         })
+		.then($location.path('/dashboard'))
         // Catch any errors
         .catch(function(error) {
             console.error("Error: ", error);
@@ -91,6 +92,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
             $scope.userId = authData.uid
 			var id = $scope.userId;
 			$scope.badges = $scope.users[id].badges
+			$location.path('/dashboard')
         })
     }
 	
