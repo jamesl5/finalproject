@@ -15,7 +15,7 @@ myApp.config(function($stateProvider) {
     })
 });
 
-myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http){
+myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location){
    new Tether({
    		element: "#signUpPopUp",
    		target: "#signUp",
@@ -108,6 +108,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
     $scope.logOut = function() {
         $scope.authObj.$unauth()
         $scope.userId = false
+		$location.path('/')
 		$scope.badges = []
 		userbadges = [];
     }
@@ -145,8 +146,8 @@ myApp.run(function ($rootScope, $state, $firebaseAuth) {
       {
 		var shouldGoHome = fromState.name === "" && toState.name !== "home";
 		if(shouldGoHome){
-			event.preventDefault();
 			$state.go('home')
+			event.preventDefault();
 		}
         return;
       }
