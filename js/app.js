@@ -137,21 +137,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	console.log($scope.allbadges);
 	console.log($scope.userbadges);
 
-  // Practicing bar graph starts here
-
-
-  // MAKES THE BAR CHART USING HTML ONLY
-  // var x = d3.scale.linear()
-  //     .domain([0, d3.max(data)])
-  //     .range([0, 420]);
-
-  // d3.select("#barChart")
-  //   .selectAll("div")
-  //     .data(data)
-  //   .enter().append("div")
-  //     .style("width", function(d) { return x(d) + "px"; })
-  //     .text(function(d) { return d; });
-
+  //CREATES THE BAR CHART
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
@@ -219,7 +205,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     d.value = +d.value; // coerce to number
     return d;
   }  
-  // Practicing bar graph ends here
+  // END OF THE BARCHART
 });
 
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
