@@ -134,7 +134,27 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	console.log($scope.userbadges);
 });
 
-
-
+myApp.run(function ($rootScope, $state, $firebaseAuth) {
+  
+    $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
+      var authObj = $firebaseAuth(ref);
+	  var authData = authObj.$getAuth();
+      
+      // NOT authenticated - goes to login page
+      if(!authData)
+      {
+		var shouldGoHome = fromState.name === "" && toState.name !== "home";
+		if(shouldGoHome){
+			event.preventDefault();
+			$state.go('home')
+		}
+        return;
+      }
+	  if(authData){
+		  return;
+	  }
+      
+    });
+});
 
 
