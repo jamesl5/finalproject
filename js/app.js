@@ -190,9 +190,16 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
       .enter().append("rect")
         .attr('class', 'bar')
         .attr('x', function(d) { return x(d.days); })
-        .attr("width", x.rangeBand())
         .attr('y', function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); });
+
+        .attr("width", x.rangeBand())
+        .transition().delay(function (d, i) { return i * 300; })
+        // .duration(300)
+        
+        .attr("height", function(d) { return height - y(d.value); })
+        // .attr("y", function(d) { return height - .5; }) 
+
+        // .attr("y", function(d) { return height - y(d.value) - .5; });;
 
     // bar.append("text")
     //     .attr("x", barWidth / 2)
