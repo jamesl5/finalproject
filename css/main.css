@@ -49,6 +49,10 @@ body {
 	flex-direction: column;
 }
 
+#badge{
+	width: 100px;
+}
+
 main {
 	flex: 1 0 auto;
 }

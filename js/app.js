@@ -1,6 +1,6 @@
 var usrbadges = [];
 var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress'])
-
+var ref = new Firebase("https://info343final.firebaseio.com/");
 myApp.config(function($stateProvider) {
   $stateProvider
     .state('home', {
@@ -32,7 +32,6 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 
    // Create a variable 'ref' to reference your firebase storage
 	console.log("hello");
-	var ref = new Firebase("https://info343final.firebaseio.com/");
     var userRef = ref.child("users");
 
     // Create a firebaseObject of your users, and store this as part of $scope
@@ -52,7 +51,8 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         // Create user
 		// Here, you set default values for users if there is any
 		$scope.create = false;
-		console.log("signin up");
+		console.log("sign up");
+		userbadges = ["powerbadge"];
         $scope.authObj.$createUser({
 			name: $scope.name,
             email: $scope.email,
@@ -109,12 +109,29 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
         $scope.authObj.$unauth()
         $scope.userId = false
 		$scope.badges = []
+		userbadges = [];
     }
 });
 
 
-myApp.controller('DashboardController', function($scope) {
-
+myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject) {
+	
+	var authData = $scope.authObj.$getAuth();
+    if (authData) {
+        $scope.userId = authData.uid;
+    }
+	var badgeRef = ref.child("allbadges");
+	var userRef = ref.child("users");
+	var userId = $scope.userId;
+	console.log(userId);
+	var userobjectsRef = userRef.child(userId);
+	var userbadgeRef = userobjectsRef.child("badges");
+	$scope.userbadges = $firebaseArray(userbadgeRef)
+	
+	$scope.allbadges = $firebaseArray(badgeRef)
+	console.log("badges loaded");
+	console.log($scope.allbadges);
+	console.log($scope.userbadges);
 });
 
 
