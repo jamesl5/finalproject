@@ -137,7 +137,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	console.log($scope.allbadges);
 	console.log($scope.userbadges);
 
-  //CREATES THE BAR CHART
+  //CREATES THE BAR CHARt
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
