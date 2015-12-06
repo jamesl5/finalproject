@@ -1,3 +1,12 @@
+
+/*STYLE FOR INDEX.HTML
+---------------------------------------------------------------------------------*/
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
 #navLogo {
 	max-width: 200px;
 }
@@ -7,6 +16,7 @@
 	background-color: white;
 }
 
+/*arrow-box is the arrow on the signup/login popups*/
 .arrow_box {
 	position: relative;
 	background: #ffffff;
@@ -15,7 +25,6 @@
 	padding: 3%;
 	margin-top: 30px;
 }
-
 .arrow_box:after, .arrow_box:before {
 	bottom: 100%;
 	left: 50%;
@@ -26,7 +35,6 @@
 	position: absolute;
 	pointer-events: none;
 }
-
 .arrow_box:after {
 	border-color: rgba(255, 255, 255, 0);
 	border-bottom-color: #ffffff;
@@ -34,7 +42,6 @@
 	margin-left: -30px;
 	
 }
-
 .arrow_box:before {
 	border-color: rgba(0, 191, 165, 0);
 	border-bottom-color: #00bfa5;
@@ -43,16 +50,45 @@
 	border-radius: 10px;
 }
 
-body {
-	display: flex;
-	min-height: 100vh;
-	flex-direction: column;
+/*main {
+	flex: 1 0 auto;
+}*/
+
+/*STYLE FOR CIRCLE GRAPH
+---------------------------------------------------------------------------------*/
+
+/*STYLE FOR CALENDAR
+---------------------------------------------------------------------------------*/
+
+
+/*STYLE FOR BARGRAPH
+---------------------------------------------------------------------------------*/
+
+.bar {
+	fill: #45ccce;
 }
 
+.bar:hover {
+	fill: teal;
+}
+
+.axis text {
+	font: 10px sans-serif;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.x.axis path {
+	display: none;
+}
+
+/*STYLE FOR BADGES SECTION
+---------------------------------------------------------------------------------*/
 #badge{
 	width: 100px;
 }
 
-main {
-	flex: 1 0 auto;
-}

@@ -117,6 +117,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 });
 
 
+
 myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject) {
 	
 	var authData = $scope.authObj.$getAuth();
@@ -135,6 +136,90 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	console.log("badges loaded");
 	console.log($scope.allbadges);
 	console.log($scope.userbadges);
+
+  // Practicing bar graph starts here
+
+
+  // MAKES THE BAR CHART USING HTML ONLY
+  // var x = d3.scale.linear()
+  //     .domain([0, d3.max(data)])
+  //     .range([0, 420]);
+
+  // d3.select("#barChart")
+  //   .selectAll("div")
+  //     .data(data)
+  //   .enter().append("div")
+  //     .style("width", function(d) { return x(d) + "px"; })
+  //     .text(function(d) { return d; });
+
+  var margin = {top: 20, right: 30, bottom: 30, left: 40},
+      width = 370 - margin.left - margin.right,
+      height = 200 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
+
+  var x = d3.scale.ordinal()
+      .rangeRoundBands([0, width], .1);    
+
+  var y = d3.scale.linear()
+      .range([height, 0]);
+
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient('bottom');
+
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient('left');
+
+  var chart = d3.select("#barChart")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append('g')
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  d3.csv("../test_data/Workbook1.csv", type, function(error, data) {
+    if(error) throw error;
+
+    x.domain(data.map(function(d) { return d.days; }));
+    y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+    var barWidth = width / data.length;
+
+    chart.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ")")
+        .call(xAxis);
+
+    chart.append('g')
+        .attr('class', 'y axis')
+        .call(yAxis)
+      .append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', -30)
+        .attr('x', -50)
+        .style('text-anchor', 'end')
+        .text('Hours');
+
+    chart.selectAll(".bar")
+        .data(data)
+      .enter().append("rect")
+        .attr('class', 'bar')
+        .attr('x', function(d) { return x(d.days); })
+        .attr("width", x.rangeBand())
+        .attr('y', function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); });
+
+    // bar.append("text")
+    //     .attr("x", barWidth / 2)
+    //     .attr("y", function(d) {return y(d.value) + 3;})
+    //     .attr("dy", ".75em")
+    //     .text(function(d) { return d.value; });
+  });
+
+  function type(d) {
+    d.value = +d.value; // coerce to number
+    return d;
+  }  
+  // Practicing bar graph ends here
 });
 
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
