@@ -32,7 +32,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
    });
 
    // Create a variable 'ref' to reference your firebase storage
-	console.log("hello");
+	// console.log("hello");
     var userRef = ref.child("users");
 
     // Create a firebaseObject of your users, and store this as part of $scope
@@ -123,21 +123,21 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	
   // ADDING BADGES
 	var authData = $scope.authObj.$getAuth();
-    if (authData) {
-        $scope.userId = authData.uid;
-    }
+  if (authData) {
+      $scope.userId = authData.uid;
+  }
 	var badgeRef = ref.child("allbadges");
 	var userRef = ref.child("users");
-	var userId = $scope.userId;
-	console.log(userId);
-	var userobjectsRef = userRef.child(userId);
+	// var userId = $scope.userId; - maybe delete this since it can be put into userobjectsRef directly below
+	// console.log(userId);
+	var userobjectsRef = userRef.child($scope.userId);
 	var userbadgeRef = userobjectsRef.child("badges");
 	$scope.userbadges = $firebaseArray(userbadgeRef)
 	
 	$scope.allbadges = $firebaseArray(badgeRef)
-	console.log("badges loaded");
-	console.log($scope.allbadges);
-	console.log($scope.userbadges);
+	// console.log("badges loaded");
+	// console.log($scope.allbadges);
+	// console.log($scope.userbadges);
 
   //CREATES THE BAR CHARt
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
@@ -197,11 +197,13 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
         // .attr('height', 0)
         .attr("width", x.rangeBand())
         .transition().delay(function (d, i) { return i * 100; })
+        .duration(1500)
+        .ease('elastic')
         .attr('y', function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); });
 
 
-    // bar.append("text")
+    // chart.selectAll(".bar").append("text")
     //     .attr("x", barWidth / 2)
     //     .attr("y", function(d) {return y(d.value) + 3;})
     //     .attr("dy", ".75em")
@@ -213,7 +215,81 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     return d;
   }  
   // END OF THE BARCHART
+
+  // CREATE CALENDAR
+  var width = 960,
+      height = 136,
+      cellSize = 17; // cell size
+
+  var percent = d3.format(".1%"),
+      format = d3.time.format("%Y-%m-%d");
+
+  var color = d3.scale.quantize()
+      .domain([-.05, .05])
+      .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
+
+  var svg = d3.select("#calendar").selectAll("svg")
+      .data(d3.range(1990, 2011))
+    .enter().append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("class", "RdYlGn")
+    .append("g")
+      .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")");
+
+  svg.append("text")
+      .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d; });
+
+  var rect = svg.selectAll(".day")
+      .data(function(d) { return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+    .enter().append("rect")
+      .attr("class", "day")
+      .attr("width", cellSize)
+      .attr("height", cellSize)
+      .attr("x", function(d) { return d3.time.weekOfYear(d) * cellSize; })
+      .attr("y", function(d) { return d.getDay() * cellSize; })
+      .datum(format);
+
+  rect.append("title")
+      .text(function(d) { return d; });
+
+  svg.selectAll(".month")
+      .data(function(d) { return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+    .enter().append("path")
+      .attr("class", "month")
+      .attr("d", monthPath);
+
+  d3.csv("../test_data/dji.csv", function(error, csv) {
+    if (error) throw error;
+
+    var data = d3.nest()
+      .key(function(d) { return d.Date; })
+      .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
+      .map(csv);
+
+    rect.filter(function(d) { return d in data; })
+        .attr("class", function(d) { return "day " + color(data[d]); })
+      .select("title")
+        .text(function(d) { return d + ": " + percent(data[d]); });
+  });
+
+  function monthPath(t0) {
+    var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
+        d0 = t0.getDay(), w0 = d3.time.weekOfYear(t0),
+        d1 = t1.getDay(), w1 = d3.time.weekOfYear(t1);
+    return "M" + (w0 + 1) * cellSize + "," + d0 * cellSize
+        + "H" + w0 * cellSize + "V" + 7 * cellSize
+        + "H" + w1 * cellSize + "V" + (d1 + 1) * cellSize
+        + "H" + (w1 + 1) * cellSize + "V" + 0
+        + "H" + (w0 + 1) * cellSize + "Z";
+  }
+
+  d3.select(self.frameElement).style("height", "2910px");
 });
+
+
 
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
   
