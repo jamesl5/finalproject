@@ -25,13 +25,11 @@
 
 </div>
 
-<div id="badges">
-	<div id="badgelist" ng-show="userbadges.length>0">	
-		<ul class="list-group">
-			<li id="badgeListItem" ng-repeat="badge in userbadges" class="list-group-item">			
-				<p>{{allbadges.$getRecord(badge.$value).name}}</p>
-				<img id="badge" ng-src={{allbadges.$getRecord(badge.$value).url}}>
-			</li>
-		</ul>
-	</div>
+<div id="badgelist" ng-show="userbadges.length>0">	
+	<ul class="list-group">
+		<div id="badgeListItem" ng-repeat="badge in userbadges" class="list-group-item">			
+			<p>{{allbadges.$getRecord(badge.$value).name}}</p>
+			<img id="badge" ng-src={{allbadges.$getRecord(badge.$value).url}}>
+		</div>
+	</ul>
 </div>
