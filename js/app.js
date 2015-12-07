@@ -219,8 +219,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     return d;
   }  
   // END OF THE BARCHART
-
-<<<<<<< HEAD
+  // $scope.curr = 55;
   // CREATE CALENDAR
   // var width = 960,
   //     height = 136,
@@ -306,8 +305,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	//     };
 	// };
 
-    $scope.curr = 55;
-=======
+
   // START HEATMAP
   // var margin = { top: 50, right: 0, bottom: 100, left: 30 },
   //           width = 960 - margin.left - margin.right,
@@ -420,7 +418,6 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   //           heatmapChart(d);
   //         });
   //  END HEATMAP
->>>>>>> still working on calendar
 });
 
 
