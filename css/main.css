@@ -115,7 +115,7 @@ h1#title {
 .slider .indicators {
 	z-index: 100;
 	position: absolute;
-	top: 88%;
+	top: 96%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: white;
@@ -123,17 +123,17 @@ h1#title {
 
 }
 
-.slider {
+.slider, .slides {
+	height: 700px !important;
+}
+div.slider {
 	z-index: -100;
 }
 
-#mainText {
+#mainText, .centerText {
 	text-align: center;
 }
 
-.headerText {
-	margin-top: 0;
-}
 #bigHeader {
 	margin-bottom: 0;
 }
@@ -143,7 +143,7 @@ i {
 }
 
 .iconDiv {
-	margin-top: 20px;
+	margin-top: 30px;
 }
 
 .midImg {
@@ -156,9 +156,14 @@ i {
 
 }
 
-.appLogo {
-	width: 1em;
+#contactus {
+	font-weight: bold;
 }
+
+.divider {
+	height: 200px;
+}
+
 
 
 /*STYLE FOR CIRCLE GRAPH
@@ -174,9 +179,8 @@ i {
 	-webkit-transform: translateY(80%);*/
 	position: absolute;
 	top: 40%;
-	left: 11%;
+	left: 33%;
 }
-
 
 /*STYLE FOR CALENDAR
 ---------------------------------------------------------------------------------*/
@@ -216,6 +220,7 @@ i {
 
 .axis text {
 	font: 10px sans-serif;
+	fill: #000;
 }
 
 .axis path, .axis line {
