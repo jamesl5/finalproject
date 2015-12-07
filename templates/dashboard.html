@@ -1,32 +1,6 @@
 <div id="calendar">
 </div>
-<div id="graphArea">
-	<div id="circleGraph progress-wrapper" class="container-fluid">
-		<div class="progress ng-binding" ng-style="getStyle()">
-		</div>
-
-		<div
-		    round-progress
-		    max="10000"
-		    current="curr" 
-		    color="#45ccce"
-		    bgcolor="#eaeaea"
-		    radius="100"
-		    stroke="30"
-		    semi="false"
-		    rounded="true"
-		    clockwise="true"
-		    responsive="false"
-		    duration="800"
-		    animation="easeInOutQuart">
-		    <div id="text" class="progress ng-binding" ng-style="getStyle()">
-			</div>
-		</div>
-	</div>
-	<div id="barGraph">
-
-	</div>
-	<div 
+<!-- 	<div 
 		class="clock"
 		round-progress
 	    max="10000"
@@ -72,8 +46,7 @@
 				    duration="800"
 				    animation="easeInOutQuart">
 		    	</div>
-	    	</div>
-	</div>
+	    	</div> -->
 
 
 <div id="heatmap">
@@ -81,22 +54,27 @@
 </div>
 
 <div id="graphArea" class="row">
-	<div id="circleGraph" class="container-fluid col-xs-12 col-md-6">
-        <div
-            round-progress
-            max="200"
-            current="100"
-            color="#45ccce"
-            bgcolor="#eaeaea"
-            radius="100"
-            stroke="30"
-            semi="false"
-            rounded="true"
-            clockwise="true"
-            responsive="false"
-            duration="800"
-            animation="easeInOutQuart">
-        </div>
+	<div class="container-fluid progress-wrapper">
+		<div id="circleGraph" class="container-fluid col-xs-12 col-md-6">
+			<div class="progress ng-binding" ng-style="getStyle()">
+				100/200
+			</div>
+	        <div
+	            round-progress
+	            max="200"
+	            current="100"
+	            color="#45ccce"
+	            bgcolor="#eaeaea"
+	            radius="100"
+	            stroke="30"
+	            semi="false"
+	            rounded="true"
+	            clockwise="true"
+	            responsive="false"
+	            duration="800"
+	            animation="easeInOutQuart">
+	        </div>
+		</div>
 	</div>
 
     <svg id="barChart" class="col-xs-12 col-md-6">
