@@ -17,8 +17,8 @@ myApp.config(function($stateProvider) {
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location){
-  $('.slider').slider({full_width: true});
-  $('.parallax').parallax();
+  angular.element('.slider').slider({full_width: true});
+  angular.element('.parallax').parallax();
 
 
    new Tether({
@@ -120,10 +120,79 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 		userbadges = [];
     }
 
+    //CREATES THE BAR CHART
+    var margin = {top: 20, right: 30, bottom: 30, left: 40},
+        width = 370 - margin.left - margin.right,
+        height = 330 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
+
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);    
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient('bottom');
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left');
+
+    var chart = d3.select(".barChart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append('g')
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.csv("../test_data/testdata.csv", type, function(error, data) {
+      if(error) throw error;
+
+      x.domain(data.map(function(d) { return d.days; }));
+      y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+      var barWidth = width / data.length;
+
+      chart.append('g')
+          .attr('class', 'x axis')
+          .attr('transform', 'translate(0,' + height + ")")
+          .call(xAxis);
+
+      chart.append('g')
+          .attr('class', 'y axis')
+          .call(yAxis)
+        .append('text')
+          .attr('transform', 'rotate(-90)')
+          .attr('y', -30)
+          .attr('x', -50)
+          .style('text-anchor', 'end')
+          .text('Hours');
+
+      chart.selectAll(".bar")
+          .data(data)
+        .enter().append("rect")
+          .attr('class', 'bar')
+          .attr('x', function(d) { return x(d.days); })
+          .attr('y', function(d) { return height; })
+          .attr('height', function(d) { return 0; })
+          // .attr('height', 0)
+          .attr("width", x.rangeBand())
+          .transition().delay(function (d, i) { return i * 100; })
+          .duration(1500)
+          .ease('elastic')
+          .attr('y', function(d) { return y(d.value); })
+          .attr("height", function(d) { return height - y(d.value); });
+    });
+    
+    function type(d) {
+      d.value = +d.value; // coerce to number
+      return d;
+    }  
+    // END OF THE BARCHART
 });
 
 myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject) {
-	
+
   // ADDING BADGES
 	var authData = $scope.authObj.$getAuth();
   if (authData) {
@@ -146,7 +215,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   //CREATES THE BAR CHART
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
-      height = 200 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
+      height = 330 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);    
@@ -162,7 +231,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
       .scale(y)
       .orient('left');
 
-  var chart = d3.select("#barChart")
+  var chart = d3.select(".barChart")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append('g')
@@ -204,8 +273,31 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
         .duration(1500)
         .ease('elastic')
         .attr('y', function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); });
+        .attr("height", function(d) { return height - y(d.value); })
+      
+      chart.selectAll(".bar").append("text")
+        .attr("x",  width / 2)
+        .attr("y", height - 3)
+        .style('text-anchor', "end")
+        .text(function(d) {return d.value});
 
+        // var yTextPadding = 20;
+        // chart.selectAll(".bartext")
+        // .data(data)
+        // .enter()
+        // .append("text")
+        // .attr("class", "bartext")
+        // .attr("text-anchor", "middle")
+        // .attr("fill", "white")
+        // .attr("x", function(d,i) {
+        //     return x(i)+x.rangeBand()/2;
+        // })
+        // .attr("y", function(d,i) {
+        //     return height-y(d)+yTextPadding;
+        // })
+        // .text(function(d){
+        //      return d;
+        // });
 
     // chart.selectAll(".bar").append("text")
     //     .attr("x", barWidth / 2)
@@ -219,7 +311,9 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     return d;
   }  
   // END OF THE BARCHART
+
   // $scope.curr = 55;
+
   // CREATE CALENDAR
   // var width = 960,
   //     height = 136,
