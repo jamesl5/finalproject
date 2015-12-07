@@ -1,3 +1,12 @@
+
+/*STYLE FOR INDEX.HTML
+---------------------------------------------------------------------------------*/
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
 #navLogo {
 	max-width: 200px;
 }
@@ -7,6 +16,8 @@
 	background-color: white;
 }
 
+
+/*arrow-box is the arrow on the signup/login popups*/
 .arrow_box {
 	position: relative;
 	background: #ffffff;
@@ -15,7 +26,6 @@
 	padding: 3%;
 	margin-top: 30px;
 }
-
 .arrow_box:after, .arrow_box:before {
 	bottom: 100%;
 	left: 50%;
@@ -26,7 +36,6 @@
 	position: absolute;
 	pointer-events: none;
 }
-
 .arrow_box:after {
 	border-color: rgba(255, 255, 255, 0);
 	border-bottom-color: #ffffff;
@@ -34,7 +43,6 @@
 	margin-left: -30px;
 	
 }
-
 .arrow_box:before {
 	border-color: rgba(0, 191, 165, 0);
 	border-bottom-color: #00bfa5;
@@ -43,16 +51,200 @@
 	border-radius: 10px;
 }
 
+.progress-wrapper{
+    position: relative;
+    margin:20px auto;
+    font-size: 40px;
+}
+
+.progresss{
+    position: absolute;
+    color: #bbb;
+    font-weight: 100;
+    line-height: 1;
+}
+
+.clock {
+	display: block;
+	margin: auto;
+	text-align: center;
+	vertical-align: center;
+}
+
+/*
 body {
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
 }
 
-#badge{
-	width: 100px;
-}
-
 main {
 	flex: 1 0 auto;
+}*/
+
+/*main {
+	flex: 1 0 auto;
+}*/
+
+/*STYLE FOR HOME
+---------------------------------------------------------------------------------*/
+div#headerImg {
+	height: 60vh;
+	background-image: url(http://cdn.theatlantic.com/static/mt/assets/food/feelinawe_bnr.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+#hometitles {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-align: center;
+}
+
+h1#title {
+	font-weight: bold;
+	margin: 0;
+	transition: font-size 0.5s;
+}
+
+.slider .indicators {
+	z-index: 100;
+	position: absolute;
+	top: 96%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-align: center;
+
+}
+
+.slider, .slides {
+	height: 700px !important;
+}
+div.slider {
+	z-index: -100;
+}
+
+#mainText, .centerText {
+	text-align: center;
+}
+
+#bigHeader {
+	margin-bottom: 0;
+}
+
+i {
+	color: #00bfa5;
+}
+
+.iconDiv {
+	margin-top: 30px;
+}
+
+.midImg {
+	background-image: url('http://img.inspiringwallpapers.net/wp-content/uploads/2014/05/ferris-wheel-at-night-wallpaper.jpg');
+	height: 500px;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+
+}
+
+#contactus {
+	font-weight: bold;
+}
+
+.divider {
+	height: 200px;
+}
+
+
+
+/*STYLE FOR CIRCLE GRAPH
+---------------------------------------------------------------------------------*/
+/*.circleStyle {
+	transform: translateY(-50%) translateX(-50%);
+	-moz-transform: translateY(-50%) translateX(-50%);
+	-webkit-transform: translateY(-50%) translateX(-50%);
+}*/
+.circleStyle {
+	/*transform: translateY(80%);
+	-moz-transform: translateY(80%);
+	-webkit-transform: translateY(80%);*/
+	position: absolute;
+	top: 40%;
+	left: 33%;
+}
+
+/*STYLE FOR CALENDAR
+---------------------------------------------------------------------------------*/
+.day {
+  fill: #fff;
+  stroke: #ccc;
+}
+
+.month {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+}
+
+.RdYlGn .q0-11{fill:rgb(165,0,38)}
+.RdYlGn .q1-11{fill:rgb(215,48,39)}
+.RdYlGn .q2-11{fill:rgb(244,109,67)}
+.RdYlGn .q3-11{fill:rgb(253,174,97)}
+.RdYlGn .q4-11{fill:rgb(254,224,139)}
+.RdYlGn .q5-11{fill:rgb(255,255,191)}
+.RdYlGn .q6-11{fill:rgb(217,239,139)}
+.RdYlGn .q7-11{fill:rgb(166,217,106)}
+.RdYlGn .q8-11{fill:rgb(102,189,99)}
+.RdYlGn .q9-11{fill:rgb(26,152,80)}
+.RdYlGn .q10-11{fill:rgb(0,104,55)}
+
+/*STYLE FOR BARGRAPH
+---------------------------------------------------------------------------------*/
+
+.bar {
+	fill: #45ccce;
+}
+
+.bar:hover {
+	fill: teal;
+}
+
+.axis text {
+	font: 10px sans-serif;
+	fill: #000;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.x.axis path {
+	display: none;
+}
+
+svg#barChart {
+	margin-top: 30px;
+}
+
+/*STYLE FOR BADGES SECTION
+---------------------------------------------------------------------------------*/
+#badge{
+	width: 100px;
+	padding: 5px;
+}
+
+.list-group-item {
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
 }
