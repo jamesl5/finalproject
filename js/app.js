@@ -287,19 +287,19 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   // }
 
   // d3.select(self.frameElement).style("height", "2910px");
-  $scope.getStyle = function(){
-        var transform = ($scope.isSemi ? '' : 'translateY(-50%) ') + 'translateX(-50%)';
+	// $scope.getStyle = function(){
+	//     var transform = ($scope.isSemi ? '' : 'translateY(-50%) ') + 'translateX(-50%)';
 
-        return {
-            'top': $scope.isSemi ? 'auto' : '50%',
-            'bottom': $scope.isSemi ? '5%' : 'auto',
-            'left': '50%',
-            'transform': transform,
-            '-moz-transform': transform,
-            '-webkit-transform': transform,
-            'font-size': $scope.radius/3.5 + 'px'
-        };
-    };
+	//     return {
+	//         'top': $scope.isSemi ? 'auto' : '50%',
+	//         'bottom': $scope.isSemi ? '5%' : 'auto',
+	//         'left': '50%',
+	//         'transform': transform,
+	//         '-moz-transform': transform,
+	//         '-webkit-transform': transform,
+	//         'font-size': $scope.radius/3.5 + 'px'
+	//     };
+	// };
 
     $scope.curr = 55;
 });

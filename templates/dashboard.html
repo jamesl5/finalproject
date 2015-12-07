@@ -54,27 +54,25 @@
 </div>
 
 <div id="graphArea" class="row">
-	<div class="container-fluid progress-wrapper">
-		<div id="circleGraph" class="container-fluid col-xs-12 col-md-6">
-			<div class="progress ng-binding" ng-style="getStyle()">
-				100/200
-			</div>
-	        <div
-	            round-progress
-	            max="200"
-	            current="100"
-	            color="#45ccce"
-	            bgcolor="#eaeaea"
-	            radius="100"
-	            stroke="30"
-	            semi="false"
-	            rounded="true"
-	            clockwise="true"
-	            responsive="false"
-	            duration="800"
-	            animation="easeInOutQuart">
-	        </div>
+	<div id="circleGraph" class="container-fluid col-xs-12 col-md-6 progress-wrapper">
+		<div class="progresss ng-cloak circleStyle" ng-style="getStyle()">
+			100/200
 		</div>
+        <div
+            round-progress
+            max="200"
+            current="100"
+            color="#45ccce"
+            bgcolor="#eaeaea"
+            radius="150"
+            stroke="30"
+            semi="false"
+            rounded="true"
+            clockwise="true"
+            responsive="false"
+            duration="800"
+            animation="easeInOutQuart">
+        </div>
 	</div>
 
     <svg id="barChart" class="col-xs-12 col-md-6">
