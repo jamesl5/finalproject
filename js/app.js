@@ -1,6 +1,7 @@
 var usrbadges = [];
 var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress'])
 var ref = new Firebase("https://info343final.firebaseio.com/");
+
 myApp.config(function($stateProvider) {
   $stateProvider
     .state('home', {
@@ -120,6 +121,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 
 myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject) {
 	
+  // ADDING BADGES
 	var authData = $scope.authObj.$getAuth();
     if (authData) {
         $scope.userId = authData.uid;
