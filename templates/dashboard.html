@@ -1,4 +1,7 @@
-<div id="calendarArea">
+<div id="calendar">
+</div>
+
+<div id="heatmap">
 </div>
 
 <div id="graphArea" class="row">
@@ -27,9 +30,9 @@
 
 <div id="badgelist" ng-show="userbadges.length>0">	
 	<ul class="list-group">
-		<div id="badgeListItem" ng-repeat="badge in userbadges" class="list-group-item">			
-			<p>{{allbadges.$getRecord(badge.$value).name}}</p>
+		<li id="badgeListItem" ng-repeat="badge in userbadges" class="list-group-item col-xs-4 col-md-1">			
+			<a uib-tooltip="hi">{{allbadges.$getRecord(badge.$value).name}}</a>
 			<img id="badge" ng-src={{allbadges.$getRecord(badge.$value).url}}>
-		</div>
+		</li>
 	</ul>
 </div>
