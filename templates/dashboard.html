@@ -53,6 +53,8 @@
 
 </div>
 
+<hr>
+
 <div id="graphArea" class="row">
 	<div id="circleGraph" class="container-fluid col-xs-12 col-md-6 progress-wrapper">
 		<div class="progresss ng-cloak circleStyle" ng-style="getStyle()">
@@ -80,10 +82,12 @@
 
 </div>
 
+<hr>
+
 <div id="badgelist" ng-show="userbadges.length>0">	
 	<ul class="list-group">
 		<li id="badgeListItem" ng-repeat="badge in userbadges" class="list-group-item col-xs-4 col-md-1">			
-			<a uib-tooltip="hi">{{allbadges.$getRecord(badge.$value).name}}</a>
+			<p>{{allbadges.$getRecord(badge.$value).name}}</p>
 			<img id="badge" ng-src={{allbadges.$getRecord(badge.$value).url}}>
 		</li>
 	</ul>
