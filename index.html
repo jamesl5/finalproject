@@ -42,6 +42,9 @@
 	<!-- Angular Directives for Bootstrap -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap.min.js"></script>
 
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 	<!-- Read Scripts -->
 	<script src="js/app.js"></script>
 	<link href="css/main.css" type="text/css" rel="stylesheet"/>
@@ -50,14 +53,14 @@
 	<div class="navbar-fixed">
 		<nav class="teal accent-4">
 		    <div class="nav-wrapper container">
-	 		    <a ui-sref="home" class="white-text" class="brand-logo"><img id="navLogo"src="img/amateur-logo.png"></a>
+	 		    <a ui-sref="home" class="brand-logo"><img id="navLogo"src="img/amateur-logo.png"></a>
 				<!-- show signup and login when user is not logged in -->
-			    <ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="!userId">
+			    <ul id="nav-mobile" class="right" ng-show="!userId">
 				    <li><a class="white-text" ng-click="create=true; enter=false" id="signUp">Sign Up</a></li>
 				    <li><a class="white-text" ng-click="enter=true; create=false" id="login">Login</a></li>
 				</ul>
 				<!-- show user name when user is logged in -->
-				<ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="userId">
+				<ul id="nav-mobile" class="right" ng-show="userId">
 					<li><a ui-sref="dashboard" class="white-text">Welcome! {{users[userId].name}}</a></li>
 					<li><a class="white-text" ng-click="logOut()" id="logout">Logout</a></li>
 				</ul>
