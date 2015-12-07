@@ -1,4 +1,4 @@
-<div id="calendarArea">
+<div id="calendar">
 </div>
 <div id="graphArea">
 	<div id="circleGraph progress-wrapper" class="container-fluid">
@@ -74,7 +74,41 @@
 		    	</div>
 	    	</div>
 	</div>
-</div>
-<div id="badges">
+
+
+<div id="heatmap">
+
 </div>
 
+<div id="graphArea" class="row">
+	<div id="circleGraph" class="container-fluid col-xs-12 col-md-6">
+        <div
+            round-progress
+            max="200"
+            current="100"
+            color="#45ccce"
+            bgcolor="#eaeaea"
+            radius="100"
+            stroke="30"
+            semi="false"
+            rounded="true"
+            clockwise="true"
+            responsive="false"
+            duration="800"
+            animation="easeInOutQuart">
+        </div>
+	</div>
+
+    <svg id="barChart" class="col-xs-12 col-md-6">
+    </svg>
+
+</div>
+
+<div id="badgelist" ng-show="userbadges.length>0">	
+	<ul class="list-group">
+		<li id="badgeListItem" ng-repeat="badge in userbadges" class="list-group-item col-xs-4 col-md-1">			
+			<a uib-tooltip="hi">{{allbadges.$getRecord(badge.$value).name}}</a>
+			<img id="badge" ng-src={{allbadges.$getRecord(badge.$value).url}}>
+		</li>
+	</ul>
+</div>
