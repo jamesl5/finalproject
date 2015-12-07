@@ -115,5 +115,10 @@ svg#barChart {
 ---------------------------------------------------------------------------------*/
 #badge{
 	width: 100px;
+	padding: 5px;
 }
 
+.list-group-item {
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+}
