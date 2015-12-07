@@ -96,3 +96,6 @@ svg#barChart {
 	width: 100px;
 }
 
+ul {
+	display: inline;
+}
