@@ -16,6 +16,7 @@ body {
 	background-color: white;
 }
 
+
 /*arrow-box is the arrow on the signup/login popups*/
 .arrow_box {
 	position: relative;
@@ -84,6 +85,81 @@ main {
 /*main {
 	flex: 1 0 auto;
 }*/
+
+/*STYLE FOR HOME
+---------------------------------------------------------------------------------*/
+div#headerImg {
+	height: 60vh;
+	background-image: url(http://cdn.theatlantic.com/static/mt/assets/food/feelinawe_bnr.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+#hometitles {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-align: center;
+}
+
+h1#title {
+	font-weight: bold;
+	margin: 0;
+	transition: font-size 0.5s;
+}
+
+.slider .indicators {
+	z-index: 100;
+	position: absolute;
+	top: 88%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-align: center;
+
+}
+
+.slider {
+	z-index: -100;
+}
+
+#mainText {
+	text-align: center;
+}
+
+.headerText {
+	margin-top: 0;
+}
+#bigHeader {
+	margin-bottom: 0;
+}
+
+i {
+	color: #00bfa5;
+}
+
+.iconDiv {
+	margin-top: 20px;
+}
+
+.midImg {
+	background-image: url('http://img.inspiringwallpapers.net/wp-content/uploads/2014/05/ferris-wheel-at-night-wallpaper.jpg');
+	height: 500px;
+	background-position: center;
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+
+}
+
+.appLogo {
+	width: 1em;
+}
+
 
 /*STYLE FOR CIRCLE GRAPH
 ---------------------------------------------------------------------------------*/
