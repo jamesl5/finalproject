@@ -162,7 +162,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     .append('g')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("../test_data/Workbook1.csv", type, function(error, data) {
+  d3.csv("../test_data/testdata.csv", type, function(error, data) {
     if(error) throw error;
 
     x.domain(data.map(function(d) { return d.days; }));
@@ -190,16 +190,14 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
       .enter().append("rect")
         .attr('class', 'bar')
         .attr('x', function(d) { return x(d.days); })
-        .attr('y', function(d) { return y(d.value); })
-
+        .attr('y', function(d) { return height; })
+        .attr('height', function(d) { return 0; })
+        // .attr('height', 0)
         .attr("width", x.rangeBand())
-        .transition().delay(function (d, i) { return i * 300; })
-        // .duration(300)
-        
+        .transition().delay(function (d, i) { return i * 100; })
+        .attr('y', function(d) { return y(d.value); })
         .attr("height", function(d) { return height - y(d.value); })
-        // .attr("y", function(d) { return height - .5; }) 
 
-        // .attr("y", function(d) { return height - y(d.value) - .5; });;
 
     // bar.append("text")
     //     .attr("x", barWidth / 2)
