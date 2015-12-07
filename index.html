@@ -55,7 +55,7 @@
 				</ul>
 				<!-- show user name when user is logged in -->
 				<ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="userId">
-					<li>Welcome! {{users[userId].name}}</li>
+					<li><a ui-sref="dashboard" class="white-text">Welcome! {{users[userId].name}}</a></li>
 					<li><a class="white-text" ng-click="logOut()" id="logout">Logout</a></li>
 				</ul>
 		    </div>
