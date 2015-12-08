@@ -165,6 +165,12 @@ i {
 }
 
 
+/*STYLE FOR DASHBOARD
+---------------------------------------------------------------------------------*/
+hr {
+	margin: 0;
+}
+
 
 /*STYLE FOR CIRCLE GRAPH
 ---------------------------------------------------------------------------------*/
@@ -182,9 +188,9 @@ i {
 	left: 33%;
 }
 
-/*STYLE FOR CALENDAR
+/*STYLE FOR HEATMAP
 ---------------------------------------------------------------------------------*/
-.day {
+/*.day {
   fill: #fff;
   stroke: #ccc;
 }
@@ -205,7 +211,30 @@ i {
 .RdYlGn .q7-11{fill:rgb(166,217,106)}
 .RdYlGn .q8-11{fill:rgb(102,189,99)}
 .RdYlGn .q9-11{fill:rgb(26,152,80)}
-.RdYlGn .q10-11{fill:rgb(0,104,55)}
+.RdYlGn .q10-11{fill:rgb(0,104,55)}*/
+
+rect.bordered {
+  stroke: #E6E6E6;
+  stroke-width:2px;   
+}
+
+text.mono {
+  font-size: 9pt;
+  font-family: Consolas, courier;
+  fill: #aaa;
+}
+
+text.axis-workweek {
+  fill: #000;
+}
+
+text.axis-worktime {
+  fill: #000;
+}
+
+#heatmap {
+	margin-top: 30px;
+}
 
 /*STYLE FOR BARGRAPH
 ---------------------------------------------------------------------------------*/
