@@ -16,10 +16,14 @@ myApp.config(function($stateProvider) {
     })
 });
 
-myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location){
+myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $anchorScroll){
   angular.element('.slider').slider({full_width: true});
   angular.element('.parallax').parallax();
-
+  // Makes sure the page is scrolled to the top on load
+  $scope.gotoTop = function() {
+    $location.hash("screenTop");
+    $anchorScroll();
+  };
 
    new Tether({
    		element: "#signUpPopUp",
@@ -191,9 +195,8 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
     // END OF THE BARCHART
 });
 
-myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject) {
-
-  // ADDING BADGES
+myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
+  // GETTING BADGES
 	var authData = $scope.authObj.$getAuth();
   if (authData) {
       $scope.userId = authData.uid;
@@ -205,12 +208,28 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	var userobjectsRef = userRef.child($scope.userId);
   var userGoalRef = userobjectsRef.child("goals");
 	var userbadgeRef = userobjectsRef.child("badges");
-	$scope.userbadges = $firebaseArray(userbadgeRef)
-	
-	$scope.allbadges = $firebaseArray(badgeRef)
+	$scope.userbadges = $firebaseArray(userbadgeRef);
+	$scope.allbadges = $firebaseArray(badgeRef);
 	// console.log("badges loaded");
 	// console.log($scope.allbadges);
 	// console.log($scope.userbadges);
+
+  // gets array of user goals
+  $scope.userGoals = $firebaseArray(userGoalRef);
+  console.log($scope.userGoals);
+  var specificGoalRef = userGoalRef.child("goal");
+  var daysOfWeek = specificGoalRef.child("days");
+  var logs = specificGoalRef.child("logs");
+  $scope.logsArray = $firebaseArray(specificGoalRef);
+  console.log($scope.logsArray);
+  var specificLog = logs.child("log");
+  // gets array of a single log
+  $scope.specificLog = $firebaseArray(specificLog);
+  console.log($scope.specificLog);
+  var totaltime = specificGoalRef.child("totaltime"); 
+
+
+
 
   //CREATES THE BAR CHART
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
@@ -316,7 +335,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 
 
   // START HEATMAP
-  var margin = { top: 20, right: 0, bottom: 50, left: 30 },
+  var margin = { top: 20, right: 0, bottom: 50, left: 20 },
             heatWidth = 400 - margin.left - margin.right,
             heatHeight = 280 - margin.top - margin.bottom,
             gridSize = Math.floor(50),
@@ -354,7 +373,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
               .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
         var heatmapChart = function(tsvFile) {
-          d3.tsv("hours.tsv",
+          d3.tsv("./test_data/hours.tsv",
           function(d) {
             return {
               weeks: +d.weeks,
