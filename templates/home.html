@@ -120,4 +120,34 @@
 <div class="container centerText">
 	<h3 id="contactus">Contact Us</h3>
 	<h4>We're always connected</h4>
+	<div id="contactForm">
+		<div class="row">
+	    <form class="col s12" name="contactform" method="post" action="email.php">
+	      <div class="row">
+	        <div class="input-field col s6">
+	          <input name="first_name" type="text" class="validate" ng-required="true">
+	          <label for="first_name">First Name</label>
+	        </div>
+	        <div class="input-field col s6">
+	          <input name="last_name" type="text" class="validate">
+	          <label for="last_name">Last Name</label>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="input-field col s12" ng-class="{'has-error':contactform.email.$touched && contactform.email.$invalid}">
+	          <input name="email" type="email" class="validate" ng-required="true" ng-model="user.email" required>
+	          <label for="email">Email</label>
+	          <p class="help-block" ng-show="contactform.email.$error.email">Please enter a valid email</p>
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="input-field col s12">
+	          <textarea name="textarea1" class="materialize-textarea"></textarea>
+	          <label for="textarea1">Textarea</label>
+	        </div>
+	      </div>
+	      <button class="btn waves-effect waves-light teal accent-4" type="submit" name="submit">Submit</button>
+	    </form>
+	  </div>
+	</div>
 </div>
