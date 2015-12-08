@@ -225,33 +225,33 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   if (authData) {
       $scope.userId = authData.uid;
   }
+  // rather than stringing all of the .childs together, we found it clearer to break
+  // each step into separate variables
 	var badgeRef = ref.child("allbadges");
 	var userRef = ref.child("users");
-	// var userId = $scope.userId; - maybe delete this since it can be put into userobjectsRef directly below
-	// console.log(userId);
-	var userobjectsRef = userRef.child($scope.userId);
+	var userId = $scope.userId;
+	var userobjectsRef = userRef.child(userId);
   var userGoalRef = userobjectsRef.child("goals");
 	var userbadgeRef = userobjectsRef.child("badges");
-	$scope.userbadges = $firebaseArray(userbadgeRef);
-	$scope.allbadges = $firebaseArray(badgeRef);
-	// console.log("badges loaded");
-	// console.log($scope.allbadges);
-	// console.log($scope.userbadges);
-
-  // gets array of user goals
-  $scope.userGoals = $firebaseArray(userGoalRef);
-  console.log($scope.userGoals);
   var specificGoalRef = userGoalRef.child("goal");
   var daysOfWeek = specificGoalRef.child("days");
+  var totaltime = specificGoalRef.child("totaltime"); 
   var logs = specificGoalRef.child("logs");
+  var specificLog = logs.child("log");
+
+  // array of user's badges
+	$scope.userbadges = $firebaseArray(userbadgeRef);
+  // array of all possible badges
+	$scope.allbadges = $firebaseArray(badgeRef);
+  // array of user's goals
+  $scope.userGoals = $firebaseArray(userGoalRef);
+  console.log($scope.userGoals);
+  // array of all of user's logs
   $scope.logsArray = $firebaseArray(specificGoalRef);
   console.log($scope.logsArray);
-  var specificLog = logs.child("log");
-  // gets array of a single log
+  // array of a specific log containing log details
   $scope.specificLog = $firebaseArray(specificLog);
   console.log($scope.specificLog);
-  var totaltime = specificGoalRef.child("totaltime"); 
-
 
 
 
