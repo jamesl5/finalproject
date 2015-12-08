@@ -229,16 +229,22 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	var badgeRef = ref.child("allbadges");
 	var userRef = ref.child("users");
 	// var userId = $scope.userId; - maybe delete this since it can be put into userobjectsRef directly below
-	// console.log(userId);
+	 //console.log(userId);
 	var userobjectsRef = userRef.child($scope.userId);
-  var userGoalRef = userobjectsRef.child("goals");
-	var userbadgeRef = userobjectsRef.child("badges");
-	$scope.userbadges = $firebaseArray(userbadgeRef)
-	
-	$scope.allbadges = $firebaseArray(badgeRef)
-	// console.log("badges loaded");
-	// console.log($scope.allbadges);
-	// console.log($scope.userbadges);
+	// var userbadgeRef = userobjectsRef.child("badges");
+	// $scope.userbadges = $firebaseArray(userbadgeRef);	
+	// $scope.allbadges = $firebaseArray(badgeRef);
+
+
+	var userGoalRef = userobjectsRef.child("goals");
+	var goalRef = userGoalRef.child("goal");
+	$scope.currArr = $firebaseArray(goalRef);
+	console.log($scope.currArr);
+	var curr = currArr[2];
+	console.log(curr);
+
+
+
 
   //CREATES THE BAR CHART
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
@@ -339,8 +345,6 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     return d;
   }  
   // END OF THE BARCHART
-
-  $scope.curr = 55;
 
 
   // START HEATMAP

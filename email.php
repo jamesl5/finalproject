@@ -1,5 +1,4 @@
 <?php 
-
         // My email
         $to = "katrinaezis@gmail.com";
         $from = $_POST['email'];
