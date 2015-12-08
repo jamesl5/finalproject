@@ -193,7 +193,7 @@ rect.bordered {
 text.mono {
   font-size: 9pt;
   font-family: Consolas, courier;
-  fill: #aaa;
+  fill: #000;
 }
 
 text.axis-workweek {
@@ -242,6 +242,7 @@ svg#barChart {
 ---------------------------------------------------------------------------------*/
 #badge{
 	width: 100px;
+	max-height: 100px;
 	padding: 5px;
 	left: 50%;
 }
