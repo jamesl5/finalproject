@@ -1,6 +1,7 @@
 <div id = "time">
+
 <h3>
-<timer interval="1000" class="ng-binding ng-isolate-scope"><span class="ng-binding ng-scope">0 hours, 0 minutes, 0 seconds.</span></timer>
+<timer interval="1000">{{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}, {{seconds}} second{{secondsS}}.</timer>
 </h3>
 <button class="btn" ng-click="stopResumeTimer('clock-timer', this)" type="button">Start</button>
 </div>
