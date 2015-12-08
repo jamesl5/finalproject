@@ -51,7 +51,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-md-6"  id="heatmap">
-        	<h5>month and year</h5>
+        	<h5>{{specificLog[2].$value}}</h5>
         </div>
 
         <div class="col-xs-12 col-md-6">
@@ -97,12 +97,14 @@
 
 <div class="container" id="badgelist" ng-show="userbadges.length>0">	
     <h3>Badges:</h3>
-	<ul class="list-group">
-		<li ng-repeat="badge in userbadges" class="center-align badgeListItem list-group-item">	
-			<p>{{allbadges.$getRecord(badge.$value).name}}</p>
-			<img id="badge" ng-src={{allbadges.$getRecord(badge.$value).url}}>
-		</li>
-	</ul>
+    <div class="container">
+		<ul class="list-group row">
+			<li ng-repeat="badge in userbadges" class="center-align badgeListItem list-group-item col-xs-12 col-md-2">	
+				<p>{{allbadges.$getRecord(badge.$value).name}}</p>
+				<img id="badge" ng-src={{allbadges.$getRecord(badge.$value).url}}>
+			</li>
+		</ul>
+	</div>
 </div>
 
 
