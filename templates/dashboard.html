@@ -53,37 +53,42 @@
 
 </div>
 
-<div id="graphArea" class="row">
-	<div id="circleGraph" class="container-fluid col-xs-12 col-md-6 progress-wrapper">
-		<div class="progresss ng-cloak circleStyle" ng-style="getStyle()">
-			100/200
+<hr>
+
+<div class="container centerText">
+	<div id="graphArea" class="row">
+		<div id="circleGraph" class="container-fluid col-xs-12 col-md-6 progress-wrapper">
+			<div class="progresss ng-cloak circleStyle" ng-style="getStyle()">
+				100/200
+			</div>
+	        <div
+	            round-progress
+	            max="200"
+	            current="100"
+	            color="#45ccce"
+	            bgcolor="#eaeaea"
+	            radius="150"
+	            stroke="30"
+	            semi="false"
+	            rounded="true"
+	            clockwise="true"
+	            responsive="false"
+	            duration="800"
+	            animation="easeInOutQuart">
+	        </div>
 		</div>
-        <div
-            round-progress
-            max="200"
-            current="100"
-            color="#45ccce"
-            bgcolor="#eaeaea"
-            radius="150"
-            stroke="30"
-            semi="false"
-            rounded="true"
-            clockwise="true"
-            responsive="false"
-            duration="800"
-            animation="easeInOutQuart">
-        </div>
+
+	    <svg class="barChart" class="col-xs-12 col-md-6">
+	    </svg>
+
 	</div>
-
-    <svg id="barChart" class="col-xs-12 col-md-6">
-    </svg>
-
 </div>
+<hr>
 
 <div id="badgelist" ng-show="userbadges.length>0">	
 	<ul class="list-group">
 		<li id="badgeListItem" ng-repeat="badge in userbadges" class="list-group-item col-xs-4 col-md-1">			
-			<a uib-tooltip="hi">{{allbadges.$getRecord(badge.$value).name}}</a>
+			<p>{{allbadges.$getRecord(badge.$value).name}}</p>
 			<img id="badge" ng-src={{allbadges.$getRecord(badge.$value).url}}>
 		</li>
 	</ul>
