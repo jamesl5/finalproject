@@ -43,11 +43,11 @@
 		</div>
 		<div class="col-xs-12 col-md-4 iconDiv">
 			<i class="fa fa-clock-o fa-5x"></i>
-			<p>Keep track of how much progress you've made on each habit</p>
+			<p>Keep track of how much progress you've made on each goal</p>
 		</div>
 		<div class="col-xs-12 col-md-4 iconDiv">
 			<i class="fa fa-flag fa-5x"></i>
-			<p>Keep yourself motivated by getting badges for various goals</p>
+			<p>Keep yourself motivated by collecting badges</p>
 		</div>
 	</div>
 </div>
@@ -64,7 +64,7 @@
 <div class="container">
 	<div class="row">
 		<div class=" col-xs-12 col-md-6">
-			<h3>Quickly add new habits to track, or start logging hours</h2>
+			<h3>Quickly add new goals to track, or start logging hours</h2>
 		</div>
 		<div class=" col-xs-12 col-md-6">
 			<p>image goes here</p>
@@ -80,7 +80,7 @@
 	<h3>Track hours with dynamic visualizations</h3>
 	<div id="graphArea" class="row">
 		<div id="circleGraph" class="container-fluid col-xs-12 col-md-6 progress-wrapper">
-	        <div class="progresss ng-cloak circleStyle" ng-style="getStyle()">
+	        <div id="circleStyleHome" class="progresss ng-cloak" ng-style="getStyle()">
 	        	100/200
 	        </div>
 	        <div
@@ -120,7 +120,7 @@
 <div class="container centerText" ng-show="formSubmit" ng-init="formSubmit=true">
 	<h3 id="contactus">Contact Us</h3>
 	<h4>We're always connected</h4>
-	<div id="contactForm">
+<!-- 	<div id="contactForm">
 		<div class="row">
 	    <form class="col s12" name="contactform">
 	      <div class="row">
@@ -149,7 +149,7 @@
 	      <button class="btn waves-effect waves-light teal accent-4" type="submit" name="submit" ng-disabled="contactform.$invalid" ng-click="formSubmit=false; submitClick()">Submit</button>
 	    </form>
 	  </div>
-	</div>
+	</div> -->
 </div>
 <div class="container centerText" id="thanks" ng-hide="formSubmit">
 	<h3 id="contactus">Thank you!</h3>

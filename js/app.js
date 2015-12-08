@@ -64,7 +64,6 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 	});
 
    // Create a variable 'ref' to reference your firebase storage
-	// console.log("hello");
     var userRef = ref.child("users");
 
     // Create a firebaseObject of your users, and store this as part of $scope
@@ -219,13 +218,14 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
     // END OF THE BARCHART
 });
 
-myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject) {
-
-  // ADDING BADGES
+myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
+	// GETTING BADGES
 	var authData = $scope.authObj.$getAuth();
-  if (authData) {
-      $scope.userId = authData.uid;
-  }
+	if (authData) {
+		$scope.userId = authData.uid;
+	}
+	// rather than stringing all of the .childs together, we found it clearer to break
+	// each step into separate variables
 	var badgeRef = ref.child("allbadges");
 	var userRef = ref.child("users");
 	// var userId = $scope.userId; - maybe delete this since it can be put into userobjectsRef directly below
@@ -243,13 +243,39 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	var curr = currArr[2];
 	console.log(curr);
 
+	var userId = $scope.userId;
+	var userobjectsRef = userRef.child(userId);
+	var userGoalRef = userobjectsRef.child("goals");
+	var userbadgeRef = userobjectsRef.child("badges");
+	var specificGoalRef = userGoalRef.child("goal");
+	var daysOfWeek = specificGoalRef.child("days");
+	var timeRef = specificGoalRef.child("totaltime");
+	var logs = specificGoalRef.child("logs");
+	var specificLog = logs.child("log");
+	
+	// array of user's badges
+	$scope.userbadges = $firebaseArray(userbadgeRef);
+	// array of all possible badges
+	$scope.allbadges = $firebaseArray(badgeRef);
+	// array of user's goals
+	$scope.userGoals = $firebaseArray(userGoalRef);
+	console.log($scope.userGoals);
+	// array of all of user's logs
+	$scope.goalArray = $firebaseArray(specificGoalRef);
+	console.log($scope.goalArray);
+	// array of a specific log containing log details
+	$scope.specificLog = $firebaseArray(specificLog);
+	console.log($scope.specificLog);
 
+
+  var today = new Date();
+  console.log(today);
 
 
   //CREATES THE BAR CHART
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
-      height = 330 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
+      height = 330 - margin.top - margin.bottom
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);    
@@ -271,7 +297,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     .append('g')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("../test_data/testdata.csv", type, function(error, data) {
+  d3.tsv("../test_data/testdata.tsv", type, function(error, data) {
     if(error) throw error;
 
     x.domain(data.map(function(d) { return d.days; }));
@@ -332,14 +358,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
         // .text(function(d){
         //      return d;
         // });
-
-    // chart.selectAll(".bar").append("text")
-    //     .attr("x", barWidth / 2)
-    //     .attr("y", function(d) {return y(d.value) + 3;})
-    //     .attr("dy", ".75em")
-    //     .text(function(d) { return d.value; });
   });
-
   function type(d) {
     d.value = +d.value; // coerce to number
     return d;
@@ -348,13 +367,13 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 
 
   // START HEATMAP
-  var margin = { top: 20, right: 0, bottom: 50, left: 30 },
+  var margin = { top: 20, right: 0, bottom: 50, left: 20 },
             heatWidth = 400 - margin.left - margin.right,
             heatHeight = 280 - margin.top - margin.bottom,
             gridSize = Math.floor(50),
             legendElementWidth = gridSize / 1.28,
             buckets = 9,
-            colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
+            colors = ["#ffffff","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"],
             days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
             weeks = ["1", "2", "3", "4"];
             datasets = ["data.tsv"];
@@ -364,6 +383,10 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
             .attr("height", heatHeight + margin.top + margin.bottom)
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient('left');
 
         var weekLabels = svg.selectAll(".weeksLabel")
             .data(weeks)
@@ -385,8 +408,26 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
               .attr("transform", "translate(" + gridSize / 2 + ", -6)")
               .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
 
+            dayLabels.append("text")
+              .text('Week')
+              .attr("x", function(d, i) { return i * gridSize; })
+              .attr("y", 0)
+              .style("text-anchor", "middle")
+              .attr("transform", "translate(" + gridSize / 2 + ", -6)");
+
+            dayLabels.append('g')
+                .attr('class', 'y axis')
+                .call(yAxis)
+              .append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -30)
+                .attr('x', -50)
+                .style('text-anchor', 'end')
+                .text('Hours');
+
+
         var heatmapChart = function(tsvFile) {
-          d3.tsv("hours.tsv",
+          d3.tsv("./test_data/hours.tsv",
           function(d) {
             return {
               weeks: +d.weeks,
@@ -437,8 +478,8 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
             legend.append("text")
               .attr("class", "mono")
               .text(function(d) { return "≥ " + Math.round(d); })
-              .attr("x", function(d, i) { return legendElementWidth * i; })
-              .attr("y", heatHeight + gridSize);
+              .attr("x", function(d, i) { return legendElementWidth * i + 10; })
+              .attr("y", heatHeight + gridSize / 1.3);
 
             legend.exit().remove();
 
@@ -459,71 +500,81 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
             heatmapChart(d);
           });
   //  END HEATMAP
-});
-
-	function stopResumeTimer(sectionId, btn) {
-		console.log(btn);
-		if (btn.innerHTML === 'Start') {
-			document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
-			btn.innerHTML = 'Stop';
-		}
-		else if (btn.innerHTML === 'Stop') {
-			document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
-			btn.innerHTML = 'Resume';
-		}
-		else {
-			document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
-			btn.innerHTML = 'Stop';
-		}
-	}
-myApp.controller('TimerController', function($scope){
-	function startTimer(sectionId) {
-		document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
-	}
-
-	function stopTimer(sectionId) {
-		document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
-	}
-	$scope.stopResumeTimer = function(sectionId, btn) {
-		console.log(btn);
-		if (btn.innerHTML === 'Start') {
-			document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
-			btn.innerHTML = 'Stop';
-		}
-		else if (btn.innerHTML === 'Stop') {
-			document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
-			btn.innerHTML = 'Resume';
-		}
-		else {
-			document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
-			btn.innerHTML = 'Stop';
-		}
-	}
-	$scope.linkAnchors = function () {
-        $('ul.nav a').click(function (){
-            var path = $(this).attr('href');
-            if (path != '#') {
-                window.location = path;
-            }
-        });
-    };
-    
-    $scope.callbackTimer={};
-    $scope.callbackTimer.status='Running';
-    $scope.callbackTimer.callbackCount=0;    
-    $scope.callbackTimer.finished=function(){
-        $scope.callbackTimer.status='COMPLETE!!';
-        $scope.callbackTimer.callbackCount++;
-        $scope.$apply();
-    }
+    //Timer stuff --------------------------------------------------------------------
+	$scope.timerRunning = false;
+    $scope.timerStopped = false;
+    $scope.timerDone = false;
+    $scope.started = true;
+    $scope.stopped = false;
+    $scope.restarted = false;
+    $scope.done = true;
+	
+	
+   /* // Create a firebaseObject of your users, and store this as part of $scope
+    $scope.users = $firebaseObject(userRef);
+	
+    // Create authorization object that referes to firebase
+    $scope.authObj = $firebaseAuth(ref);
 	var authData = $scope.authObj.$getAuth();
-	if (authData) {
-		$scope.userId = authData.uid;
-	}
-	var userRef = ref.child("users");
-	console.log("timer")
-   
+    if (authData) {
+        $scope.userId = authData.uid;
+    } 
+	console.log($scope.userId);
+	var userObjectsRef = userRef.child($scope.userId);
+	console.log(userObjectsRef);
+	var userGoalsRef = userObjectsRef.child("goals");
+	console.log(userGoalsRef);*/
+	
+    $scope.startTimer = function (){
+        $scope.$broadcast('timer-start');
+        $scope.restarted = true;
+        $scope.started = false;
+		
+    };
+
+    $scope.stopTimer = function (){
+        $scope.$broadcast('timer-stop');
+        $scope.stopped = true;
+        $scope.restarted = false;
+    };
+
+    $scope.resumeTimer = function (){
+        $scope.$broadcast('timer-resume');
+        $scope.restarted = true;
+        $scope.stopped = false;
+    }
+	$scope.totaltime = $firebaseObject(timeRef);
+	
+	var timeObj = $firebaseObject(timeRef);
+    $scope.done = function() {
+       $scope.done = false;
+       $scope.timerDone = true;
+	   //var time_values = new Array();
+	   
+		timeObj.$bindTo($scope, "totaltime").then(function() {
+			console.log("total is " + $scope.totaltime.$value); 
+			console.log("added amount is " + $scope.currentTime.millis);
+			var totalTime = $scope.totaltime.$value;
+			var addedTime = $scope.currentTime.millis;
+			$scope.totaltime.$value = totalTime + addedTime
+		});
+    }
+    
+
+    $scope.startOrStop = function(){
+    document.getElementById('first')[$scope.operation]();
+      $scope.operation = ($scope.operation === 'start' || $scope.operation === 'resume') ? 'stop' : 'resume';
+    }
+
+
+    $scope.$on('timer-stopped', function (event, args) {
+        console.log('timer-stopped args = ', args);
+		$scope.currentTime = args;
+    });
+	//Timer stuff end---------------------------------------------------------------
+	
 });
+
 
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
   

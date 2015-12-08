@@ -1,7 +1,22 @@
-<div id = "time">
 
-<h3>
-<timer interval="1000">{{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}, {{seconds}} second{{secondsS}}.</timer>
-</h3>
-<button class="btn" ng-click="stopResumeTimer('clock-timer', this)" type="button">Start</button>
+<div id = "time">
+	<h3>
+		<timer id="first" interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
+		<timer id="first" interval="60" autostart="false"><div class="progress"><div class="progress-bar" role="progressbar" style="width: {{seconds}} * 1.67%;"></div></div></timer>   
+		
+	</h3>
+
+	<div class="wrapper">
+		<a class="button button-border-action button-circle" ng-click="startTimer()" ng-disabled="timerStarted" ng-show="started">Start</a>
+
+		<a class="button button-border-highlight button-circle" ng-click="resumeTimer()" ng-disabled="!timerRunning" ng-show="stopped">Resume</a>
+
+		<a class="button button-border-caution button-circle" ng-click="stopTimer()" ng-disabled="timerRunning" ng-show="restarted">Stop</a>
+
+		<a class="button button-border-primary button-circle" ng-click="done()">Done</a>
+
+		<!-- <a class="button button-border-royal button-circle">Submit</a> -->
+
+
+	</div>
 </div>
