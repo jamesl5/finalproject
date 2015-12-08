@@ -50,10 +50,12 @@
 <p>{{specificLog.day}}</p>
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-md-6"  id="heatmap">
-        	<h5>{{specificLog[2].$value}}</h5>
-        </div>
-
+    	<div class="col-xs-12 col-md-6">
+	        <div id="heatmap">
+	        	<h5>{{specificLog[2].$value}}</h5>
+	        </div>
+       		<p id="heatRange">range of hours</p>
+    	</div>	
         <div class="col-xs-12 col-md-6">
         </div>
     </div>
@@ -97,7 +99,7 @@
 
 <div class="container" id="badgelist" ng-show="userbadges.length>0">	
     <h3>Badges:</h3>
-    <div class="container">
+    <div class="container" uib-tooltip="hi">
 		<ul class="list-group row">
 			<li ng-repeat="badge in userbadges" class="center-align badgeListItem list-group-item col-xs-12 col-md-2">	
 				<p>{{allbadges.$getRecord(badge.$value).name}}</p>
