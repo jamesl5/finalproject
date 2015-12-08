@@ -277,3 +277,26 @@ svg#barChart {
 	border: none;
 	background-color: rgba(0, 0, 0, 0);
 }
+
+/*STYLE FOR BADGES SECTION
+---------------------------------------------------------------------------------*/
+#time h3 {
+	text-align: center;
+}
+.wrapper {
+	text-align: center;
+}
+#time {
+	padding-top: 15%;
+	padding-bottom: 15%;
+}
+
+.start::before{
+  content:"Start";
+}
+.stop::before{
+  content:"Stop";
+}
+.resume::before{
+  content:"Resume";
+}

@@ -1,5 +1,5 @@
 var usrbadges = [];
-var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', "ui.bootstrap"])
+var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', "ui.bootstrap", 'timer'])
 var ref = new Firebase("https://info343final.firebaseio.com/");
 
 myApp.config(function($stateProvider) {
@@ -13,6 +13,11 @@ myApp.config(function($stateProvider) {
       url: '/dashboard',
       templateUrl: 'templates/dashboard.html',
       controller: 'DashboardController'
+    })
+	.state('timer', {
+      url: '/timer',
+      templateUrl: 'templates/timer.html',
+      controller: 'TimerController'
     })
 });
 
@@ -429,7 +434,124 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   //  END HEATMAP
 });
 
+	// function stopResumeTimer(sectionId, btn) {
+ //    console.log(btn);
+ //    if (btn.innerHTML === 'Start') {
+ //      document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
+ //      btn.innerHTML = 'Stop';
+ //    }
+ //    else if (btn.innerHTML === 'Stop') {
+ //      document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
+ //      btn.innerHTML = 'Resume';
+ //    }
+ //    else {
+ //      document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
+ //      btn.innerHTML = 'Stop';
+ //    }
+ //  }
 
+//angular.module('MyApp', ['timer'])
+  myApp.controller('TimerController', ['$scope', function ($scope) {
+    $scope.timerRunning = false;
+    $scope.timerStopped = false;
+
+    $scope.timerDone = false;
+
+    $scope.started = true;
+    $scope.stopped = false;
+    $scope.restarted = false;
+
+    $scope.done = true;
+
+    $scope.startTimer = function (){
+        $scope.$broadcast('timer-start');
+
+        $scope.restarted = true;
+        $scope.started = false;
+
+        console.log($scope.hours);
+    };
+
+    $scope.stopTimer = function (){
+        $scope.$broadcast('timer-stop');
+
+        $scope.stopped = true;
+        $scope.restarted = false;
+    };
+
+    $scope.resumeTimer = function (){
+        $scope.$broadcast('timer-resume');
+
+        $scope.restarted = true;
+        $scope.stopped = false;
+    }
+
+    $scope.done = function() {
+       $scope.done = false;
+       $scope.timerDone = true;
+    }
+    
+
+    $scope.startOrStop = function(){
+    document.getElementById('first')[$scope.operation]();
+      $scope.operation = ($scope.operation === 'start' || $scope.operation === 'resume') ? 'stop' : 'resume';
+    }
+
+
+    $scope.$on('timer-stopped', function (event, args) {
+        console.log('timer-stopped args = ', args);
+    });
+  }]);
+
+// myApp.controller('TimerController', function($scope){
+
+// 	function startTimer(sectionId) {
+// 		document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
+// 	}
+
+// 	function stopTimer(sectionId) {
+// 		document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
+// 	}
+// 	$scope.stopResumeTimer = function(sectionId, btn) {
+// 		console.log(btn);
+// 		if (btn.innerHTML === 'Start') {
+// 			document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
+// 			btn.innerHTML = 'Stop';
+// 		}
+// 		else if (btn.innerHTML === 'Stop') {
+// 			document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
+// 			btn.innerHTML = 'Resume';
+// 		}
+// 		else {
+// 			document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
+// 			btn.innerHTML = 'Stop';
+// 		}
+// 	}
+// 	$scope.linkAnchors = function () {
+//         $('ul.nav a').click(function (){
+//             var path = $(this).attr('href');
+//             if (path != '#') {
+//                 window.location = path;
+//             }
+//         });
+//     };
+    
+//     $scope.callbackTimer={};
+//     $scope.callbackTimer.status='Running';
+//     $scope.callbackTimer.callbackCount=0;    
+//     $scope.callbackTimer.finished=function(){
+//         $scope.callbackTimer.status='COMPLETE!!';
+//         $scope.callbackTimer.callbackCount++;
+//         $scope.$apply();
+//     }
+// 	var authData = $scope.authObj.$getAuth();
+// 	if (authData) {
+// 		$scope.userId = authData.uid;
+// 	}
+// 	var userRef = ref.child("users");
+// 	console.log("timer")
+   
+// });
 
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
   
