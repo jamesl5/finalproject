@@ -27,7 +27,7 @@
 			<div class="caption center-align">
 		  		<h3>Welcome to amateur hour</h3>
 		  		<h5 class="light grey-text text-lighten-3">Where we use irrelevant pictures of nature</h5>
-		</div>
+			</div>
 		</li>
     </ul>
 </div>      
@@ -80,7 +80,7 @@
 	<h3>Track hours with dynamic visualizations</h3>
 	<div id="graphArea" class="row">
 		<div id="circleGraph" class="container-fluid col-xs-12 col-md-6 progress-wrapper">
-	        <div class="progresss ng-cloak circleStyle" ng-style="getStyle()">
+	        <div id="circleStyleHome" class="progresss ng-cloak" ng-style="getStyle()">
 	        	100/200
 	        </div>
 	        <div
@@ -117,37 +117,41 @@
     <div class="parallax"><img src="http://fanaru.com/doge/image/18351-doge-only-doge-with-text.jpg"></div>
 </div>
 
-<div class="container centerText">
+<div class="container centerText" ng-show="formSubmit" ng-init="formSubmit=true">
 	<h3 id="contactus">Contact Us</h3>
 	<h4>We're always connected</h4>
-	<div id="contactForm">
+<!-- 	<div id="contactForm">
 		<div class="row">
-	    <form class="col s12" name="contactform" method="post" action="email.php">
+	    <form class="col s12" name="contactform">
 	      <div class="row">
 	        <div class="input-field col s6">
-	          <input name="first_name" type="text" class="validate" ng-required="true">
+	          <input ng-model="first_name" type="text"  ng-required="true">
 	          <label for="first_name">First Name</label>
 	        </div>
 	        <div class="input-field col s6">
-	          <input name="last_name" type="text" class="validate">
+	          <input ng-model="last_name" type="text" >
 	          <label for="last_name">Last Name</label>
 	        </div>
 	      </div>
 	      <div class="row">
 	        <div class="input-field col s12" ng-class="{'has-error':contactform.email.$touched && contactform.email.$invalid}">
-	          <input name="email" type="email" class="validate" ng-required="true" ng-model="user.email" required>
+	          <input ng-model="email" name="email" type="email" ng-required="true" ng-model="user.email" required>
 	          <label for="email">Email</label>
 	          <p class="help-block" ng-show="contactform.email.$error.email">Please enter a valid email</p>
 	        </div>
 	      </div>
 	      <div class="row">
 	        <div class="input-field col s12">
-	          <textarea name="textarea1" class="materialize-textarea"></textarea>
+	          <textarea ng-model="textarea1" class="materialize-textarea"></textarea>
 	          <label for="textarea1">Textarea</label>
 	        </div>
 	      </div>
-	      <button class="btn waves-effect waves-light teal accent-4" type="submit" name="submit">Submit</button>
+	      <button class="btn waves-effect waves-light teal accent-4" type="submit" name="submit" ng-disabled="contactform.$invalid" ng-click="formSubmit=false; submitClick()">Submit</button>
 	    </form>
 	  </div>
-	</div>
+	</div> -->
+</div>
+<div class="container centerText" id="thanks" ng-hide="formSubmit">
+	<h3 id="contactus">Thank you!</h3>
+	<h4>We will be in contact shortly</h4>
 </div>
