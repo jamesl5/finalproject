@@ -245,13 +245,13 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	$scope.allbadges = $firebaseArray(badgeRef);
   // array of user's goals
   $scope.userGoals = $firebaseArray(userGoalRef);
-  console.log("user goals array " + $scope.userGoals);
+  console.log($scope.userGoals);
   // array of all of user's logs
-  $scope.logsArray = $firebaseArray(specificGoalRef);
-  console.log("user logs array " + $scope.logsArray);
+  $scope.goalArray = $firebaseArray(specificGoalRef);
+  console.log($scope.goalArray);
   // array of a specific log containing log details
   $scope.specificLog = $firebaseArray(specificLog);
-  console.log("specific log array " + $scope.specificLog);
+  console.log($scope.specificLog);
 
 
 
@@ -448,7 +448,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
             legend.append("text")
               .attr("class", "mono")
               .text(function(d) { return "≥ " + Math.round(d); })
-              .attr("x", function(d, i) { return legendElementWidth * i; })
+              .attr("x", function(d, i) { return legendElementWidth * i + 10; })
               .attr("y", heatHeight + gridSize);
 
             legend.exit().remove();
