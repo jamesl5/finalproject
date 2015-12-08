@@ -260,7 +260,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   //CREATES THE BAR CHART
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
-      height = 330 - margin.top - margin.bottom,
+      height = 330 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);    
@@ -343,14 +343,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
         // .text(function(d){
         //      return d;
         // });
-
-    // chart.selectAll(".bar").append("text")
-    //     .attr("x", barWidth / 2)
-    //     .attr("y", function(d) {return y(d.value) + 3;})
-    //     .attr("dy", ".75em")
-    //     .text(function(d) { return d.value; });
   });
-
   function type(d) {
     d.value = +d.value; // coerce to number
     return d;
@@ -378,6 +371,10 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
           .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient('left');
+
         var weekLabels = svg.selectAll(".weeksLabel")
             .data(weeks)
             .enter().append("text")
@@ -403,7 +400,17 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
               .attr("x", function(d, i) { return i * gridSize; })
               .attr("y", 0)
               .style("text-anchor", "middle")
-              .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+              .attr("transform", "translate(" + gridSize / 2 + ", -6)");
+
+            dayLabels.append('g')
+                .attr('class', 'y axis')
+                .call(yAxis)
+              .append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -30)
+                .attr('x', -50)
+                .style('text-anchor', 'end')
+                .text('Hours');
 
 
         var heatmapChart = function(tsvFile) {
