@@ -1,5 +1,5 @@
 var usrbadges = [];
-var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', "ui.bootstrap"])
+var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', "ui.bootstrap", 'timer'])
 var ref = new Firebase("https://info343final.firebaseio.com/");
 
 myApp.config(function($stateProvider) {
@@ -14,30 +14,54 @@ myApp.config(function($stateProvider) {
       templateUrl: 'templates/dashboard.html',
       controller: 'DashboardController'
     })
+	.state('timer', {
+      url: '/timer',
+      templateUrl: 'templates/timer.html',
+      controller: 'TimerController'
+    })
 });
 
-myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $anchorScroll){
-  angular.element('.slider').slider({full_width: true});
-  angular.element('.parallax').parallax();
-  // Makes sure the page is scrolled to the top on load
-  $scope.gotoTop = function() {
-    $location.hash("screenTop");
-    $anchorScroll();
-  };
+myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $httpParamSerializer){
+	angular.element('.slider').slider({full_width: true});
+	angular.element('.parallax').parallax();
 
-   new Tether({
-   		element: "#signUpPopUp",
-   		target: "#signUp",
-   		attachment: 'top center',
-   		targetAttachment: 'bottom center'
-   });
+	$scope.submitClick = function() {
+		var first_name = $scope.first_name;
+		console.log(first_name);
+		var last_name = $scope.last_name;
+		console.log(last_name);
+		var email = $scope.email;
+		console.log(email);
+		var text = $scope.textarea1;
+		var req = {
+			method: 'POST', 
+			url: 'email.php',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			data: $httpParamSerializer({
+				first_name: first_name,
+				last_name: last_name,
+				email: email,
+				textarea1: text
+			})
+		};
+		$http(req);
+	}
 
-   new Tether({
-   		element: "#loginPopUp",
-   		target: "#login",
-   		attachment: 'top center',
-   		targetAttachment: 'bottom center'
-   });
+	new Tether({
+		element: "#signUpPopUp",
+		target: "#signUp",
+		attachment: 'top center',
+		targetAttachment: 'bottom center'
+	});
+
+	new Tether({
+		element: "#loginPopUp",
+		target: "#login",
+		attachment: 'top center',
+		targetAttachment: 'bottom center'
+	});
 
    // Create a variable 'ref' to reference your firebase storage
 	// console.log("hello");
@@ -448,7 +472,69 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   //  END HEATMAP
 });
 
+	function stopResumeTimer(sectionId, btn) {
+		console.log(btn);
+		if (btn.innerHTML === 'Start') {
+			document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
+			btn.innerHTML = 'Stop';
+		}
+		else if (btn.innerHTML === 'Stop') {
+			document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
+			btn.innerHTML = 'Resume';
+		}
+		else {
+			document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
+			btn.innerHTML = 'Stop';
+		}
+	}
+myApp.controller('TimerController', function($scope){
+	function startTimer(sectionId) {
+		document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
+	}
 
+	function stopTimer(sectionId) {
+		document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
+	}
+	$scope.stopResumeTimer = function(sectionId, btn) {
+		console.log(btn);
+		if (btn.innerHTML === 'Start') {
+			document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
+			btn.innerHTML = 'Stop';
+		}
+		else if (btn.innerHTML === 'Stop') {
+			document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
+			btn.innerHTML = 'Resume';
+		}
+		else {
+			document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
+			btn.innerHTML = 'Stop';
+		}
+	}
+	$scope.linkAnchors = function () {
+        $('ul.nav a').click(function (){
+            var path = $(this).attr('href');
+            if (path != '#') {
+                window.location = path;
+            }
+        });
+    };
+    
+    $scope.callbackTimer={};
+    $scope.callbackTimer.status='Running';
+    $scope.callbackTimer.callbackCount=0;    
+    $scope.callbackTimer.finished=function(){
+        $scope.callbackTimer.status='COMPLETE!!';
+        $scope.callbackTimer.callbackCount++;
+        $scope.$apply();
+    }
+	var authData = $scope.authObj.$getAuth();
+	if (authData) {
+		$scope.userId = authData.uid;
+	}
+	var userRef = ref.child("users");
+	console.log("timer")
+   
+});
 
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
   
