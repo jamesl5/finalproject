@@ -21,7 +21,7 @@ myApp.config(function($stateProvider) {
     })
 });
 
-myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location){
+myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $httpParamSerializer){
 	angular.element('.slider').slider({full_width: true});
 	angular.element('.parallax').parallax();
 
@@ -33,20 +33,20 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 		var email = $scope.email;
 		console.log(email);
 		var text = $scope.textarea1;
-		$http.post('email.php', {
-			data: 'toPost'
-		}, {}).then(function(result) {
-			first_name: first_name,
-			last_name: last_name,
-			email: email,
-			textarea1: text
-		});
-		// $http("email.php", {
-		// 	first_name: first_name,
-		// 	last_name: last_name,
-		// 	email: email,
-		// 	textarea1: text
-		// });
+		var req = {
+			method: 'POST', 
+			url: 'email.php',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			data: $httpParamSerializer({
+				first_name: first_name,
+				last_name: last_name,
+				email: email,
+				textarea1: text
+			})
+		};
+		$http(req);
 	}
 
 	new Tether({

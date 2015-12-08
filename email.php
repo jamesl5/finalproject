@@ -1,5 +1,4 @@
 <?php 
-    // if(isset($_POST['submit'])){
 
         // My email
         $to = "katrinaezis@gmail.com";
@@ -16,7 +15,4 @@
         // Sending the email
         mail($to,$subject,$message,$headers);
 
-        // Redirecting users to a thank you screen
-        // header('Location: http://localhost:8080/#');
-    // }
 ?>
