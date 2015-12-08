@@ -1,61 +1,16 @@
-<!-- 	<div 
-		class="clock"
-		round-progress
-	    max="10000"
-	    current="curr" 
-	    color="#45ccce"
-	    bgcolor="#eaeaea"
-	    radius="130"
-	    stroke="30"
-	    semi="false"
-	    rounded="true"
-	    clockwise="true"
-	    responsive="false"
-	    duration="800"
-	    animation="easeInOutQuart">
-	    	<div
-		    	class="clock"
-				round-progress
-			    max="10000"
-			    current="curr" 
-			    color="#45ccce"
-			    bgcolor="#eaeaea"
-			    radius="100"
-			    stroke="30"
-			    semi="false"
-			    rounded="true"
-			    clockwise="true"
-			    responsive="false"
-			    duration="800"
-			    animation="easeInOutQuart">
-		    	<div
-			    	class="clock"
-					round-progress
-				    max="10000"
-				    current="curr" 
-				    color="#45ccce"
-				    bgcolor="#eaeaea"
-				    radius="70"
-				    stroke="30"
-				    semi="false"
-				    rounded="true"
-				    clockwise="true"
-				    responsive="false"
-				    duration="800"
-				    animation="easeInOutQuart">
-		    	</div>
-	    	</div> -->
 
 <h1 id="goalTitle">{{userGoals[0].goalname}}</h1>
 <p>{{specificLog.day}}</p>
 <div class="container">
     <div class="row">
+    	<!-- Heatmap section -->
     	<div class="col-xs-12 col-md-6">
 	        <div id="heatmap">
 	        	<h5>{{specificLog[2].$value}}</h5>
 	        </div>
        		<p id="heatRange">range of hours</p>
     	</div>	
+    	<!-- Timer section -->
         <div class="col-xs-12 col-md-6">
 			<div id = "time">
 					<timer id="first" interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
@@ -72,11 +27,8 @@
 					<a class="button button-border-primary button-circle" ng-click="done()">Done</a>
 
 					<!-- <a class="button button-border-royal button-circle">Submit</a> -->
-
-
 				</div>
 			</div>
-
         </div>
     </div>
 </div>
@@ -89,7 +41,7 @@
 		<div id="circleGraph" class="container-fluid col-xs-12 col-md-6 progress-wrapper">
 			<h5 class="graphLabel">lifetime progress</h5>
 			<div id="circleStyleDashboard" class="progresss ng-cloak" ng-style="getStyle()">
-				{{totaltime.$value}}/200000
+				{{totaltime.$value}}/10000
 			</div>
 			<!--error occurs when I add {{totaltime.$value}} to current  -->
 			<!-- current="{{curr}}" -->
