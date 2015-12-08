@@ -64,7 +64,6 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 	});
 
    // Create a variable 'ref' to reference your firebase storage
-	// console.log("hello");
     var userRef = ref.child("users");
 
     // Create a firebaseObject of your users, and store this as part of $scope
@@ -481,6 +480,69 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
             heatmapChart(d);
           });
   //  END HEATMAP
+    //Timer stuff -----------------------
+	$scope.timerRunning = false;
+    $scope.timerStopped = false;
+    $scope.timerDone = false;
+    $scope.started = true;
+    $scope.stopped = false;
+    $scope.restarted = false;
+    $scope.done = true;
+	var userRef = ref.child("users");
+	
+    // Create a firebaseObject of your users, and store this as part of $scope
+    $scope.users = $firebaseObject(userRef);
+	
+    // Create authorization object that referes to firebase
+    $scope.authObj = $firebaseAuth(ref);
+	var authData = $scope.authObj.$getAuth();
+    if (authData) {
+        $scope.userId = authData.uid;
+    } 
+	console.log($scope.userId);
+	var userObjectsRef = userRef.child($scope.userId);
+	console.log(userObjectsRef);
+	var userGoalsRef = userObjectsRef.child("goals");
+	console.log(userGoalsRef);
+	
+    $scope.startTimer = function (){
+        $scope.$broadcast('timer-start');
+        $scope.restarted = true;
+        $scope.started = false;
+		
+    };
+
+    $scope.stopTimer = function (){
+        $scope.$broadcast('timer-stop');
+        $scope.stopped = true;
+        $scope.restarted = false;
+    };
+
+    $scope.resumeTimer = function (){
+        $scope.$broadcast('timer-resume');
+        $scope.restarted = true;
+        $scope.stopped = false;
+    }
+
+    $scope.done = function() {
+       $scope.done = false;
+       $scope.timerDone = true;
+	   $scope.currentTime
+    }
+    
+
+    $scope.startOrStop = function(){
+    document.getElementById('first')[$scope.operation]();
+      $scope.operation = ($scope.operation === 'start' || $scope.operation === 'resume') ? 'stop' : 'resume';
+    }
+
+
+    $scope.$on('timer-stopped', function (event, args) {
+        console.log('timer-stopped args = ', args);
+		$scope.currentTime = args;
+    });
+	//Timer stuff --------------
+	
 });
 
 	// function stopResumeTimer(sectionId, btn) {
@@ -500,37 +562,46 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
  //  }
 
 //angular.module('MyApp', ['timer'])
-  myApp.controller('TimerController', ['$scope', function ($scope) {
+  myApp.controller('TimerController', function ($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $location) {
     $scope.timerRunning = false;
     $scope.timerStopped = false;
-
     $scope.timerDone = false;
-
     $scope.started = true;
     $scope.stopped = false;
     $scope.restarted = false;
-
     $scope.done = true;
-
+	var userRef = ref.child("users");
+	
+    // Create a firebaseObject of your users, and store this as part of $scope
+    $scope.users = $firebaseObject(userRef);
+	
+    // Create authorization object that referes to firebase
+    $scope.authObj = $firebaseAuth(ref);
+	var authData = $scope.authObj.$getAuth();
+    if (authData) {
+        $scope.userId = authData.uid;
+    } 
+	console.log($scope.userId);
+	var userObjectsRef = userRef.child($scope.userId);
+	console.log(userObjectsRef);
+	var userGoalsRef = userObjectsRef.child("goals");
+	console.log(userGoalsRef);
+	
     $scope.startTimer = function (){
         $scope.$broadcast('timer-start');
-
         $scope.restarted = true;
         $scope.started = false;
-
-        console.log($scope.hours);
+		
     };
 
     $scope.stopTimer = function (){
         $scope.$broadcast('timer-stop');
-
         $scope.stopped = true;
         $scope.restarted = false;
     };
 
     $scope.resumeTimer = function (){
         $scope.$broadcast('timer-resume');
-
         $scope.restarted = true;
         $scope.stopped = false;
     }
@@ -538,6 +609,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     $scope.done = function() {
        $scope.done = false;
        $scope.timerDone = true;
+	   $scope.currentTime
     }
     
 
@@ -549,8 +621,9 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 
     $scope.$on('timer-stopped', function (event, args) {
         console.log('timer-stopped args = ', args);
+		$scope.currentTime = args;
     });
-  }]);
+  });
 
 // myApp.controller('TimerController', function($scope){
 
