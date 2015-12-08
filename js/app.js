@@ -218,39 +218,39 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
     // END OF THE BARCHART
 });
 
-myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
-  // GETTING BADGES
+myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
+	// GETTING BADGES
 	var authData = $scope.authObj.$getAuth();
-  if (authData) {
-      $scope.userId = authData.uid;
-  }
-  // rather than stringing all of the .childs together, we found it clearer to break
-  // each step into separate variables
+	if (authData) {
+		$scope.userId = authData.uid;
+	}
+	// rather than stringing all of the .childs together, we found it clearer to break
+	// each step into separate variables
 	var badgeRef = ref.child("allbadges");
 	var userRef = ref.child("users");
 	var userId = $scope.userId;
 	var userobjectsRef = userRef.child(userId);
-  var userGoalRef = userobjectsRef.child("goals");
+	var userGoalRef = userobjectsRef.child("goals");
 	var userbadgeRef = userobjectsRef.child("badges");
-  var specificGoalRef = userGoalRef.child("goal");
-  var daysOfWeek = specificGoalRef.child("days");
-  var totaltime = specificGoalRef.child("totaltime"); 
-  var logs = specificGoalRef.child("logs");
-  var specificLog = logs.child("log");
-
-  // array of user's badges
+	var specificGoalRef = userGoalRef.child("goal");
+	var daysOfWeek = specificGoalRef.child("days");
+	var timeRef = specificGoalRef.child("totaltime");
+	var logs = specificGoalRef.child("logs");
+	var specificLog = logs.child("log");
+	
+	// array of user's badges
 	$scope.userbadges = $firebaseArray(userbadgeRef);
-  // array of all possible badges
+	// array of all possible badges
 	$scope.allbadges = $firebaseArray(badgeRef);
-  // array of user's goals
-  $scope.userGoals = $firebaseArray(userGoalRef);
-  console.log($scope.userGoals);
-  // array of all of user's logs
-  $scope.goalArray = $firebaseArray(specificGoalRef);
-  console.log($scope.goalArray);
-  // array of a specific log containing log details
-  $scope.specificLog = $firebaseArray(specificLog);
-  console.log($scope.specificLog);
+	// array of user's goals
+	$scope.userGoals = $firebaseArray(userGoalRef);
+	console.log($scope.userGoals);
+	// array of all of user's logs
+	$scope.goalArray = $firebaseArray(specificGoalRef);
+	console.log($scope.goalArray);
+	// array of a specific log containing log details
+	$scope.specificLog = $firebaseArray(specificLog);
+	console.log($scope.specificLog);
 
 
   var today = new Date();
@@ -260,7 +260,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   //CREATES THE BAR CHART
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
-      height = 330 - margin.top - margin.bottom;
+      height = 330 - margin.top - margin.bottom
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);    
@@ -487,7 +487,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
             heatmapChart(d);
           });
   //  END HEATMAP
-    //Timer stuff -----------------------
+    //Timer stuff --------------------------------------------------------------------
 	$scope.timerRunning = false;
     $scope.timerStopped = false;
     $scope.timerDone = false;
@@ -495,9 +495,9 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     $scope.stopped = false;
     $scope.restarted = false;
     $scope.done = true;
-	var userRef = ref.child("users");
 	
-    // Create a firebaseObject of your users, and store this as part of $scope
+	
+   /* // Create a firebaseObject of your users, and store this as part of $scope
     $scope.users = $firebaseObject(userRef);
 	
     // Create authorization object that referes to firebase
@@ -510,7 +510,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	var userObjectsRef = userRef.child($scope.userId);
 	console.log(userObjectsRef);
 	var userGoalsRef = userObjectsRef.child("goals");
-	console.log(userGoalsRef);
+	console.log(userGoalsRef);*/
 	
     $scope.startTimer = function (){
         $scope.$broadcast('timer-start');
@@ -530,11 +530,21 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
         $scope.restarted = true;
         $scope.stopped = false;
     }
-
+	$scope.totaltime = $firebaseObject(timeRef);
+	
+	var timeObj = $firebaseObject(timeRef);
     $scope.done = function() {
        $scope.done = false;
        $scope.timerDone = true;
-	   $scope.currentTime
+	   //var time_values = new Array();
+	   
+		timeObj.$bindTo($scope, "totaltime").then(function() {
+			console.log("total is " + $scope.totaltime.$value); 
+			console.log("added amount is " + $scope.currentTime.millis);
+			var totalTime = $scope.totaltime.$value;
+			var addedTime = $scope.currentTime.millis;
+			$scope.totaltime.$value = totalTime + addedTime
+		});
     }
     
 
@@ -548,139 +558,10 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
         console.log('timer-stopped args = ', args);
 		$scope.currentTime = args;
     });
-	//Timer stuff --------------
+	//Timer stuff end---------------------------------------------------------------
 	
 });
 
-	// function stopResumeTimer(sectionId, btn) {
- //    console.log(btn);
- //    if (btn.innerHTML === 'Start') {
- //      document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
- //      btn.innerHTML = 'Stop';
- //    }
- //    else if (btn.innerHTML === 'Stop') {
- //      document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
- //      btn.innerHTML = 'Resume';
- //    }
- //    else {
- //      document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
- //      btn.innerHTML = 'Stop';
- //    }
- //  }
-
-//angular.module('MyApp', ['timer'])
-  myApp.controller('TimerController', function ($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $location) {
-    $scope.timerRunning = false;
-    $scope.timerStopped = false;
-    $scope.timerDone = false;
-    $scope.started = true;
-    $scope.stopped = false;
-    $scope.restarted = false;
-    $scope.done = true;
-	var userRef = ref.child("users");
-	
-    // Create a firebaseObject of your users, and store this as part of $scope
-    $scope.users = $firebaseObject(userRef);
-	
-    // Create authorization object that referes to firebase
-    $scope.authObj = $firebaseAuth(ref);
-	var authData = $scope.authObj.$getAuth();
-    if (authData) {
-        $scope.userId = authData.uid;
-    } 
-	console.log($scope.userId);
-	var userObjectsRef = userRef.child($scope.userId);
-	console.log(userObjectsRef);
-	var userGoalsRef = userObjectsRef.child("goals");
-	console.log(userGoalsRef);
-	
-    $scope.startTimer = function (){
-        $scope.$broadcast('timer-start');
-        $scope.restarted = true;
-        $scope.started = false;
-		
-    };
-
-    $scope.stopTimer = function (){
-        $scope.$broadcast('timer-stop');
-        $scope.stopped = true;
-        $scope.restarted = false;
-    };
-
-    $scope.resumeTimer = function (){
-        $scope.$broadcast('timer-resume');
-        $scope.restarted = true;
-        $scope.stopped = false;
-    }
-
-    $scope.done = function() {
-       $scope.done = false;
-       $scope.timerDone = true;
-	   $scope.currentTime
-    }
-    
-
-    $scope.startOrStop = function(){
-    document.getElementById('first')[$scope.operation]();
-      $scope.operation = ($scope.operation === 'start' || $scope.operation === 'resume') ? 'stop' : 'resume';
-    }
-
-
-    $scope.$on('timer-stopped', function (event, args) {
-        console.log('timer-stopped args = ', args);
-		$scope.currentTime = args;
-    });
-  });
-
-// myApp.controller('TimerController', function($scope){
-
-// 	function startTimer(sectionId) {
-// 		document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
-// 	}
-
-// 	function stopTimer(sectionId) {
-// 		document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
-// 	}
-// 	$scope.stopResumeTimer = function(sectionId, btn) {
-// 		console.log(btn);
-// 		if (btn.innerHTML === 'Start') {
-// 			document.getElementById(sectionId).getElementsByTagName('timer')[0].start();
-// 			btn.innerHTML = 'Stop';
-// 		}
-// 		else if (btn.innerHTML === 'Stop') {
-// 			document.getElementById(sectionId).getElementsByTagName('timer')[0].stop();
-// 			btn.innerHTML = 'Resume';
-// 		}
-// 		else {
-// 			document.getElementById(sectionId).getElementsByTagName('timer')[0].resume();
-// 			btn.innerHTML = 'Stop';
-// 		}
-// 	}
-// 	$scope.linkAnchors = function () {
-//         $('ul.nav a').click(function (){
-//             var path = $(this).attr('href');
-//             if (path != '#') {
-//                 window.location = path;
-//             }
-//         });
-//     };
-    
-//     $scope.callbackTimer={};
-//     $scope.callbackTimer.status='Running';
-//     $scope.callbackTimer.callbackCount=0;    
-//     $scope.callbackTimer.finished=function(){
-//         $scope.callbackTimer.status='COMPLETE!!';
-//         $scope.callbackTimer.callbackCount++;
-//         $scope.$apply();
-//     }
-// 	var authData = $scope.authObj.$getAuth();
-// 	if (authData) {
-// 		$scope.userId = authData.uid;
-// 	}
-// 	var userRef = ref.child("users");
-// 	console.log("timer")
-   
-// });
 
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
   

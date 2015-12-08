@@ -162,7 +162,12 @@ h1#goalTitle {
 	color: white;
 }
 
-
+#time{
+	text-align: center;
+	margin : 5px;
+	padding-top: 150px;
+	padding-left: 20%;
+}
 /*STYLE FOR CIRCLE GRAPH
 ---------------------------------------------------------------------------------*/
 
