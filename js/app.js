@@ -238,10 +238,10 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
 	var userGoalRef = userobjectsRef.child("goals");
 	var goalRef = userGoalRef.child("goal");
-	$scope.currArr = $firebaseArray(goalRef);
-	console.log($scope.currArr);
-	var curr = currArr[2];
-	console.log(curr);
+	// $scope.currArr = $firebaseArray(goalRef);
+	// console.log($scope.currArr);
+	// var curr = currArr[2];
+	// console.log(curr);
 
 	var userId = $scope.userId;
 	var userobjectsRef = userRef.child(userId);
@@ -500,7 +500,8 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
             heatmapChart(d);
           });
   //  END HEATMAP
-    //Timer stuff --------------------------------------------------------------------
+
+  //Timer stuff --------------------------------------------------------------------
 	$scope.timerRunning = false;
     $scope.timerStopped = false;
     $scope.timerDone = false;
