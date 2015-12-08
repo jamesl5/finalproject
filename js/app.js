@@ -17,23 +17,46 @@ myApp.config(function($stateProvider) {
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location){
-  angular.element('.slider').slider({full_width: true});
-  angular.element('.parallax').parallax();
+	angular.element('.slider').slider({full_width: true});
+	angular.element('.parallax').parallax();
 
+	$scope.submitClick = function() {
+		var first_name = $scope.first_name;
+		console.log(first_name);
+		var last_name = $scope.last_name;
+		console.log(last_name);
+		var email = $scope.email;
+		console.log(email);
+		var text = $scope.textarea1;
+		$http.post('email.php', {
+			data: 'toPost'
+		}, {}).then(function(result) {
+			first_name: first_name,
+			last_name: last_name,
+			email: email,
+			textarea1: text
+		});
+		// $http("email.php", {
+		// 	first_name: first_name,
+		// 	last_name: last_name,
+		// 	email: email,
+		// 	textarea1: text
+		// });
+	}
 
-   new Tether({
-   		element: "#signUpPopUp",
-   		target: "#signUp",
-   		attachment: 'top center',
-   		targetAttachment: 'bottom center'
-   });
+	new Tether({
+		element: "#signUpPopUp",
+		target: "#signUp",
+		attachment: 'top center',
+		targetAttachment: 'bottom center'
+	});
 
-   new Tether({
-   		element: "#loginPopUp",
-   		target: "#login",
-   		attachment: 'top center',
-   		targetAttachment: 'bottom center'
-   });
+	new Tether({
+		element: "#loginPopUp",
+		target: "#login",
+		attachment: 'top center',
+		targetAttachment: 'bottom center'
+	});
 
    // Create a variable 'ref' to reference your firebase storage
 	// console.log("hello");
