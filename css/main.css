@@ -88,30 +88,12 @@ main {
 
 /*STYLE FOR HOME
 ---------------------------------------------------------------------------------*/
-div#headerImg {
-	height: 60vh;
-	background-image: url(http://cdn.theatlantic.com/static/mt/assets/food/feelinawe_bnr.jpg);
-	background-repeat: no-repeat;
-	background-position: center;
-	background-attachment: fixed;
-	background-size: cover;
-}
-
-#hometitles {
-	position: absolute;
-	top: 30%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: white;
-	text-align: center;
-}
-
-h1#title {
-	font-weight: bold;
-	margin: 0;
-	transition: font-size 0.5s;
-}
-
+/*  -positions the slider image carousel indicators 
+	 to overlap the image at the bottom
+	-sets the height of the slider images and overrides
+	 the default materialize height setting
+	-sets the slider div to have a lower z-index so that 
+	 the login/signup popups are still visible*/
 .slider .indicators {
 	z-index: 100;
 	position: absolute;
@@ -122,7 +104,6 @@ h1#title {
 	text-align: center;
 
 }
-
 .slider, .slides {
 	height: 700px !important;
 }
@@ -130,88 +111,79 @@ div.slider {
 	z-index: -100;
 }
 
+/*  -centers text that have id mainText and the class centerText
+	 not all of the tags with class centerText are in home.html*/
 #mainText, .centerText {
 	text-align: center;
 }
 
+/*  -fixes margin of main header below image carousel*/
 #bigHeader {
 	margin-bottom: 0;
 }
 
+/*  -changes the color of font awesome icons to match layout
+	-addes margin to top of div with font awesome icons*/
 i {
 	color: #00bfa5;
 }
-
 .iconDiv {
 	margin-top: 30px;
 }
 
-.midImg {
-	background-image: url('http://img.inspiringwallpapers.net/wp-content/uploads/2014/05/ferris-wheel-at-night-wallpaper.jpg');
-	height: 500px;
-	background-position: center;
-	background-attachment: fixed;
-	background-size: cover;
-	background-repeat: no-repeat;
-
-}
-
+/*  -bolds the contact us text*/
 #contactus {
 	font-weight: bold;
 }
 
+/*  -gives a height to the teal divider between sections*/
 .divider {
-	height: 200px;
+	height: 80px;
 }
 
 
 /*STYLE FOR DASHBOARD
 ---------------------------------------------------------------------------------*/
+/*  -gives the horizontal rows in dashboard.html no margins*/
 hr {
 	margin: 0;
+}
+
+h1#goalTitle {
+	text-align: center;
+	background-color: #80cbc4;
+	margin-top: 0;
+	padding-top: 18px;
+	padding-bottom: 15px;
 }
 
 
 /*STYLE FOR CIRCLE GRAPH
 ---------------------------------------------------------------------------------*/
-/*.circleStyle {
-	transform: translateY(-50%) translateX(-50%);
-	-moz-transform: translateY(-50%) translateX(-50%);
-	-webkit-transform: translateY(-50%) translateX(-50%);
-}*/
-.circleStyle {
-	/*transform: translateY(80%);
-	-moz-transform: translateY(80%);
-	-webkit-transform: translateY(80%);*/
+
+/*  -positions the text over the lifetime time tracker
+	-they are positioned separately for the dashboard and the home pages*/
+#circleStyleDashboard {
 	position: absolute;
-	top: 40%;
+	top: 50%;
 	left: 33%;
+}
+#circleStyleHome {
+	position: absolute;
+	top: 35%;
+	left: 33%;
+}
+
+/*  -gets rid of the margin at the top of the circle graph on the Dashboard*/
+#circleGraph {
+	margin-top: 0;
 }
 
 /*STYLE FOR HEATMAP
 ---------------------------------------------------------------------------------*/
-/*.day {
-  fill: #fff;
-  stroke: #ccc;
+.graphLabel {
+	margin-bottom: 40px;
 }
-
-.month {
-  fill: none;
-  stroke: #000;
-  stroke-width: 2px;
-}
-
-.RdYlGn .q0-11{fill:rgb(165,0,38)}
-.RdYlGn .q1-11{fill:rgb(215,48,39)}
-.RdYlGn .q2-11{fill:rgb(244,109,67)}
-.RdYlGn .q3-11{fill:rgb(253,174,97)}
-.RdYlGn .q4-11{fill:rgb(254,224,139)}
-.RdYlGn .q5-11{fill:rgb(255,255,191)}
-.RdYlGn .q6-11{fill:rgb(217,239,139)}
-.RdYlGn .q7-11{fill:rgb(166,217,106)}
-.RdYlGn .q8-11{fill:rgb(102,189,99)}
-.RdYlGn .q9-11{fill:rgb(26,152,80)}
-.RdYlGn .q10-11{fill:rgb(0,104,55)}*/
 
 rect.bordered {
   stroke: #E6E6E6;
@@ -271,9 +243,15 @@ svg#barChart {
 #badge{
 	width: 100px;
 	padding: 5px;
+	left: 50%;
+}
+
+.badgeListItem p {
+	text-align :center;
 }
 
 .list-group-item {
 	border: none;
 	background-color: rgba(0, 0, 0, 0);
+	width: 140px;
 }
