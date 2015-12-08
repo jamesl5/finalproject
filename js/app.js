@@ -245,13 +245,13 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
 	$scope.allbadges = $firebaseArray(badgeRef);
   // array of user's goals
   $scope.userGoals = $firebaseArray(userGoalRef);
-  console.log($scope.userGoals);
+  console.log("user goals array " + $scope.userGoals);
   // array of all of user's logs
   $scope.logsArray = $firebaseArray(specificGoalRef);
-  console.log($scope.logsArray);
+  console.log("user logs array " + $scope.logsArray);
   // array of a specific log containing log details
   $scope.specificLog = $firebaseArray(specificLog);
-  console.log($scope.specificLog);
+  console.log("specific log array " + $scope.specificLog);
 
 
 
