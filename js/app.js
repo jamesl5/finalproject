@@ -254,11 +254,14 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
   console.log($scope.specificLog);
 
 
+  var today = new Date();
+  console.log(today);
+
 
   //CREATES THE BAR CHART
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
-      height = 330 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
+      height = 330 - margin.top - margin.bottom,
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);    
@@ -280,7 +283,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
     .append('g')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("../test_data/testdata.csv", type, function(error, data) {
+  d3.tsv("../test_data/testdata.tsv", type, function(error, data) {
     if(error) throw error;
 
     x.domain(data.map(function(d) { return d.days; }));
@@ -365,7 +368,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
             gridSize = Math.floor(50),
             legendElementWidth = gridSize / 1.28,
             buckets = 9,
-            colors = ["#ffffd9","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"], // alternatively colorbrewer.YlGnBu[9]
+            colors = ["#ffffff","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"],
             days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
             weeks = ["1", "2", "3", "4"];
             datasets = ["data.tsv"];
@@ -395,6 +398,14 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
               .style("text-anchor", "middle")
               .attr("transform", "translate(" + gridSize / 2 + ", -6)")
               .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
+
+            dayLabels.append("text")
+              .text('Week')
+              .attr("x", function(d, i) { return i * gridSize; })
+              .attr("y", 0)
+              .style("text-anchor", "middle")
+              .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+
 
         var heatmapChart = function(tsvFile) {
           d3.tsv("./test_data/hours.tsv",
@@ -449,7 +460,7 @@ myApp.controller('DashboardController', function($scope, $firebaseAuth, $firebas
               .attr("class", "mono")
               .text(function(d) { return "≥ " + Math.round(d); })
               .attr("x", function(d, i) { return legendElementWidth * i + 10; })
-              .attr("y", heatHeight + gridSize);
+              .attr("y", heatHeight + gridSize / 1.3);
 
             legend.exit().remove();
 
