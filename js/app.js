@@ -603,38 +603,28 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   
     $scope.startTimer = function (){
         $scope.$broadcast('timer-start');
-        // $scope.restarted = true;
-        // $scope.started = false;
-        // $scope.reset = false;
     };
 
     $scope.stopTimer = function (){
         $scope.$broadcast('timer-stop');
-        // $scope.stopped = true;
-        // $scope.restarted = false;
     };
 
     $scope.resumeTimer = function (){
         $scope.$broadcast('timer-resume');
-        // $scope.restarted = true;
-        // $scope.stopped = false;
     }
 
     $scope.resetTimer= function (){
         $scope.$broadcast('timer-reset');
-        // $scope.reset = true;
     }
 
 	 $scope.totaltime = $firebaseObject(timeRef);
 	
 	 var timeObj = $firebaseObject(timeRef);
 
-    $scope.donee = function() {
+    $scope.doneTimer = function() {
 	    //var time_values = new Array();
-	    timeObj.$bindTo($scope, "totaltime").then(function() {
+	    //timeObj.$bindTo($scope, "totaltime").then(function() {
         //$scope.totaltime = $firebaseObject(timeRef);
-        //var timeObj = $firebaseObject(timeRef);
-
   			var totalTime = $scope.totaltime.$value;
   			var addedTime = $scope.currentTime.millis;
         //$scope.totaltime = DashboardController.totaltime;
@@ -642,8 +632,9 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
         console.log("total is " + $scope.totaltime.$value); 
         console.log("added amount is " + addedTime);
-		  });
-      console.log("hi");
+		  //});
+      // $scope.totaltime = $firebaseObject(timeRef);
+      // var timeObj = $firebaseObject(timeRef);
     };
 
     $scope.$on('timer-stopped', function (event, args) {
