@@ -10,6 +10,25 @@ body {
     flex-direction: column;
 }
 
+#graphs {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#time, #heatmap {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding: 2%;
+}
+
+#time {
+	margin: auto 5px;
+}
+
 main {
 	flex: 1 0 auto;
 }
@@ -214,12 +233,6 @@ hr {
 	background-image: linear-gradient(to right, #ccc, #333, #ccc);
 }
 
-.eachBadge {
-	display: inline-block;
-	margin: 1%;
-	text-align: center;
-}
-
 #piano {
 	display: cover;
 }
@@ -243,12 +256,12 @@ hr {
 	color: white;
 }
 
-#time{
+/*#time{
 	text-align: center;
 	margin : 5px;
 	padding-top: 150px;
 	padding-left: 20%;
-}
+}*/
 
 .featurette {
 	display: block;
@@ -304,6 +317,14 @@ text.axis-workweek {
   fill: #000;
 }
 
+#block {
+	display: block;
+}
+
+#titleAct {
+	display: inline-block;
+}
+
 text.axis-worktime {
   fill: #000;
 }
@@ -353,6 +374,15 @@ svg#barChart {
 	padding: 5px;
 }
 
+#badgelist {
+	text-align: center;
+}
+
+.eachBadge {
+	display: inline-block;
+	margin: 1%;
+}
+
 .list-group-item {
 	border: none;
 	background-color: rgba(0, 0, 0, 0);
@@ -367,10 +397,10 @@ svg#barChart {
 	text-align: center;
 }
 
-#time {
+/*#time {
 	padding-top: 15%;
 	padding-bottom: 15%;
-}
+}*/
 
 .start::before{
   content:"Start";
@@ -382,4 +412,13 @@ svg#barChart {
 
 .resume::before{
   content:"Resume";
+}
+
+@media screen and (min-width: 992px) {
+	#graphs {
+		display: inline-flex;
+	}
+	#heatmap {
+		padding-right: 10%;
+	}
 }
