@@ -533,7 +533,8 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
             heatmapChart(d);
           });
   //  END HEATMAP
-    //Timer stuff --------------------------------------------------------------------
+
+  //Timer stuff --------------------------------------------------------------------
 	$scope.timerRunning = false;
     $scope.timerStopped = false;
     $scope.timerDone = false;
