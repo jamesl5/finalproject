@@ -1,6 +1,6 @@
 <h1 id="goalTitle">{{userGoals[0].goalname}}</h1>
-<h2 id="dailyGoal" ng-show="showDailyGoal()">your goal for today is: {{daysOfWeekArray[currDay].hours}} hours!</h2>
-<p>{{specificLogArray.day}}</p>
+<h2 id="dailyGoal" ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
+<!-- <p>{{logArray.day}}</p> -->
 <div class="container">
     <div class="row">
     	<!-- Heatmap section -->
@@ -63,7 +63,7 @@
 		</div>
 		<div class="container-fluid col-xs-12 col-md-6">
 			<h5 class="graphLabel">weekly progress</h5>
-	    	<svg class="barChart" class="">
+	    	<svg class="barChart">
 	    	</svg>
 		</div>
 
