@@ -38,6 +38,7 @@ myApp.controller('SignUpController', function($scope, $firebaseAuth, $firebaseAr
 	var email = $scope.email;
 	var password = $scope.password;
    	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
+   	$scope.weekArray = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 });
 
 myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {

@@ -1,31 +1,69 @@
 <form name="signUpForm" novalidate>
 <!-- Sign-in/sign-up form: show if userId isn't defined -->
-	<div class="form-group">
-		<label>Name:</label>
-		<input name="name" class="form-control" type="text" ng-model="name" ng-minlength="2" required></input>
+	<div id="formHeader" class="container">
+		<h2 id="formHeadText" class="text-center deep-orange-text text-accent-1">Sign Up</h2>
+		<div class="form-group">
+			<label>Name:</label>
+			<input name="name" class="form-control" type="text" ng-model="name" ng-minlength="2" required></input>
 
-		<p ng-show="createUser.name.$error.minlength">Please enter your full name</p>
-	</div>
-	
-	<!-- Bind model "email" to this input and make it required -->
-	<div class="form-group">
-		<label>Email:</label>
-		<input name="email" type="email" class="form-control" ng-model="email" required></input>
-		<!-- Show an error message if the email is not valid -->	
-		<p ng-show="signUpForm.email.$error.email">Not a valid email</p>
-	</div>
+			<p ng-show="createUser.name.$error.minlength">Please enter your full name</p>
+		</div>
+		
+		<!-- Bind model "email" to this input and make it required -->
+		<div class="form-group">
+			<label>Email:</label>
+			<input name="email" type="email" class="form-control" ng-model="email" required></input>
+			<!-- Show an error message if the email is not valid -->	
+			<p ng-show="signUpForm.email.$error.email">Not a valid email</p>
+		</div>
 
-	<!-- Password -->
-	<div class="form-group">
-		<label>Password:</label>
-		<input  name="password" type="password" class="form-control" ng-model="password" required></input>      
+		<!-- Password -->
+		<div class="form-group">
+			<label>Password:</label>
+			<input  name="password" type="password" class="form-control" ng-model="password" required></input>      
+		</div>
+	</div>
+	<div id="makeGoal">
+		<div class="card-panel teal accent-4 white-text">
+			<div class="jumbotron transparent container">
+				<h4>Let's start by making our first goal!</h4>
+				<h5>Choose a name for your goal and then decide how many hours you want to dedicate to your goal per day.</h5>
+			</div>
+		</div>
+
+		<div id="nameSelect" class="form-group container">
+			<label>Goal Title:</label>
+			<input name="goalTitle" type="text" ng-model="goalTitle" required></input>
+			<div class="container-fluid" id="hourSelect">
+				<div class="row">
+					<div class="col-md-3 col-xs-5" ng-repeat="n in weekArray" class="eachSelect">
+						<label>{{n}}</label>
+						<select class="browser-default">
+						    <option value="0" selected>0 hours</option>
+							<option value="1">1 hour</option>
+							<option value="2">2 hours</option>
+							<option value="3">3 hours</option>
+							<option value="4">4 hours</option>
+							<option value="5">5 hours</option>
+							<option value="6">6 hours</option>
+							<option value="7">7 hours</option>
+							<option value="8">8 hours</option>
+							<option value="9">9 hours</option>
+							<option value="10">10 hours</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<!-- Submit buttons: should only be active if certain inputs are valid -->
-	<div class="form-group">
-		<button ng-click="create=false" class="btn btn-primary">Cancel</button>
-		<button ng-click="signUp()"  ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary">Sign-up</button>
-		<!-- <button ng-click="signIn()" ng-disabled="myForm.email.$invalid || myForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button> -->
-		<!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newUser">Create Account</button> -->
+	<div id="submitButtons" class="container">
+		<div class="form-group">
+			<button ng-click="create=false" class="btn btn-primary">Cancel</button>
+			<button ng-click="signUp()"  ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary">Sign-up</button>
+			<!-- <button ng-click="signIn()" ng-disabled="myForm.email.$invalid || myForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button> -->
+			<!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#newUser">Create Account</button> -->
+		</div>
 	</div>
 </form>

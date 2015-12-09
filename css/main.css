@@ -4,6 +4,46 @@ body {
 	font-family: 'Open Sans', sans-serif;
 }
 
+#uiView {
+	display: flex;
+    min-height: 80vh;
+    flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+#hourSelect {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.eachSelect {
+	margin: 1%;
+}
+
+#nameSelect * {
+	padding-top: 2%;
+}
+
+#makeGoal, #formHeadText {
+	margin-top: 3%;
+}
+
+#submitButtons * {
+	margin: 1%;
+}
+
+#submitButtons {
+	display: block;
+	margin: auto;
+	text-align: center;
+}
+
 #navLogo {
 	max-width: 200px;
 }
