@@ -1,81 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato|Open+Sans);
 
-body {
-	font-family: 'Open Sans', sans-serif;
-}
-
-#uiView {
-	display: flex;
-    min-height: 80vh;
-    flex-direction: column;
-}
-
-#graphs {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-}
-
-#time, #heatmap {
-	display: inline-block;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	padding: 2%;
-}
-
-#time {
-	margin: auto 5px;
-}
-
-main {
-	flex: 1 0 auto;
-}
-
-#hourSelect {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	display: block;
-	margin-right: auto;
-	margin-left: auto;
-}
-
-.eachSelect {
-	margin: 1%;
-}
-
-#nameSelect * {
-	padding-top: 2%;
-}
-
-#makeGoal, #formHeadText {
-	margin-top: 3%;
-}
-
-#submitButtons * {
-	margin: 1%;
-}
-
-#submitButtons {
-	display: block;
-	margin: auto;
-	text-align: center;
-}
-
-#navLogo {
-	max-width: 200px;
-}
-
-#paraLogo {
-	width: 100%;
-}
-
-#signUpPopUp {
-	width: 40%;
-	background-color: white;
-}
-
 /*arrow-box is the arrow on the signup/login popups*/
 .arrow_box {
 	position: relative;
@@ -84,6 +8,14 @@ main {
 	border-radius: 10px;
 	padding: 3%;
 	margin-top: 30px;
+}
+
+.arrow_box:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-bottom-color: #ffffff;
+	border-width: 30px;
+	margin-left: -30px;
+	
 }
 
 .arrow_box:after, .arrow_box:before {
@@ -97,14 +29,6 @@ main {
 	pointer-events: none;
 }
 
-.arrow_box:after {
-	border-color: rgba(255, 255, 255, 0);
-	border-bottom-color: #ffffff;
-	border-width: 30px;
-	margin-left: -30px;
-	
-}
-
 .arrow_box:before {
 	border-color: rgba(0, 191, 165, 0);
 	border-bottom-color: #00bfa5;
@@ -113,10 +37,228 @@ main {
 	border-radius: 10px;
 }
 
-.progress-wrapper{
-    position: relative;
-    margin:20px auto;
-    font-size: 40px;
+.axis text {
+	font: 10px sans-serif;
+	fill: #000;
+}
+
+.axis .x path {
+	display: none;
+}
+
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.badges {
+	width: 100px;
+	max-height: 100px;
+	padding: 5px;
+}
+
+#badgelist {
+	text-align: center;
+}
+
+.bar {
+	fill: #45ccce;
+}
+
+#barChart svg{
+	margin-top: 30px;
+}
+
+.bar:hover {
+	fill: teal;
+}
+
+#bigHeader {
+	margin-bottom: 0;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.book {
+	font-style: italic;
+}
+
+#block {
+	display: block;
+}
+
+/*  -gets rid of the margin at the top of the circle graph on the Dashboard*/
+#circleGraph {
+	margin-top: 0;
+}
+
+/*  -positions the text over the lifetime time tracker
+	-they are positioned separately for the dashboard and the home pages*/
+#circleStyleDashboard {
+	position: absolute;
+	top: 50%;
+	left: 33%;
+}
+
+#circleStyleHome {
+	position: absolute;
+	top: 35%;
+	left: 33%;
+}
+
+.clock {
+	display: block;
+	margin: auto;
+	text-align: center;
+	vertical-align: center;
+}
+
+.colorBlock {
+	height: 2%;
+	margin: 0px;
+}
+
+#contactUsForm {
+	margin-top: 2%;
+}
+
+#dailyGoal, #goalTitle {
+	margin-top: 0;
+}
+
+/*  -gives a height to the teal divider between sections*/
+.divider {
+	height: 80px;
+}
+
+.eachBadge {
+	display: inline-block;
+	margin: 1%;
+}
+
+.eachSelect {
+	margin: 1%;
+}
+
+.featurette {
+	display: block;
+	overflow: auto;
+}
+
+#goalTitle {
+	margin: 4%;
+/* border-bottom: 10px solid #00bfa5;*/
+}
+
+#graphs {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.graphLabel {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+#hamburger {
+	color: white;
+}
+
+#heatmap {
+	margin-top: 30px;
+}
+
+#heatMapDate {
+	margin-left: 40px;
+}
+
+.hour:hover {
+	opacity: 0.7;
+}
+
+#hourSelect {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#howContent {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+/*  -gives the horizontal rows in dashboard.html no margins*/
+hr {
+	margin: 0;
+	border: 0;
+	height: 1px;
+	background: #333;
+	background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+i {
+	color: #00bfa5;
+}
+.iconDiv {
+	margin-top: 30px;
+}
+
+.iconDivText {
+	width: 70%;
+	display: block;
+	margin: auto;
+
+}
+
+.list-group-item {
+	border: none;
+	background-color: rgba(0, 0, 0, 0);
+	width: 140px;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+#mainText {
+	margin: 3%;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#mainText, .centerText {
+	text-align: center;
+}
+
+#mainTextIcons {
+	margin: 4%;
+}
+
+
+#makeGoal, #formHeadText {
+	margin-top: 3%;
+}
+
+#nameSelect * {
+	padding-top: 2%;
+}
+
+#navLogo {
+	max-width: 200px;
+}
+
+#paraLogo {
+	width: 100%;
 }
 
 .progresss{
@@ -126,11 +268,28 @@ main {
     line-height: 1;
 }
 
-.clock {
-	display: block;
-	margin: auto;
-	text-align: center;
-	vertical-align: center;
+.progress-wrapper{
+    position: relative;
+    margin:20px auto;
+    font-size: 40px;
+}
+
+#piano {
+	display: cover;
+}
+
+rect.bordered {
+  stroke: #E6E6E6;
+  stroke-width:2px;   
+}
+
+.resume::before{
+  content:"Resume";
+}
+
+#signUpPopUp {
+	width: 40%;
+	background-color: white;
 }
 
 /*  -positions the slider image carousel indicators 
@@ -157,154 +316,38 @@ div.slider {
 	z-index: -100;
 }
 
-/*  -centers text that have id mainText and the class centerText
-	 not all of the tags with class centerText are in home.html*/
-#mainText, .centerText {
-	text-align: center;
-}
-
-/*#explanation {
-	margin: 3%;
-	display: block;
-	margin-right: auto;
-	margin-left: auto;
-}*/
-
-#mainText {
-	margin: 3%;
-	display: block;
-	margin-right: auto;
-	margin-left: auto;
-}
-/*  -fixes margin of main header below image carousel*/
-#bigHeader {
-	margin-bottom: 0;
-}
-
-/*  -changes the color of font awesome icons to match layout
-	-addes margin to top of div with font awesome icons*/
-i {
-	color: #00bfa5;
-}
-.iconDiv {
-	margin-top: 30px;
-}
-
-.iconDivText {
-	width: 70%;
-	display: block;
-	margin: auto;
-
-}
-
-.colorBlock {
-	height: 2%;
-	margin: 0px;
-}
-
-#mainTextIcons {
-	margin: 4%;
-}
-
-/*  -bolds the contact us text*/
-/*#contactus {
-	font-weight: bold;
-}*/
-
-.book {
-	font-style: italic;
-}
-
-#contactUsForm {
-	margin-top: 2%;
-}
-
-/*  -gives a height to the teal divider between sections*/
-.divider {
-	height: 80px;
-}
-
-/*  -gives the horizontal rows in dashboard.html no margins*/
-hr {
-	margin: 0;
-	border: 0;
-	height: 1px;
-	background: #333;
-	background-image: linear-gradient(to right, #ccc, #333, #ccc);
-}
-
-#piano {
-	display: cover;
-}
-
-/*#goalTitle, #dailyGoal {
-	text-align: center;
-	margin-top: 0;
-	padding-bottom: 15px;
-	padding-top: 18px;
-}*/
-#goalTitle {
-	margin: 4%;
-/* border-bottom: 10px solid #00bfa5;*/
-}
-
-#dailyGoal, #goalTitle {
-	margin-top: 0;
-}
-
-#hamburger {
-	color: white;
-}
-
-/*#time{
-	text-align: center;
-	margin : 5px;
-	padding-top: 150px;
-	padding-left: 20%;
-}*/
-
-.featurette {
-	display: block;
-	overflow: auto;
-}
-
-#howContent {
-	margin-top: 2%;
-	margin-bottom: 2%;
-	margin-right: auto;
-	margin-left: auto;
-}
-
-/*  -positions the text over the lifetime time tracker
-	-they are positioned separately for the dashboard and the home pages*/
-#circleStyleDashboard {
-	position: absolute;
-	top: 50%;
-	left: 33%;
-}
-#circleStyleHome {
-	position: absolute;
-	top: 35%;
-	left: 33%;
-}
-
-/*  -gets rid of the margin at the top of the circle graph on the Dashboard*/
-#circleGraph {
-	margin-top: 0;
-}
-
 .slider .indicators .indicator-item.active {
 	background-color: #00bfa5;
 }
 
-.graphLabel {
-	margin-top: 40px;
-	margin-bottom: 40px;
+#submitButtons * {
+	margin: 1%;
 }
 
-rect.bordered {
-  stroke: #E6E6E6;
-  stroke-width:2px;   
+#submitButtons {
+	display: block;
+	margin: auto;
+	text-align: center;
+}
+
+.start::before{
+  content:"Start";
+}
+
+.stop::before{
+  content:"Stop";
+}
+
+#time, #heatmap {
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding: 2%;
+}
+
+#time {
+	margin: auto 5px;
 }
 
 text.mono {
@@ -317,101 +360,26 @@ text.axis-workweek {
   fill: #000;
 }
 
-#block {
-	display: block;
-}
-
-#titleAct {
-	display: inline-block;
-}
-
 text.axis-worktime {
   fill: #000;
-}
-
-#heatmap {
-	margin-top: 30px;
-}
-
-.hour:hover {
-	opacity: 0.7;
-}
-
-#heatMapDate {
-	margin-left: 40px;
-}
-
-.bar {
-	fill: #45ccce;
-}
-
-.bar:hover {
-	fill: teal;
-}
-
-.axis text {
-	font: 10px sans-serif;
-	fill: #000;
-}
-
-.axis path, .axis line {
-	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-}
-
-.x.axis path {
-	display: none;
-}
-
-svg#barChart {
-	margin-top: 30px;
-}
-
-.badges {
-	width: 100px;
-	max-height: 100px;
-	padding: 5px;
-}
-
-#badgelist {
-	text-align: center;
-}
-
-.eachBadge {
-	display: inline-block;
-	margin: 1%;
-}
-
-.list-group-item {
-	border: none;
-	background-color: rgba(0, 0, 0, 0);
-	width: 140px;
 }
 
 #time h3 {
 	text-align: center;
 }
 
+#titleAct {
+	display: inline-block;
+}
+
+#uiView {
+	display: flex;
+    min-height: 80vh;
+    flex-direction: column;
+}
+
 .wrapper {
 	text-align: center;
-}
-
-/*#time {
-	padding-top: 15%;
-	padding-bottom: 15%;
-}*/
-
-.start::before{
-  content:"Start";
-}
-
-.stop::before{
-  content:"Stop";
-}
-
-.resume::before{
-  content:"Resume";
 }
 
 @media screen and (min-width: 992px) {
