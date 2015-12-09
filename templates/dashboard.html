@@ -11,23 +11,22 @@
     	</div>	
     	<!-- Timer section -->
         <div class="col-xs-12 col-md-6">
-			<div id = "time">
-				<timer id="first" interval="100" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
-				<timer id="first" interval="60" autostart="false">
-					<div class="progress">
-						<div class="progress-bar" role="progressbar" style="width: ({{seconds}} * 1.66)%;">
-						</div>
-					</div>
-				</timer>   
-				<!-- Buttons for the timer -->
+
+			<div id = "time" ng-init="started = true; stopped = false; restarted = false; reset = false; done = false">
+
+					<timer id="first" interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
+					<timer id="first" interval="60" autostart="false"><div class="progress"><div class="progress-bar" role="progressbar" style="width: {{seconds}}%;"></div></div></timer>   
+
 				<div class="wrapper">
-					<a class="button button-border-action button-circle" ng-click="startTimer()" ng-disabled="timerStarted" ng-show="started">Start</a>
+					<a class="button button-border-action button-circle" ng-click="startTimer(); restarted = true; started = false; reset = false; done = false" ng-show="started">Start</a>
 
-					<a class="button button-border-highlight button-circle" ng-click="resumeTimer()" ng-disabled="!timerRunning" ng-show="stopped">Resume</a>
+					<a class="button button-border-highlight button-circle" ng-click="resumeTimer(); restarted = true; stopped = false" ng-show="stopped">Resume</a>
 
-					<a class="button button-border-caution button-circle" ng-click="stopTimer()" ng-disabled="timerRunning" ng-show="restarted">Stop</a>
+					<a class="button button-border-caution button-circle" ng-click="stopTimer(); stopped = true; restarted = false" ng-show="restarted">Stop</a>
 
-					<a class="button button-border-primary button-circle" ng-click="done()">Done</a>
+					<a class="button button-border-primary button-circle" ng-click="resetTimer(); reset = true; stopped = false; restarted = false; started = true;">Reset</a>
+
+					<a class="button button-border-royal button-circle" ng-click="done(); done = true" ng-disabled="done">Done</a>
 
 					<!-- <a class="button button-border-royal button-circle">Submit</a> -->
 				</div>

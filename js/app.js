@@ -562,76 +562,76 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   }
 
   //Timer stuff --------------------------------------------------------------------
-	$scope.timerRunning = false;
-    $scope.timerStopped = false;
-    $scope.timerDone = false;
-    $scope.started = true;
-    $scope.stopped = false;
-    $scope.restarted = false;
-    $scope.done = true;
-	
 	
    /* // Create a firebaseObject of your users, and store this as part of $scope
     $scope.users = $firebaseObject(userRef);
-	
+  
     // Create authorization object that referes to firebase
     $scope.authObj = $firebaseAuth(ref);
-	var authData = $scope.authObj.$getAuth();
+  var authData = $scope.authObj.$getAuth();
     if (authData) {
         $scope.userId = authData.uid;
     } 
-	console.log($scope.userId);
-	var userObjectsRef = userRef.child($scope.userId);
-	console.log(userObjectsRef);
-	var userGoalsRef = userObjectsRef.child("goals");
-	console.log(userGoalsRef);*/
-	
+  console.log($scope.userId);
+  var userObjectsRef = userRef.child($scope.userId);
+  console.log(userObjectsRef);
+  var userGoalsRef = userObjectsRef.child("goals");
+  console.log(userGoalsRef);*/
+
+  // $scope.timerRunning = false;
+  // $scope.timerStopped = false;
+  // $scope.timerDone = false;
+  // $scope.started = true;
+  // $scope.stopped = false;
+  // $scope.restarted = false;
+  // $scope.done = true;
+  // $scope.reset = false;
+  
     $scope.startTimer = function (){
         $scope.$broadcast('timer-start');
-        $scope.restarted = true;
-        $scope.started = false;
-		
+        // $scope.restarted = true;
+        // $scope.started = false;
+        // $scope.reset = false;
     };
 
     $scope.stopTimer = function (){
         $scope.$broadcast('timer-stop');
-        $scope.stopped = true;
-        $scope.restarted = false;
+        // $scope.stopped = true;
+        // $scope.restarted = false;
     };
 
     $scope.resumeTimer = function (){
         $scope.$broadcast('timer-resume');
-        $scope.restarted = true;
-        $scope.stopped = false;
+        // $scope.restarted = true;
+        // $scope.stopped = false;
     }
+
+    $scope.resetTimer= function (){
+        $scope.$broadcast('timer-reset');
+        // $scope.reset = true;
+    }
+
 	$scope.totaltime = $firebaseObject(timeRef);
 	
 	var timeObj = $firebaseObject(timeRef);
+
     $scope.done = function() {
-       $scope.done = false;
-       $scope.timerDone = true;
-	   //var time_values = new Array();
-	   
-		timeObj.$bindTo($scope, "totaltime").then(function() {
-			console.log("total is " + $scope.totaltime.$value); 
-			console.log("added amount is " + $scope.currentTime.millis);
-			var totalTime = $scope.totaltime.$value;
-			var addedTime = $scope.currentTime.millis;
-			$scope.totaltime.$value = totalTime + addedTime
-		});
-    }
-    
+	    //var time_values = new Array();
+	    timeObj.$bindTo($scope, "totaltime").then(function() {
+  			var totalTime = $scope.totaltime.$value;
+  			var addedTime = $scope.currentTime.millis;
 
-    $scope.startOrStop = function(){
-    document.getElementById('first')[$scope.operation]();
-      $scope.operation = ($scope.operation === 'start' || $scope.operation === 'resume') ? 'stop' : 'resume';
+  			$scope.totaltime.$value = totalTime + addedTime;
+        console.log("total is " + $scope.totaltime.$value); 
+        console.log("added amount is " + addedTime);
+		  });
     }
-
 
     $scope.$on('timer-stopped', function (event, args) {
-        console.log('timer-stopped args = ', args);
-		$scope.currentTime = args;
+      console.log('timer-stopped args = ', args);
+		  $scope.currentTime = args;
     });
+
 	//Timer stuff end---------------------------------------------------------------
 	
 });
