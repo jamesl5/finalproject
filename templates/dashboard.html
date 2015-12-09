@@ -1,6 +1,5 @@
 <h1 id="goalTitle">{{userGoals[0].goalname}}</h1>
 <h2 id="dailyGoal" ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
-<!-- <p>{{logArray.day}}</p> -->
 <div class="container">
     <div class="row">
     	<!-- Heatmap section -->
@@ -14,8 +13,12 @@
 
 			<div id = "time" ng-init="started = true; stopped = false; restarted = false; reset = false; done = false">
 
-					<timer id="first" interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
-					<timer id="first" interval="60" autostart="false"><div class="progress"><div class="progress-bar" role="progressbar" style="width: {{seconds}}%;"></div></div></timer>   
+				<timer interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
+				<timer interval="60" autostart="false">
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" style="width: {{seconds}}%;"></div>
+					</div>
+				</timer>   
 
 				<div class="wrapper">
 <!-- 					<a class="button button-border-action button-circle" ng-click="startTimer(); restarted = true; started = false; reset = false; done = false" ng-show="started">Start</a>
@@ -80,7 +83,7 @@
 
 <div class="container" id="badgelist" ng-show="userbadges.length>0">	
     <h3>Badges:</h3>
-	<div ng-repeat="badge in userbadges" class="eachBadge">
+	<div ng-repeat="badge in userbadges" class="eachBadge" ng-mouseover="droplet()">
 		<p>{{allbadges.$getRecord(badge.$value).name}}</p>
 		<img class="badges" ng-src={{allbadges.$getRecord(badge.$value).url}}>
 	</div>
