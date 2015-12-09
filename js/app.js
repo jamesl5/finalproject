@@ -648,35 +648,35 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
 
     $scope.doneTimer = function() {
-		var today = new Date();
-		var date = today.getDate();
-		var day = today.getDay();
-		var week = 0;
-		if (date == 31 || date == 30){
-		  if (day == 0 || day == 1){
-			  week = 6;
-		  }
-		} else{
-		  week = Math.ceil(date/7);
-		}
-		console.log(date);
-		console.log(day);
-		console.log(week);
-		
-		var timeObj = $firebaseObject(timeRef);
-	    timeObj.$bindTo($scope, "totaltime").then(function() {
-			var totalTime = $scope.totaltime.$value;
-  			var addedTime = $scope.currentTime.millis;
-  			$scope.totaltime.$value = totalTime + addedTime;
-			console.log("total is " + $scope.totaltime.$value); 
-			console.log("added amount is " + $scope.currentTime.millis);
-			var logObj = $firebaseObject(logs);
-			logObj.$bindTo($scope, "logs").then(function(){
-				console.log($scope.logs);
-				console.log($scope.logs[week]);
-				$scope.logs[week][day] = $scope.logs[week][day] + addedTime;
-			});
-		});
+  		var today = new Date();
+  		var date = today.getDate();
+  		var day = today.getDay();
+  		var week = 0;
+  		if (date == 31 || date == 30){
+  		  if (day == 0 || day == 1){
+  			  week = 6;
+  		  }
+  		} else{
+  		  week = Math.ceil(date/7);
+  		}
+  		console.log(date);
+  		console.log(day);
+  		console.log(week);
+  		
+  		var timeObj = $firebaseObject(timeRef);
+  	    timeObj.$bindTo($scope, "totaltime").then(function() {
+  			var totalTime = $scope.totaltime.$value;
+    			var addedTime = $scope.currentTime.millis;
+    			$scope.totaltime.$value = totalTime + addedTime;
+  			console.log("total is " + $scope.totaltime.$value); 
+  			console.log("added amount is " + $scope.currentTime.millis);
+  			var logObj = $firebaseObject(logs);
+  			logObj.$bindTo($scope, "logs").then(function(){
+  				console.log($scope.logs);
+  				console.log($scope.logs[week]);
+  				$scope.logs[week][day] = $scope.logs[week][day] + addedTime;
+  			});
+  		});
 
     }
     $scope.$on('timer-stopped', function (event, args) {
