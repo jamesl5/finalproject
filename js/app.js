@@ -689,6 +689,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         $scope.$broadcast('timer-reset');
     }
 
+
     $scope.doneTimer = function() {
   		var today = new Date();
   		var date = today.getDate();
@@ -704,12 +705,13 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   		console.log(date);
   		console.log(day);
   		console.log(week);
-  		
+		
+		console.log($scope.totaltime);
   		var timeObj = $firebaseObject(timeRef);
   	    timeObj.$bindTo($scope, "totaltime").then(function() {
   			var totalTime = $scope.totaltime.$value;
-    			var addedTime = $scope.currentTime.millis;
-    			$scope.totaltime.$value = totalTime + addedTime;
+			var addedTime = $scope.currentTime.millis;
+			$scope.totaltime.$value = totalTime + addedTime;
   			console.log("total is " + $scope.totaltime.$value); 
   			console.log("added amount is " + $scope.currentTime.millis);
   			var logObj = $firebaseObject(logs);
