@@ -224,13 +224,20 @@ hr {
 	display: cover;
 }
 
-h1#goalTitle {
+#goalTitle, #dailyGoal {
 	text-align: center;
-	background-color: #80cbc4;
 	margin-top: 0;
-	padding-top: 18px;
 	padding-bottom: 15px;
+	padding-top: 18px;
+}
+#goalTitle {
+	background-color: #80cbc4;	
 	color: white;
+	margin-bottom: 0;
+}
+
+#dailyGoal {
+	background-color: #b2dfdb;
 }
 
 #hamburger {
@@ -302,9 +309,12 @@ text.axis-worktime {
 	margin-top: 30px;
 }
 
-#heatRange {
-	text-align: center;
-	font-size: .8em;
+.hour:hover {
+	opacity: 0.7;
+}
+
+#heatMapDate {
+	margin-left: 40px;
 }
 
 .bar {
