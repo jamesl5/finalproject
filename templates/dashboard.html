@@ -21,7 +21,6 @@
 				</timer>   
 
 				<div class="wrapper">
-					<a class="button button-border-royal button-circle" ng-click="resetTimer(); done(); reset = true; stopped = false; restarted = false; started = true;">Done</a> -->
 					<a class="button button-border-action button-circle" ng-click="startTimer(); restarted = true; started = false; reset = false; done = false" ng-show="started">Start</a>
 
 					<a class="button button-border-highlight button-circle" ng-click="resumeTimer(); restarted = true; stopped = false" ng-show="stopped">Resume</a>
