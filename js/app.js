@@ -30,6 +30,11 @@ myApp.config(function($stateProvider) {
       templateUrl: 'templates/login.html',
       controller: 'LoginController'
     })
+	.state('newGoal', {
+		url: '/newGoal',
+		templateUrl: 'templates/newGoal.html',
+		controller: 'NewGoalController'
+	})
 });
 
 function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
@@ -166,6 +171,25 @@ myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArr
 	var email = $scope.email;
 	var password = $scope.password;
    	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
+});
+
+myApp.controller('NewGoalController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+	console.log($scope.userId);
+	/*var newGoal = {goals: {
+		0: {
+			goalname: $scope.goalTitle,
+			schedule: {
+				0: {hours: document.getElementById("Sunday").value},
+				1: {hours: document.getElementById("Monday").value},
+				2: {hours: document.getElementById("Tuesday").value},
+				3: {hours: document.getElementById("Wednesday").value},
+				4: {hours: document.getElementById("Thursday").value},
+				5: {hours: document.getElementById("Friday").value},
+				6: {hours: document.getElementById("Saturday").value}
+			},
+			totaltime: 0
+		}
+	}}*/
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $httpParamSerializer){
@@ -758,7 +782,7 @@ myApp.run(function ($rootScope, $state, $firebaseAuth) {
         return;
       }
 	  if(authData){
-		  var shouldGoDashboard = toState.name !== "dashboard";
+		  var shouldGoDashboard = toState.name !== "newGoal" && toState.name !== "dashboard";
 		  if(shouldGoDashboard){
 			$state.go('dashboard')
 			event.preventDefault();
