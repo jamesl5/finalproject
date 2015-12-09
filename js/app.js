@@ -287,6 +287,26 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 });
 
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
+
+  // Get today's date and convert to milliseconds
+  var today = new Date();
+  var milliseconds = today.getTime();
+  var date = today.getDate();
+  var day = today.getDay();
+  var week = 0;
+  if (date == 31 || date == 30){
+    if (day == 0 || day == 1){
+      week = 6;
+    }
+  } else{
+    week = Math.ceil(date/7);
+  }
+  console.log(date);
+  console.log(day);
+  console.log(week); 
+  $scope.date = milliseconds;
+  $scope.currDay = day;
+
 	getStyleFun($scope);
 
 	$('.dropdown-button').dropdown({
@@ -341,8 +361,30 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	var userbadgeRef = userobjectsRef.child("badges");
 	var specificGoalRef = userGoalRef.child($scope.currentGoal);
 	var schedule = specificGoalRef.child("schedule");
+  var schedObj = $firebaseObject(schedule);
 	var timeRef = specificGoalRef.child("totaltime");
 	var logs = specificGoalRef.child("logs");
+  var weekRef = logs.child(week);
+  var dayRef = weekRef.child(day);
+  var dayObj = $firebaseObject(dayRef);
+    
+    dayObj.$bindTo($scope, "dayObj").then(function() {
+      $scope.dayObj.$value;
+      schedObj.$bindTo($scope, "schedObj").then(function(){
+        var schedTime = $scope.schedObj[day].hours;
+        var schedTimeMilli = schedTime * 3600000;
+
+        // function that controls whether the daily goal is shown or hidden
+        // depending on whether that goal has been met already or not
+        $scope.showDailyGoal = function() {
+          if($scope.dayObj.$value >= schedTimeMilli) {
+            return false;
+          } else {
+            return true;
+          }
+        };
+      });
+    });
 	// var specificLog = logs.child("log");
 	
 	// array of user's badges
@@ -362,15 +404,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   $scope.scheduleArray = $firebaseArray(schedule);
   console.log($scope.scheduleArray);
 
-  // Get today's date and convert to milliseconds
-  var today = new Date();
-  var milliseconds = today.getTime();
-  // console.log(milliseconds);
-  var todayis = today.getDay();
-  // console.log(todayis);
-  $scope.date = milliseconds;
-  $scope.currDay = todayis;
-
   // 
   var hoursCsv = Papa.unparse($scope.logArray, {
     complete: function(results) {
@@ -379,17 +412,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   });
 
   console.log(hoursCsv);
-
-  // function that controls whether the daily goal is shown or hidden
-  // depending on whether that goal has been met already or not
-  $scope.showDailyGoal = function() {
-    return true;
-    // if(todays log time == todays log goal ){
-    //   return false;  
-    // } else {
-    //   return false
-    // }
-  };
 
 
   // START BAR CHART -----------------------------------------------------------------
@@ -667,8 +689,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         $scope.$broadcast('timer-reset');
     }
 
-
-
     $scope.doneTimer = function() {
   		var today = new Date();
   		var date = today.getDate();
@@ -699,7 +719,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   				$scope.logs[week][day] = $scope.logs[week][day] + addedTime;
   			});
   		});
-
     }
     $scope.$on('timer-stopped', function (event, args) {
       console.log('timer-stopped args = ', args);
