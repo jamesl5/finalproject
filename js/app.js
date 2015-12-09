@@ -267,7 +267,9 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 });
 
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
+
 	getStyleFun($scope);
+  	angular.element('.tooltipped').tooltip({delay: 50});
 
 	// GETTING BADGES
 	$scope.Math = window.Math;
@@ -298,11 +300,11 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	var userobjectsRef = userRef.child(userId);
 	var userGoalRef = userobjectsRef.child("goals");
 	var userbadgeRef = userobjectsRef.child("badges");
-	var specificGoalRef = userGoalRef.child("goal");
-	var daysOfWeek = specificGoalRef.child("days");
+	var specificGoalRef = userGoalRef.child("0");
+	var schedule = specificGoalRef.child("schedule");
 	var timeRef = specificGoalRef.child("totaltime");
 	var logs = specificGoalRef.child("logs");
-	var specificLog = logs.child("log");
+	// var specificLog = logs.child("log");
 	
 	// array of user's badges
 	$scope.userbadges = $firebaseArray(userbadgeRef);
@@ -315,11 +317,11 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	$scope.goalArray = $firebaseArray(specificGoalRef);
 	console.log($scope.goalArray);
 	// array of a specific log containing log details
-	$scope.specificLogArray = $firebaseArray(specificLog);
-	console.log($scope.specificLogArray);
+	$scope.logArray = $firebaseArray(logs);
+	console.log($scope.logArray);
   // array of days of the week which contain the user's daily time goals 
-  $scope.daysOfWeekArray = $firebaseArray(daysOfWeek);
-  console.log($scope.daysOfWeekArray);
+  $scope.scheduleArray = $firebaseArray(schedule);
+  console.log($scope.scheduleArray);
 
   // Get today's date and convert to milliseconds
   var today = new Date();
@@ -330,13 +332,14 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   $scope.date = milliseconds;
   $scope.currDay = todayis;
 
-  // $scope.showDailyGoal = function() {
-  //   if(todays log time == todays log goal ){
-  //     return false;  
-  //   } else {
-  //     return false
-  //   }
-  // };
+  $scope.showDailyGoal = function() {
+    return true;
+    // if(todays log time == todays log goal ){
+    //   return false;  
+    // } else {
+    //   return false
+    // }
+  };
 
 
   // START BAR CHART -----------------------------------------------------------------
@@ -578,76 +581,76 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   }
 
   //Timer stuff --------------------------------------------------------------------
-	$scope.timerRunning = false;
-    $scope.timerStopped = false;
-    $scope.timerDone = false;
-    $scope.started = true;
-    $scope.stopped = false;
-    $scope.restarted = false;
-    $scope.done = true;
-	
 	
    /* // Create a firebaseObject of your users, and store this as part of $scope
     $scope.users = $firebaseObject(userRef);
-	
+  
     // Create authorization object that referes to firebase
     $scope.authObj = $firebaseAuth(ref);
-	var authData = $scope.authObj.$getAuth();
+  var authData = $scope.authObj.$getAuth();
     if (authData) {
         $scope.userId = authData.uid;
     } 
-	console.log($scope.userId);
-	var userObjectsRef = userRef.child($scope.userId);
-	console.log(userObjectsRef);
-	var userGoalsRef = userObjectsRef.child("goals");
-	console.log(userGoalsRef);*/
-	
+  console.log($scope.userId);
+  var userObjectsRef = userRef.child($scope.userId);
+  console.log(userObjectsRef);
+  var userGoalsRef = userObjectsRef.child("goals");
+  console.log(userGoalsRef);*/
+
+  // $scope.timerRunning = false;
+  // $scope.timerStopped = false;
+  // $scope.timerDone = false;
+  // $scope.started = true;
+  // $scope.stopped = false;
+  // $scope.restarted = false;
+  // $scope.done = true;
+  // $scope.reset = false;
+  
     $scope.startTimer = function (){
         $scope.$broadcast('timer-start');
-        $scope.restarted = true;
-        $scope.started = false;
-		
+        // $scope.restarted = true;
+        // $scope.started = false;
+        // $scope.reset = false;
     };
 
     $scope.stopTimer = function (){
         $scope.$broadcast('timer-stop');
-        $scope.stopped = true;
-        $scope.restarted = false;
+        // $scope.stopped = true;
+        // $scope.restarted = false;
     };
 
     $scope.resumeTimer = function (){
         $scope.$broadcast('timer-resume');
-        $scope.restarted = true;
-        $scope.stopped = false;
+        // $scope.restarted = true;
+        // $scope.stopped = false;
     }
+
+    $scope.resetTimer= function (){
+        $scope.$broadcast('timer-reset');
+        // $scope.reset = true;
+    }
+
 	$scope.totaltime = $firebaseObject(timeRef);
 	
 	var timeObj = $firebaseObject(timeRef);
+
     $scope.done = function() {
-       $scope.done = false;
-       $scope.timerDone = true;
-	   //var time_values = new Array();
-	   
-		timeObj.$bindTo($scope, "totaltime").then(function() {
-			console.log("total is " + $scope.totaltime.$value); 
-			console.log("added amount is " + $scope.currentTime.millis);
-			var totalTime = $scope.totaltime.$value;
-			var addedTime = $scope.currentTime.millis;
-			$scope.totaltime.$value = totalTime + addedTime
-		});
-    }
-    
+	    //var time_values = new Array();
+	    timeObj.$bindTo($scope, "totaltime").then(function() {
+  			var totalTime = $scope.totaltime.$value;
+  			var addedTime = $scope.currentTime.millis;
 
-    $scope.startOrStop = function(){
-    document.getElementById('first')[$scope.operation]();
-      $scope.operation = ($scope.operation === 'start' || $scope.operation === 'resume') ? 'stop' : 'resume';
+  			$scope.totaltime.$value = totalTime + addedTime;
+        console.log("total is " + $scope.totaltime.$value); 
+        console.log("added amount is " + addedTime);
+		  });
     }
-
 
     $scope.$on('timer-stopped', function (event, args) {
-        console.log('timer-stopped args = ', args);
-		$scope.currentTime = args;
+      console.log('timer-stopped args = ', args);
+		  $scope.currentTime = args;
     });
+
 	//Timer stuff end---------------------------------------------------------------
 	
 });
