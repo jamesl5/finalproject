@@ -34,8 +34,8 @@ myApp.config(function($stateProvider) {
       templateUrl: 'templates/timer.html',
       controller: 'TimerController'
     })
-    .state('signUp', {
-      url: '/signUp',
+    .state('signup', {
+      url: '/signup',
       templateUrl: 'templates/signup.html',
       controller: 'SignUpController'
     })
