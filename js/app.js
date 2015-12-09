@@ -1,8 +1,22 @@
+// Group 5
+// Info-343
+// Final Project
+// December 9, 2015
+// Main JavaScript for our final
+// project. Here we define all of our
+// controllers for our multi-page
+// architecture.
+
+// Initiate global variables, create angular module,
+// and firebase reference
 var usrbadges = [];
 var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', 'ui.bootstrap', 'timer']);
 var ref = new Firebase("https://info343final.firebaseio.com/");
 
-
+// Takes in $stateProvider to allow for
+// multipage-architecture. Declares the
+// different controllers and links the pages
+// together.
 myApp.config(function($stateProvider) {
   $stateProvider
     .state('home', {
@@ -37,6 +51,10 @@ myApp.config(function($stateProvider) {
 	})
 });
 
+// Logs in or signs up a user. If a user is signing up
+// for the first time, they will be automatically
+// logged in. This function also includes user
+// authentication all based off of firebase
 function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
 	// Create a variable 'ref' to reference your firebase storage
     var userRef = ref.child("users");
@@ -58,11 +76,8 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
         // Create user
 		// Here, you set default values for users if there is any
 		$scope.create = false;
-		console.log("sign up");
-		
-		console.log($scope.newUserbadges);
-		console.log($scope.goalTitle);
-		console.log(document.getElementById("Sunday").value);
+
+		// Authenticate user
         $scope.authObj.$createUser({
             email: $scope.email,
             password: $scope.password
@@ -142,6 +157,10 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
     }
 }
 
+// Styling function for our circle graph
+// dynamically changes depending upon data
+// and which page the circle is on
+// Takes in scope and a percent number
 function getStyleFun($scope, num) {
 	$scope.getStyle = function(){
 	    var transform = ($scope.isSemi ? '' : 'translateY(-50%) ') + 'translateX(-50%)';
@@ -158,6 +177,9 @@ function getStyleFun($scope, num) {
 	};
 }
 
+// Signs up the user from the sign up page
+// saves their data in firebase and allows
+// them to create a new goal.
 myApp.controller('SignUpController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 	var name = $scope.name;
 	var email = $scope.email;
@@ -166,6 +188,7 @@ myApp.controller('SignUpController', function($scope, $firebaseAuth, $firebaseAr
    	$scope.weekArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 });
 
+// Logs in user from the log in page
 myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 	var name = $scope.name;
 	var email = $scope.email;
@@ -173,6 +196,7 @@ myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArr
    	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
+// Creates a new goal
 myApp.controller('NewGoalController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
 	console.log($scope.userId);
 	/*var newGoal = {goals: {
@@ -192,12 +216,17 @@ myApp.controller('NewGoalController', function($scope, $firebaseAuth, $firebaseA
 	}}*/
 });
 
+// Controls the functionality of our home page
+// This includes the image styling, the carousel,
+// and creates the circle and bar graphs.
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $httpParamSerializer){
 	angular.element('.slider').slider({full_width: true});
 	angular.element('.parallax').parallax();
 	var num = "50%";
 	getStyleFun($scope, num);
 
+	// Submits contact us data to php
+	// file and sends email to katrina
 	$scope.submitClick = function() {
 		var first_name = $scope.first_name;
 		console.log(first_name);
@@ -222,26 +251,13 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 		$http(req);
 	}
 
-	// new Tether({
-	// 	element: "#signUpPopUp",
-	// 	target: "#signUp",
-	// 	attachment: 'top center',
-	// 	targetAttachment: 'bottom center'
-	// });
-
-	new Tether({
-		element: "#loginPopUp",
-		target: "#login",
-		attachment: 'top center',
-		targetAttachment: 'bottom center'
-	});
-
+	// Logs user in
 	var name = $scope.name;
 	var email = $scope.email;
 	var password = $scope.password;
    	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
     
-    //CREATES THE BAR CHART
+    // creates the bar chart
     var margin = {top: 20, right: 30, bottom: 30, left: 40},
         width = 370 - margin.left - margin.right,
         height = 330 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
@@ -309,42 +325,34 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
       d.value = +d.value; // coerce to number
       return d;
     }  
-    // END OF THE BARCHART
 });
 
+// Controls our dashboard page
+// Creates calendar, timer, circle graph,
+// bar graph, and displays badges.
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
 
+	// Styles circle graph
 	var num = "60%";
 	getStyleFun($scope, num);
 
-	// var drop = new Drop({
-	// 	target: document.querySelector('.titleAct'),
-	// 	content: '<div ng-repeat="user in goalsArray">{{user["goalname"]}}</div>',
-	// 	position: 'bottom center',
-	// 	openOn: 'click'
-	// });
+	// Get today's date and convert to milliseconds
+	var today = new Date();
+	var milliseconds = today.getTime();
+	var date = today.getDate();
+	var day = today.getDay();
+	var week = 0;
+	if (date == 31 || date == 30){
+	if (day == 0 || day == 1){
+		week = 6;
+	}
+	} else{
+		week = Math.ceil(date/7);
+	} 
+	$scope.date = milliseconds;
+	$scope.currDay = day;
 
-  // Get today's date and convert to milliseconds
-  var today = new Date();
-  var milliseconds = today.getTime();
-  var date = today.getDate();
-  var day = today.getDay();
-  var week = 0;
-  if (date == 31 || date == 30){
-    if (day == 0 || day == 1){
-      week = 6;
-    }
-  } else{
-    week = Math.ceil(date/7);
-  }
-  console.log(date);
-  console.log(day);
-  console.log(week); 
-  $scope.date = milliseconds;
-  $scope.currDay = day;
-
-	
-
+	// Labels badges when they are clicked
   	$scope.droplet = function(userbadge) {
   		var badgePopover = new Drop ({
   			target: document.querySelector(".a" + userbadge['$id']),
@@ -354,51 +362,35 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   		});
   	}
 
-  	angular.element('.tooltipped').tooltip({delay: 50});
+  	// Declaring variables needed for database
+  	// Saving database variables to scope
 	$scope.currentGoal = "0"
-	// GETTING BADGES
 	$scope.Math = window.Math;
 	console.log($scope.userId);
-	// rather than stringing all of the .childs together, we found it clearer to break
-	// each step into separate variables
 	var badgeRef = ref.child("allbadges");
 	var userRef = ref.child("users");
-	// var userId = $scope.userId; - maybe delete this since it can be put into userobjectsRef directly below
-	 //console.log(userId);
 	var userobjectsRef = userRef.child($scope.userId);
-	// var userbadgeRef = userobjectsRef.child("badges");
-	// $scope.userbadges = $firebaseArray(userbadgeRef);	
-	// $scope.allbadges = $firebaseArray(badgeRef);
-	
-
 	var userGoalRef = userobjectsRef.child("goals");
 	var goalRef = userGoalRef.child("goal");
-	// $scope.currArr = $firebaseArray(goalRef);
-	// console.log($scope.currArr);
-	// var curr = currArr[2];
-	// console.log(curr);
-
 	var userId = $scope.userId;
 	var userobjectsRef = userRef.child(userId);
 	var userGoalsRef = userobjectsRef.child("goals");
 	$scope.goalsArray = $firebaseArray(userGoalsRef);
-	console.log($scope.goalsArray);
-	console.log($scope.goalsArray.length);
 	var userbadgeRef = userobjectsRef.child("badges");
 	var specificGoalRef = userGoalRef.child($scope.currentGoal);
 	var schedule = specificGoalRef.child("schedule");
-  var schedObj = $firebaseObject(schedule);
+  	var schedObj = $firebaseObject(schedule);
 	var timeRef = specificGoalRef.child("totaltime");
 	var logs = specificGoalRef.child("logs");
-  var weekRef = logs.child(week);
-  var dayRef = weekRef.child(day);
-  var dayObj = $firebaseObject(dayRef);
+  	var weekRef = logs.child(week);
+  	var dayRef = weekRef.child(day);
+  	var dayObj = $firebaseObject(dayRef);
     
     dayObj.$bindTo($scope, "dayObj").then(function() {
-      $scope.dayObj.$value;
-      schedObj.$bindTo($scope, "schedObj").then(function(){
-        var schedTime = $scope.schedObj[day].hours;
-        var schedTimeMilli = schedTime * 3600000;
+    $scope.dayObj.$value;
+    schedObj.$bindTo($scope, "schedObj").then(function(){
+    var schedTime = $scope.schedObj[day].hours;
+    var schedTimeMilli = schedTime * 3600000;
 
         // function that controls whether the daily goal is shown or hidden
         // depending on whether that goal has been met already or not
