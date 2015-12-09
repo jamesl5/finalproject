@@ -304,6 +304,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   // Get today's date and convert to milliseconds
   var today = new Date();
   var milliseconds = today.getTime();
+  console.log(milliseconds);
   var todayis = today.getDay();
   console.log(todayis);
   $scope.date = milliseconds;
