@@ -289,7 +289,7 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
       .append('g')
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    d3.csv("../test_data/testdata.csv", type, function(error, data) {
+    d3.csv("./test_data/testdata.csv", type, function(error, data) {
       if(error) throw error;
 
       x.domain(data.map(function(d) { return d.days; }));
@@ -452,7 +452,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
     .append('g')
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.tsv("../test_data/testdata.tsv", type, function(error, data) {
+  d3.tsv("./test_data/testdata.tsv", type, function(error, data) {
     console.log(data);
     if(error) throw error;
 
