@@ -625,21 +625,26 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         // $scope.reset = true;
     }
 
-	$scope.totaltime = $firebaseObject(timeRef);
+	 $scope.totaltime = $firebaseObject(timeRef);
 	
-	var timeObj = $firebaseObject(timeRef);
+	 var timeObj = $firebaseObject(timeRef);
 
-    $scope.done = function() {
+    $scope.donee = function() {
 	    //var time_values = new Array();
 	    timeObj.$bindTo($scope, "totaltime").then(function() {
+        //$scope.totaltime = $firebaseObject(timeRef);
+        //var timeObj = $firebaseObject(timeRef);
+
   			var totalTime = $scope.totaltime.$value;
   			var addedTime = $scope.currentTime.millis;
-
+        //$scope.totaltime = DashboardController.totaltime;
   			$scope.totaltime.$value = totalTime + addedTime;
+
         console.log("total is " + $scope.totaltime.$value); 
         console.log("added amount is " + addedTime);
 		  });
-    }
+      console.log("hi");
+    };
 
     $scope.$on('timer-stopped', function (event, args) {
       console.log('timer-stopped args = ', args);
