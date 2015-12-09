@@ -343,11 +343,20 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   // Get today's date and convert to milliseconds
   var today = new Date();
   var milliseconds = today.getTime();
-  console.log(milliseconds);
+  // console.log(milliseconds);
   var todayis = today.getDay();
-  console.log(todayis);
+  // console.log(todayis);
   $scope.date = milliseconds;
   $scope.currDay = todayis;
+
+  // 
+  var hoursCsv = Papa.unparse($scope.logArray, {
+    complete: function(results) {
+      console.log("papa results are " + results);
+    }
+  });
+
+  console.log(hoursCsv);
 
   // function that controls whether the daily goal is shown or hidden
   // depending on whether that goal has been met already or not
