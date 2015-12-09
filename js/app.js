@@ -269,7 +269,6 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
 
 	getStyleFun($scope);
-  	angular.element('.tooltipped').tooltip({delay: 50});
 
 	// GETTING BADGES
 	$scope.Math = window.Math;
@@ -332,6 +331,8 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   $scope.date = milliseconds;
   $scope.currDay = todayis;
 
+  // function that controls whether the daily goal is shown or hidden
+  // depending on whether that goal has been met already or not
   $scope.showDailyGoal = function() {
     return true;
     // if(todays log time == todays log goal ){
