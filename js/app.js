@@ -250,6 +250,8 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
 }
 
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
+  angular.element('.tooltipped').tooltip({delay: 50});
+
 	// GETTING BADGES
 	$scope.Math = window.Math;
 	var authData = $scope.authObj.$getAuth();
@@ -279,11 +281,11 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	var userobjectsRef = userRef.child(userId);
 	var userGoalRef = userobjectsRef.child("goals");
 	var userbadgeRef = userobjectsRef.child("badges");
-	var specificGoalRef = userGoalRef.child("goal");
-	var daysOfWeek = specificGoalRef.child("days");
+	var specificGoalRef = userGoalRef.child("0");
+	var schedule = specificGoalRef.child("schedule");
 	var timeRef = specificGoalRef.child("totaltime");
 	var logs = specificGoalRef.child("logs");
-	var specificLog = logs.child("log");
+	// var specificLog = logs.child("log");
 	
 	// array of user's badges
 	$scope.userbadges = $firebaseArray(userbadgeRef);
@@ -296,11 +298,11 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	$scope.goalArray = $firebaseArray(specificGoalRef);
 	console.log($scope.goalArray);
 	// array of a specific log containing log details
-	$scope.specificLogArray = $firebaseArray(specificLog);
-	console.log($scope.specificLogArray);
+	$scope.logArray = $firebaseArray(logs);
+	console.log($scope.logArray);
   // array of days of the week which contain the user's daily time goals 
-  $scope.daysOfWeekArray = $firebaseArray(daysOfWeek);
-  console.log($scope.daysOfWeekArray);
+  $scope.scheduleArray = $firebaseArray(schedule);
+  console.log($scope.scheduleArray);
 
   // Get today's date and convert to milliseconds
   var today = new Date();
@@ -311,13 +313,14 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   $scope.date = milliseconds;
   $scope.currDay = todayis;
 
-  // $scope.showDailyGoal = function() {
-  //   if(todays log time == todays log goal ){
-  //     return false;  
-  //   } else {
-  //     return false
-  //   }
-  // };
+  $scope.showDailyGoal = function() {
+    return true;
+    // if(todays log time == todays log goal ){
+    //   return false;  
+    // } else {
+    //   return false
+    // }
+  };
 
 
   // START BAR CHART -----------------------------------------------------------------
