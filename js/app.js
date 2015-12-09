@@ -421,13 +421,13 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   // START HEATMAP -------------------------------------------------------------------------------
   var margin = { top: 20, right: 0, bottom: 50, left: 40 },
       heatWidth = 400 - margin.left - margin.right,
-      heatHeight = 285 - margin.top - margin.bottom,
+      heatHeight = 385 - margin.top - margin.bottom,
       gridSize = Math.floor(50),
       legendElementWidth = gridSize / 1.28,
       buckets = 9,
       colors = ["#ffffff","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"],
       days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-      weeks = ["1", "2", "3", "4"];
+      weeks = ["1", "2", "3", "4", "5", "6"];
       datasets = ["data.tsv"];
 
   var svg = d3.select("#heatmap").append("svg")
@@ -435,10 +435,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
       .attr("height", heatHeight + margin.top + margin.bottom)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient('left');
 
   var weekLabels = svg.selectAll(".weeksLabel")
       .data(weeks)
@@ -473,7 +469,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         .attr("class", "mono")
         .text("range of hours")
         .attr("x", 130)
-        .attr("y", 263);
+        .attr("y", 363);
 
 
   var heatmapChart = function(tsvFile) {
@@ -496,7 +492,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
           .data(data, function(d) {return d.weeks+':'+d.days;})
 
       cards.enter().append("rect")
-          .attr("x", function(d) { return (d.days - 1) * gridSize; })
+          .attr("x", function(d) { return (d.days) * gridSize; })
           .attr("y", function(d) { return (d.weeks - 1) * gridSize; })
           .attr("rx", 4)
           .attr("ry", 4)
@@ -504,7 +500,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
           .attr("data-position", "top")
           .attr("width", gridSize)
           .attr("height", gridSize)
-          .style("fill", colors[0])
+          .style("fill", colors[0]);
           // .on("mouseover", flash("hi!", "10"));
 
           // function flash(name, dy) {
@@ -534,7 +530,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
       cards.transition().duration(2000)
           .style("fill", function(d) { return colorScale(d.value); });
 
-      
       cards.exit().remove();
 
       var legend = svg.selectAll(".legend")
