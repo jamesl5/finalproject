@@ -387,7 +387,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
       .append('text')
         .attr('transform', 'rotate(-90)')
         .attr('y', -30)
-        .attr('x', -50)
+        .attr('x', -120)
         .style('text-anchor', 'end')
         .text('Hours');
 
@@ -398,18 +398,18 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         .attr('x', function(d) { return x(d.days); })
         .attr('y', function(d) { return height; })
         .attr('height', function(d) { return 0; })
-        // .attr('height', 0)
         .attr("width", x.rangeBand())
         .transition().delay(function (d, i) { return i * 100; })
         .duration(1500)
         .ease('elastic')
         .attr('y', function(d) { return y(d.value); })
-        .attr("height", function(d) { return height - y(d.value); })
-      
-      chart.selectAll(".bar").append("text")
-        .attr("x",  width / 2)
-        .attr("y", height - 3)
-        .style('text-anchor', "end")
+        .attr("height", function(d) { return height - y(d.value); });
+
+    chart.selectAll(".bar")
+      .append("text")
+        .attr("x", 0) //x.rangeBand() / 2
+        .attr("y", 0) //function(d) { return height - y(d.value) - 3; }
+        .style('text-anchor', "middle")
         .text(function(d) {return d.value});
   });
   function type(d) {
@@ -460,7 +460,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         // code to try to add label to heatmap
       svg.append("text")
         .attr("class", "mono")
-        .attr("x", -85)
+        .attr("x", -135)
         .attr("y", -20)
         .style("text-anchor", "end")
         .attr('transform', 'rotate(-90)')
@@ -672,7 +672,7 @@ myApp.run(function ($rootScope, $state, $firebaseAuth) {
 });
 
 window.onload = function () {
-	$(".button-collapse").sideNav();
+	angular.element(".button-collapse").sideNav();
 	console.log("hello");
 }
 
