@@ -300,12 +300,19 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	$scope.specificLog = $firebaseArray(specificLog);
 	console.log($scope.specificLog);
 
-
+  // Testing dates, yo
   var today = new Date();
-  console.log(today);
+  var milliseconds = today.getTime();
+  $scope.date = milliseconds;
 
 
-  //CREATES THE BAR CHART
+  // var circleText = d3.select("#circleGraph")
+  //   .append("text")
+  //   .text('Hello')
+  //   .attr("x", 0)
+  //   .attr("y", 0)
+
+  // START BAR CHART -----------------------------------------------------------------
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
       height = 330 - margin.top - margin.bottom
@@ -373,166 +380,175 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         .attr("y", height - 3)
         .style('text-anchor', "end")
         .text(function(d) {return d.value});
-
-        // var yTextPadding = 20;
-        // chart.selectAll(".bartext")
-        // .data(data)
-        // .enter()
-        // .append("text")
-        // .attr("class", "bartext")
-        // .attr("text-anchor", "middle")
-        // .attr("fill", "white")
-        // .attr("x", function(d,i) {
-        //     return x(i)+x.rangeBand()/2;
-        // })
-        // .attr("y", function(d,i) {
-        //     return height-y(d)+yTextPadding;
-        // })
-        // .text(function(d){
-        //      return d;
-        // });
   });
   function type(d) {
     d.value = +d.value; // coerce to number
     return d;
   }  
-  // END OF THE BARCHART
+  // END OF THE BARCHART ---------------------------------------------------------------------
 
 
-  // START HEATMAP
-  var margin = { top: 20, right: 0, bottom: 50, left: 20 },
-            heatWidth = 400 - margin.left - margin.right,
-            heatHeight = 280 - margin.top - margin.bottom,
-            gridSize = Math.floor(50),
-            legendElementWidth = gridSize / 1.28,
-            buckets = 9,
-            colors = ["#ffffff","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"],
-            days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-            weeks = ["1", "2", "3", "4"];
-            datasets = ["data.tsv"];
+  // START HEATMAP -------------------------------------------------------------------------------
+  var margin = { top: 20, right: 0, bottom: 50, left: 40 },
+      heatWidth = 400 - margin.left - margin.right,
+      heatHeight = 285 - margin.top - margin.bottom,
+      gridSize = Math.floor(50),
+      legendElementWidth = gridSize / 1.28,
+      buckets = 9,
+      colors = ["#ffffff","#edf8b1","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#253494","#081d58"],
+      days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+      weeks = ["1", "2", "3", "4"];
+      datasets = ["data.tsv"];
 
-        var svg = d3.select("#heatmap").append("svg")
-            .attr("width", heatWidth + margin.left + margin.right)
-            .attr("height", heatHeight + margin.top + margin.bottom)
-          .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = d3.select("#heatmap").append("svg")
+      .attr("width", heatWidth + margin.left + margin.right)
+      .attr("height", heatHeight + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient('left');
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient('left');
 
-        var weekLabels = svg.selectAll(".weeksLabel")
-            .data(weeks)
-            .enter().append("text")
-              .text(function (d) { return d; })
-              .attr("x", 0)
-              .attr("y", function (d, i) { return i * gridSize; })
-              .style("text-anchor", "end")
-              .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
-              .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "dayLabel mono axis axis-workweek" : "dayLabel mono axis"); });
+  var weekLabels = svg.selectAll(".weeksLabel")
+      .data(weeks)
+      .enter().append("text")
+        .text(function (d) { return d; })
+        .attr("x", 0)
+        .attr("y", function (d, i) { return i * gridSize; })
+        .style("text-anchor", "end")
+        .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
+        .attr("class", function (d, i) { return ((i >= 0 && i <= 4) ? "weeksLabel mono axis axis-workweek" : "weeksLabel mono axis"); });
 
-        var dayLabels = svg.selectAll(".daysLabel")
-            .data(days)
-            .enter().append("text")
-              .text(function(d) { return d; })
-              .attr("x", function(d, i) { return i * gridSize; })
-              .attr("y", 0)
-              .style("text-anchor", "middle")
-              .attr("transform", "translate(" + gridSize / 2 + ", -6)")
-              .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "timeLabel mono axis axis-worktime" : "timeLabel mono axis"); });
+  var dayLabels = svg.selectAll(".daysLabel")
+      .data(days)
+      .enter().append("text")
+        .text(function(d) { return d; })
+        .attr("x", function(d, i) { return i * gridSize; })
+        .attr("y", 0)
+        .style("text-anchor", "middle")
+        .attr("transform", "translate(" + gridSize / 2 + ", -6)")
+        .attr("class", function(d, i) { return ((i >= 7 && i <= 16) ? "daysLabel mono axis axis-worktime" : "daysLabel mono axis"); });
 
-            dayLabels.append("text")
-              .text('Week')
-              .attr("x", function(d, i) { return i * gridSize; })
-              .attr("y", 0)
-              .style("text-anchor", "middle")
-              .attr("transform", "translate(" + gridSize / 2 + ", -6)");
+        // code to try to add label to heatmap
+      svg.append("text")
+        .attr("class", "mono")
+        .attr("x", -85)
+        .attr("y", -20)
+        .style("text-anchor", "end")
+        .attr('transform', 'rotate(-90)')
+        .text('weeks');
 
-            dayLabels.append('g')
-                .attr('class', 'y axis')
-                .call(yAxis)
-              .append('text')
-                .attr('transform', 'rotate(-90)')
-                .attr('y', -30)
-                .attr('x', -50)
-                .style('text-anchor', 'end')
-                .text('Hours');
+      svg.append("text")
+        .attr("class", "mono")
+        .text("range of hours")
+        .attr("x", 130)
+        .attr("y", 263);
 
 
-        var heatmapChart = function(tsvFile) {
-          d3.tsv("./test_data/hours.tsv",
-          function(d) {
-            return {
-              weeks: +d.weeks,
-              days: +d.days,
-              value: +d.value
-            };
-          },
-          function(error, data) {
-            var colorScale = d3.scale.quantile()
-                .domain([0, buckets - 1, d3.max(data, function (d) { return d.value; })])
-                .range(colors);
+  var heatmapChart = function(tsvFile) {
+    d3.tsv("./test_data/hours.tsv",
+    function(d) {
+      return {
+        weeks: +d.weeks,
+        days: +d.days,
+        value: +d.value
+      };
+    },
+    function(error, data) {
 
-            var cards = svg.selectAll(".hour")
-                .data(data, function(d) {return d.weeks+':'+d.days;});
+      // scale.quantile sets continuous domains to discrete ranges in buckets (or bins)
+      var colorScale = d3.scale.quantile()
+          .domain([0, buckets - 1,  function (d) { return d.value; }])
+          .range(colors);
 
-            cards.append("title");
+      var cards = svg.selectAll(".hour")
+          .data(data, function(d) {return d.weeks+':'+d.days;})
 
-            cards.enter().append("rect")
-                .attr("x", function(d) { return (d.days - 1) * gridSize; })
-                .attr("y", function(d) { return (d.weeks - 1) * gridSize; })
-                .attr("rx", 4)
-                .attr("ry", 4)
-                .attr("class", "hour bordered")
-                .attr("width", gridSize)
-                .attr("height", gridSize)
-                .style("fill", colors[0]);
+      cards.enter().append("rect")
+          .attr("x", function(d) { return (d.days - 1) * gridSize; })
+          .attr("y", function(d) { return (d.weeks - 1) * gridSize; })
+          .attr("rx", 4)
+          .attr("ry", 4)
+          .attr("class", "hour bordered")
+          .attr("data-position", "top")
+          .attr("width", gridSize)
+          .attr("height", gridSize)
+          .style("fill", colors[0])
+          // .on("mouseover", flash("hi!", "10"));
 
-            cards.transition().duration(2000)
-                .style("fill", function(d) { return colorScale(d.value); });
+          // function flash(name, dy) {
+          //   return function() {
+          //     console.log(name);
 
-            cards.select("title").text(function(d) { return d.value; });
-            
-            cards.exit().remove();
+          //     svg.append("text")
+          //         .attr("class", name)
+          //         // .attr("transform", "translate(" + d3.mouse(this) + ")")
+          //         .attr("dy", dy)
+          //         .attr("x", 15)
+          //         .attr("y", 18)
+          //         .text(name)
+          //       // .transition()
+          //       //   .duration(1500)
+          //       //   .style("opacity", 0)
+          //       //   .remove();
+          //   };
+          // }
 
-            var legend = svg.selectAll(".legend")
-                .data([0].concat(colorScale.quantiles()), function(d) { return d; });
+          // function unflash() {
+          //   return function() {
+          //     svg.select("text")
+          //   };
+          // }
 
-            legend.enter().append("g")
-                .attr("class", "legend");
+      cards.transition().duration(2000)
+          .style("fill", function(d) { return colorScale(d.value); });
 
-            legend.append("rect")
-              .attr("x", function(d, i) { return legendElementWidth * i; })
-              .attr("y", heatHeight)
-              .attr("width", legendElementWidth)
-              .attr("height", gridSize / 2)
-              .style("fill", function(d, i) { return colors[i]; });
+      
+      cards.exit().remove();
 
-            legend.append("text")
-              .attr("class", "mono")
-              .text(function(d) { return "≥ " + Math.round(d); })
-              .attr("x", function(d, i) { return legendElementWidth * i + 10; })
-              .attr("y", heatHeight + gridSize / 1.3);
+      var legend = svg.selectAll(".legend")
+          .data([0].concat(colorScale.quantiles()), function(d) { return d; });
 
-            legend.exit().remove();
+      legend.enter().append("g")
+          .attr("class", "legend");
 
-          });  
-        };
+      legend.append("rect")
+        .attr("class", "bordered")
+        .attr("x", function(d, i) { return legendElementWidth * i; })
+        .attr("y", heatHeight - 5)
+        .attr("width", legendElementWidth)
+        .attr("height", gridSize / 2)
+        .style("fill", function(d, i) { return colors[i]; });
 
-        heatmapChart(datasets[0]);
-        
-        var datasetpicker = d3.select("#dataset-picker").selectAll(".dataset-button")
-          .data(datasets);
+      legend.append("text")
+        .attr("class", "mono")
+        .text(function(d, i) { return "≥ " + i; })
+        .attr("x", function(d, i) { return legendElementWidth * i + 10; })
+        .attr("y", heatHeight - 5 + gridSize / 1.3);
 
-        datasetpicker.enter()
-          .append("input")
-          .attr("value", function(d){ return "Dataset " + d })
-          .attr("type", "button")
-          .attr("class", "dataset-button")
-          .on("click", function(d) {
-            heatmapChart(d);
-          });
-  //  END HEATMAP
+      legend.exit().remove();
+    });  
+  };
+
+  heatmapChart(datasets[0]);
+  
+  var datasetpicker = d3.select("#dataset-picker").selectAll(".dataset-button")
+    .data(datasets);
+
+  datasetpicker.enter()
+    .append("input")
+    .attr("value", function(d){ return "Dataset " + d })
+    .attr("type", "button")
+    .attr("class", "dataset-button")
+    .on("click", function(d) {
+      heatmapChart(d);
+    });
+  //  END HEATMAP-------------------------------------------------------------------
+
+  $scope.showText = function() {
+    console.log('show text');
+  }
 
   //Timer stuff --------------------------------------------------------------------
 	$scope.timerRunning = false;
