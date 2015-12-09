@@ -304,7 +304,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	// var userbadgeRef = userobjectsRef.child("badges");
 	// $scope.userbadges = $firebaseArray(userbadgeRef);	
 	// $scope.allbadges = $firebaseArray(badgeRef);
-
+	
 
 	var userGoalRef = userobjectsRef.child("goals");
 	var goalRef = userGoalRef.child("goal");
@@ -315,7 +315,8 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
 	var userId = $scope.userId;
 	var userobjectsRef = userRef.child(userId);
-	var userGoalRef = userobjectsRef.child("goals");
+	var userGoalsRef = userobjectsRef.child("goals");
+	$scope.goalsArray = $firebaseArray(userGoalsRef);
 	var userbadgeRef = userobjectsRef.child("badges");
 	var specificGoalRef = userGoalRef.child($scope.currentGoal);
 	var schedule = specificGoalRef.child("schedule");
