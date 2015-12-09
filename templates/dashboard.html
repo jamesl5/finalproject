@@ -1,4 +1,5 @@
 <h1 id="goalTitle">{{userGoals[0].goalname}}</h1>
+
 <h2 id="dailyGoal" ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
 <div class="container">
     <div class="row">
@@ -16,9 +17,10 @@
 				<timer interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
 				<timer interval="60" autostart="false">
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" style="width: {{seconds}}%;"></div>
+						<div class="progress-bar" role="progressbar" style="width: {{seconds*1.667}}%;"></div>
 					</div>
-				</timer>   
+				</timer>  
+
 
 				<div class="wrapper">
 					<a class="button button-border-action button-circle" ng-click="startTimer(); restarted = true; started = false; reset = false; done = false" ng-show="started">Start</a>
@@ -29,7 +31,7 @@
 
 					<a class="button button-border-primary button-circle" ng-click="resetTimer(); reset = true; stopped = false; restarted = false; started = true;">Reset</a>
 
-					<a class="button button-border-royal button-circle" ng-click="started = true; stopped = false; resetTimer(); doneTimer(); reset = true; restarted = false;">Done</a>
+					<a class="button button-border-royal button-circle" ng-click="done = true; started = true; stopped = false; resetTimer(); doneTimer(); reset = true; restarted = false;">Done</a>
 				</div>
 			</div>
         </div>

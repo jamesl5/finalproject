@@ -1,6 +1,7 @@
 var usrbadges = [];
-var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', 'ui.bootstrap', 'timer'])
+var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', 'ui.bootstrap', 'timer']);
 var ref = new Firebase("https://info343final.firebaseio.com/");
+
 
 myApp.config(function($stateProvider) {
   $stateProvider
@@ -69,7 +70,7 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
         .then(function(authData) {
 			console.log($scope.newUserbadges);
             $scope.userId = authData.uid;
-            $scope.users[authData.uid] ={
+            $scope.users[authData.uid] = {
                 name: $scope.name,
 				badges: $scope.newUserbadges,
 				goals: {
@@ -602,7 +603,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   $scope.showText = function() {
     console.log('show text');
   }
-
   //Timer stuff --------------------------------------------------------------------
 	
    /* // Create a firebaseObject of your users, and store this as part of $scope
@@ -685,7 +685,12 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
     });
 
 	//Timer stuff end---------------------------------------------------------------
-	
+  angular.module('ngrepeatSelect', [])
+   .controller('DashboardController', ['$scope', function($scope) {
+     $scope.data = {
+      repeatSelect: null
+     };
+  }]);
 });
 
 
@@ -721,6 +726,5 @@ window.onload = function () {
 	angular.element(".button-collapse").sideNav();
 	console.log("hello");
 }
-
 
 
