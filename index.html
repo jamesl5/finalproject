@@ -75,8 +75,7 @@
 				</ul>
 				<!-- show user name when user is logged in -->
 				<ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="userId">
-					<li><a ui-sref="dashboard" class="white-text"><span class="deep-orange-text text-accent-1">hello {{users[userId].name.toLowerCase()}}</span></a></li>
-					<li><a class="white-text" ui-sref="timer">timer</a></li>
+					<li><a ui-sref="dashboard" class="white-text">hello <span class="deep-orange-text text-accent-1">{{users[userId].name.toLowerCase()}}</span></a></li>
 					<li><a class="white-text" ng-click="logOut()" id="logout">logout</a></li>
 				</ul>
 				<ul class="side-nav" id="mobile-demo">

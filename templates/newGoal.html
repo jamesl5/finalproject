@@ -1,0 +1,9 @@
+<form name="signUpForm" novalidate>
+	<!-- Submit buttons: should only be active if certain inputs are valid -->
+	<div id="submitButtons" class="container">
+		<div class="form-group">
+			<button ng-click="create=false" class="btn btn-primary">Cancel</button>
+			<button ng-click="signUp()"  ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary">Create</button>
+		</div>
+	</div>
+</form>
