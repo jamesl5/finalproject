@@ -224,20 +224,19 @@ hr {
 	display: cover;
 }
 
-#goalTitle, #dailyGoal {
+/*#goalTitle, #dailyGoal {
 	text-align: center;
 	margin-top: 0;
 	padding-bottom: 15px;
 	padding-top: 18px;
-}
+}*/
 #goalTitle {
-	background-color: #80cbc4;	
-	color: white;
-	margin-bottom: 0;
+	margin: 4%;
+/* border-bottom: 10px solid #00bfa5;*/
 }
 
-#dailyGoal {
-	background-color: #b2dfdb;
+#dailyGoal, #goalTitle {
+	margin-top: 0;
 }
 
 #hamburger {

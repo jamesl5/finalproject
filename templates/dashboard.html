@@ -1,5 +1,8 @@
-<h1 id="goalTitle">{{userGoals[0].goalname}}</h1>
-<h2 id="dailyGoal" ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
+<div id="goalTitle" class="white deep-orange-text text-accent-1 text-center">
+	<h1>{{userGoals[0].goalname}}</h1>
+	<h2 ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
+</div>
+<hr>
 <!-- <p>{{logArray.day}}</p> -->
 <div class="container">
     <div class="row">
