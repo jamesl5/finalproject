@@ -1,6 +1,8 @@
 var usrbadges = [];
-var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', "ui.bootstrap", 'timer'])
+var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', 'ui.bootstrap', 'timer'])
 var ref = new Firebase("https://info343final.firebaseio.com/");
+
+
 
 myApp.config(function($stateProvider) {
   $stateProvider
@@ -19,6 +21,30 @@ myApp.config(function($stateProvider) {
       templateUrl: 'templates/timer.html',
       controller: 'TimerController'
     })
+    .state('signUp', {
+      url: '/signUp',
+      templateUrl: 'templates/signUp.html',
+      controller: 'SignUpController'
+    })
+    .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginController'
+    })
+});
+
+myApp.controller('SignUpController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+	var name = $scope.name;
+	var email = $scope.email;
+	var password = $scope.password;
+   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
+});
+
+myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+	var name = $scope.name;
+	var email = $scope.email;
+	var password = $scope.password;
+   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
 });
 
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $httpParamSerializer){
@@ -63,90 +89,11 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 		targetAttachment: 'bottom center'
 	});
 
-   // Create a variable 'ref' to reference your firebase storage
-    var userRef = ref.child("users");
-
-    // Create a firebaseObject of your users, and store this as part of $scope
-    $scope.users = $firebaseObject(userRef);
-	
-    // Create authorization object that referes to firebase
-    $scope.authObj = $firebaseAuth(ref);
-	
-    // Test if already logged in
-    var authData = $scope.authObj.$getAuth();
-    if (authData) {
-        $scope.userId = authData.uid;
-    } 
-	
-    // SignUp function
-    $scope.signUp = function() {
-        // Create user
-		// Here, you set default values for users if there is any
-		$scope.create = false;
-		console.log("sign up");
-		userbadges = ["powerbadge"];
-        $scope.authObj.$createUser({
-			name: $scope.name,
-            email: $scope.email,
-            password: $scope.password,
-			badges: usrbadges
-        })
-
-        // Once the user is created, call the logIn function
-        .then($scope.logIn)
-
-        // Once logged in, set and save the user data
-        .then(function(authData) {
-            $scope.userId = authData.uid;
-            $scope.users[authData.uid] ={
-                name: $scope.name
-            }
-            $scope.users.$save()
-        })
-		.then($location.path('/dashboard'))
-        // Catch any errors
-        .catch(function(error) {
-            console.error("Error: ", error);
-			console.log(error.code);
-			if(error.code == "INVALID_EMAIL"){
-				alert("Email is invalid")
-			}
-			if(error.code == "EMAIL_TAKEN"){
-				alert("Email already in use")
-			}
-        });
-    }
-
-
-    // SignIn function, reads whatever set-up the user has
-    $scope.signIn = function() {
-        $scope.logIn().then(function(authData){
-            $scope.userId = authData.uid
-			var id = $scope.userId;
-			$scope.badges = $scope.users[id].badges
-			$location.path('/dashboard')
-        })
-    }
-	
-    // LogIn function
-    $scope.logIn = function() {
-        return $scope.authObj.$authWithPassword({
-            email: $scope.email,
-            password: $scope.password
-        })
-    }
-	
-	usrbadges = $scope.badges;
-	
-    // LogOut function
-    $scope.logOut = function() {
-        $scope.authObj.$unauth()
-        $scope.userId = false
-		$location.path('/')
-		$scope.badges = []
-		userbadges = [];
-    }
-
+	var name = $scope.name;
+	var email = $scope.email;
+	var password = $scope.password;
+   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
+    
     //CREATES THE BAR CHART
     var margin = {top: 20, right: 30, bottom: 30, left: 40},
         width = 370 - margin.left - margin.right,
@@ -218,8 +165,94 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
     // END OF THE BARCHART
 });
 
+function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
+	// Create a variable 'ref' to reference your firebase storage
+    var userRef = ref.child("users");
+
+    // Create a firebaseObject of your users, and store this as part of $scope
+    $scope.users = $firebaseObject(userRef);
+	
+    // Create authorization object that referes to firebase
+    $scope.authObj = $firebaseAuth(ref);
+	
+    // Test if already logged in
+    var authData = $scope.authObj.$getAuth();
+    if (authData) {
+        $scope.userId = authData.uid;
+    } 
+
+    // SignUp function
+    $scope.signUp = function() {
+        // Create user
+		// Here, you set default values for users if there is any
+		$scope.create = false;
+		console.log("sign up");
+		userbadges = ["powerbadge"];
+        $scope.authObj.$createUser({
+			name: $scope.name,
+            email: $scope.email,
+            password: $scope.password,
+			badges: usrbadges
+        })
+
+        // Once the user is created, call the logIn function
+        .then($scope.logIn)
+
+        // Once logged in, set and save the user data
+        .then(function(authData) {
+            $scope.userId = authData.uid;
+            $scope.users[authData.uid] ={
+                name: $scope.name
+            }
+            $scope.users.$save()
+        })
+		.then($location.path('/dashboard'))
+        // Catch any errors
+        .catch(function(error) {
+            console.error("Error: ", error);
+			console.log(error.code);
+			if(error.code == "INVALID_EMAIL"){
+				alert("Email is invalid")
+			}
+			if(error.code == "EMAIL_TAKEN"){
+				alert("Email already in use")
+			}
+        });
+    }
+
+    // SignIn function, reads whatever set-up the user has
+    $scope.signIn = function() {
+        $scope.logIn().then(function(authData){
+            $scope.userId = authData.uid
+			var id = $scope.userId;
+			$scope.badges = $scope.users[id].badges
+			$location.path('/dashboard')
+        })
+    }
+	
+    // LogIn function
+    $scope.logIn = function() {
+        return $scope.authObj.$authWithPassword({
+            email: $scope.email,
+            password: $scope.password
+        })
+    }
+	
+	usrbadges = $scope.badges;
+	
+    // LogOut function
+    $scope.logOut = function() {
+        $scope.authObj.$unauth()
+        $scope.userId = false
+		$location.path('/')
+		$scope.badges = []
+		userbadges = [];
+    }
+}
+
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
 	// GETTING BADGES
+	$scope.Math = window.Math;
 	var authData = $scope.authObj.$getAuth();
 	if (authData) {
 		$scope.userId = authData.uid;
@@ -238,10 +271,10 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
 	var userGoalRef = userobjectsRef.child("goals");
 	var goalRef = userGoalRef.child("goal");
-	$scope.currArr = $firebaseArray(goalRef);
-	console.log($scope.currArr);
-	var curr = currArr[2];
-	console.log(curr);
+	// $scope.currArr = $firebaseArray(goalRef);
+	// console.log($scope.currArr);
+	// var curr = currArr[2];
+	// console.log(curr);
 
 	var userId = $scope.userId;
 	var userobjectsRef = userRef.child(userId);
@@ -598,5 +631,11 @@ myApp.run(function ($rootScope, $state, $firebaseAuth) {
       
     });
 });
+
+window.onload = function () {
+	$(".button-collapse").sideNav();
+	console.log("hello");
+}
+
 
 

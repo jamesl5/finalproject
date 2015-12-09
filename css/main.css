@@ -1,21 +1,21 @@
+@import url(https://fonts.googleapis.com/css?family=Lato|Open+Sans);
 
-/*STYLE FOR INDEX.HTML
----------------------------------------------------------------------------------*/
 body {
-	display: flex;
-	min-height: 100vh;
-	flex-direction: column;
+	font-family: 'Open Sans', sans-serif;
 }
 
 #navLogo {
 	max-width: 200px;
 }
 
+#paraLogo {
+	width: 100%;
+}
+
 #signUpPopUp {
 	width: 40%;
 	background-color: white;
 }
-
 
 /*arrow-box is the arrow on the signup/login popups*/
 .arrow_box {
@@ -26,6 +26,7 @@ body {
 	padding: 3%;
 	margin-top: 30px;
 }
+
 .arrow_box:after, .arrow_box:before {
 	bottom: 100%;
 	left: 50%;
@@ -36,6 +37,7 @@ body {
 	position: absolute;
 	pointer-events: none;
 }
+
 .arrow_box:after {
 	border-color: rgba(255, 255, 255, 0);
 	border-bottom-color: #ffffff;
@@ -43,6 +45,7 @@ body {
 	margin-left: -30px;
 	
 }
+
 .arrow_box:before {
 	border-color: rgba(0, 191, 165, 0);
 	border-bottom-color: #00bfa5;
@@ -71,23 +74,6 @@ body {
 	vertical-align: center;
 }
 
-/*
-body {
-	display: flex;
-	min-height: 100vh;
-	flex-direction: column;
-}
-
-main {
-	flex: 1 0 auto;
-}*/
-
-/*main {
-	flex: 1 0 auto;
-}*/
-
-/*STYLE FOR HOME
----------------------------------------------------------------------------------*/
 /*  -positions the slider image carousel indicators 
 	 to overlap the image at the bottom
 	-sets the height of the slider images and overrides
@@ -102,11 +88,12 @@ main {
 	transform: translate(-50%, -50%);
 	color: white;
 	text-align: center;
-
 }
+
 .slider, .slides {
 	height: 700px !important;
 }
+
 div.slider {
 	z-index: -100;
 }
@@ -117,6 +104,19 @@ div.slider {
 	text-align: center;
 }
 
+/*#explanation {
+	margin: 3%;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}*/
+
+#mainText {
+	margin: 3%;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
 /*  -fixes margin of main header below image carousel*/
 #bigHeader {
 	margin-bottom: 0;
@@ -131,9 +131,33 @@ i {
 	margin-top: 30px;
 }
 
+.iconDivText {
+	width: 70%;
+	display: block;
+	margin: auto;
+
+}
+
+.colorBlock {
+	height: 2%;
+	margin: 0px;
+}
+
+#mainTextIcons {
+	margin: 4%;
+}
+
 /*  -bolds the contact us text*/
-#contactus {
+/*#contactus {
 	font-weight: bold;
+}*/
+
+.book {
+	font-style: italic;
+}
+
+#contactUsForm {
+	margin-top: 2%;
 }
 
 /*  -gives a height to the teal divider between sections*/
@@ -141,9 +165,6 @@ i {
 	height: 80px;
 }
 
-
-/*STYLE FOR DASHBOARD
----------------------------------------------------------------------------------*/
 /*  -gives the horizontal rows in dashboard.html no margins*/
 hr {
 	margin: 0;
@@ -151,6 +172,16 @@ hr {
 	height: 1px;
 	background: #333;
 	background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+.eachBadge {
+	display: inline-block;
+	margin: 1%;
+	text-align: center;
+}
+
+#piano {
+	display: cover;
 }
 
 h1#goalTitle {
@@ -162,14 +193,28 @@ h1#goalTitle {
 	color: white;
 }
 
+#hamburger {
+	color: white;
+}
+
 #time{
 	text-align: center;
 	margin : 5px;
 	padding-top: 150px;
 	padding-left: 20%;
 }
-/*STYLE FOR CIRCLE GRAPH
----------------------------------------------------------------------------------*/
+
+.featurette {
+	display: block;
+	overflow: auto;
+}
+
+#howContent {
+	margin-top: 2%;
+	margin-bottom: 2%;
+	margin-right: auto;
+	margin-left: auto;
+}
 
 /*  -positions the text over the lifetime time tracker
 	-they are positioned separately for the dashboard and the home pages*/
@@ -189,8 +234,6 @@ h1#goalTitle {
 	margin-top: 0;
 }
 
-/*STYLE FOR HEATMAP
----------------------------------------------------------------------------------*/
 .graphLabel {
 	margin-top: 40px;
 	margin-bottom: 40px;
@@ -224,9 +267,6 @@ text.axis-worktime {
 	font-size: .8em;
 }
 
-/*STYLE FOR BARGRAPH
----------------------------------------------------------------------------------*/
-
 .bar {
 	fill: #45ccce;
 }
@@ -254,17 +294,10 @@ svg#barChart {
 	margin-top: 30px;
 }
 
-/*STYLE FOR BADGES SECTION
----------------------------------------------------------------------------------*/
-#badge{
+.badges {
 	width: 100px;
 	max-height: 100px;
 	padding: 5px;
-	left: 50%;
-}
-
-.badgeListItem p {
-	text-align :center;
 }
 
 .list-group-item {
@@ -273,14 +306,14 @@ svg#barChart {
 	width: 140px;
 }
 
-/*STYLE FOR TIMER
----------------------------------------------------------------------------------*/
 #time h3 {
 	text-align: center;
 }
+
 .wrapper {
 	text-align: center;
 }
+
 #time {
 	padding-top: 15%;
 	padding-bottom: 15%;
@@ -289,9 +322,11 @@ svg#barChart {
 .start::before{
   content:"Start";
 }
+
 .stop::before{
   content:"Stop";
 }
+
 .resume::before{
   content:"Resume";
 }

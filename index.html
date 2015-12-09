@@ -34,6 +34,7 @@
 	<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
+
 	<!-- D3 Library -->
 	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
@@ -54,31 +55,34 @@
 
 	<!-- Unicorn button.css library -->
 	<link rel="stylesheet" href="css/buttons.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   	<script type="text/javascript" src="js/buttons.js"></script>
- 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.css" rel="stylesheet" />
-
-
 </head>
 <body>
-	<div class="navbar-fixed" id="screenTop">
+	<div class="navbar-fixed" id="topNavBar">
 		<nav class="teal accent-4">
 		    <div class="nav-wrapper container">
 	 		    <a ui-sref="home" class="brand-logo" ng-click="gotoTop()"><img id="navLogo"src="img/amateur-logo.png"></a>
+	 		    <a href="#" data-activates="mobile-demo" class="button-collapse"><i id="hamburger" class="material-icons">menu</i></a>
 				<!-- show signup and login when user is not logged in -->
-			    <ul id="nav-mobile" class="right" ng-show="!userId">
+			    <ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="!userId">
 				    <li><a class="white-text" ng-click="create=true; enter=false" id="signUp">Sign Up</a></li>
 				    <li><a class="white-text" ng-click="enter=true; create=false" id="login">Login</a></li>
 				</ul>
 				<!-- show user name when user is logged in -->
-				<ul id="nav-mobile" class="right" ng-show="userId">
+				<ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="userId">
 					<li><a ui-sref="dashboard" class="white-text">Welcome! {{users[userId].name}}</a></li>
 					<li><a class="white-text" ui-sref="timer">Timer</a></li>
 					<li><a class="white-text" ng-click="logOut()" id="logout">Logout</a></li>
 				</ul>
+				<ul class="side-nav" id="mobile-demo">
+					<li ng-show="!userId"><a class="teal-text accent-4-text" id="signUp" ui-sref="signUp">Sign Up</a></li>
+				    <li ng-show="!userId"><a class="teal-text accent-4-text" id="login" ui-sref="login">Login</a></li>
+				    <li ng-show="userId"><a ui-sref="dashboard" class="teal-text accent-4-text">Welcome! {{users[userId].name}}</a></li>
+					<li ng-show="userId"><a class="teal-text accent-4-text" ui-sref="timer">Timer</a></li>
+					<li ng-show="userId"><a class="teal-text accent-4-text" ng-click="logOut()" id="logout">Logout</a></li>
+				</ul>
 		    </div>
 	    </nav>
-
 	</div>
 	<div ng-init="create=false" ng-show="create" id="signUpPopUp" class="arrow_box">
 		<!-- took out ng-show="!userId" -->
@@ -133,6 +137,7 @@
 			</div>
 		</form>
 	</div>
+
 	<div>
 		<!-- This is where your content will display -->
 		<div id="uiView" ui-view></div>
