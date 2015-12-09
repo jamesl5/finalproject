@@ -5,17 +5,21 @@
     	<!-- Heatmap section -->
     	<div class="col-xs-12 col-md-6">
 	        <div id="heatmap">
-	        	<h5>{{specificLog[2].$value}}</h5>
+	        	<!-- <h5>{{specificLog[2].$value}}</h5> -->
+	        	<h5 id="heatMapDate">{{date | date: "MMM, yyyy"}}</h5>
 	        </div>
-       		<p id="heatRange">range of hours</p>
     	</div>	
     	<!-- Timer section -->
         <div class="col-xs-12 col-md-6">
 			<div id = "time">
-					<timer id="first" interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
-					<timer id="first" interval="60" autostart="false"><div class="progress"><div class="progress-bar" role="progressbar" style="width: {{seconds}}%;"></div></div></timer>   
-
-
+				<timer id="first" interval="100" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
+				<timer id="first" interval="60" autostart="false">
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" style="width: ({{seconds}} * 1.66)%;">
+						</div>
+					</div>
+				</timer>   
+				<!-- Buttons for the timer -->
 				<div class="wrapper">
 					<a class="button button-border-action button-circle" ng-click="startTimer()" ng-disabled="timerStarted" ng-show="started">Start</a>
 
@@ -31,7 +35,6 @@
         </div>
     </div>
 </div>
-
 
 <hr>
 
