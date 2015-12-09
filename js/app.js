@@ -289,7 +289,48 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
 
+  // Get today's date and convert to milliseconds
+  var today = new Date();
+  var milliseconds = today.getTime();
+  var date = today.getDate();
+  var day = today.getDay();
+  var week = 0;
+  if (date == 31 || date == 30){
+    if (day == 0 || day == 1){
+      week = 6;
+    }
+  } else{
+    week = Math.ceil(date/7);
+  }
+  console.log(date);
+  console.log(day);
+  console.log(week); 
+  $scope.date = milliseconds;
+  $scope.currDay = day;
+
 	getStyleFun($scope);
+
+	$('.dropdown-button').dropdown({
+			inDuration: 300,
+			outDuration: 225,
+			constrain_width: true, // Does not change width of dropdown to that of the activator
+			hover: true, // Activate on hover
+			belowOrigin: true
+		// gutter: 50% // Spacing from edge
+		// Displays dropdown below the button
+		// alignment: 'left' // Displays dropdown with edge aligned to the left of button
+		}
+	);
+
+  	$scope.droplet = function(userbadge) {
+  		var badgePopover = new Drop ({
+  			target: document.querySelector(".a" + userbadge['$id']),
+  			content: userbadge['$value'],
+  			position: "bottom center",
+  			openOn: 'click'
+  		});
+  	}
+
   	angular.element('.tooltipped').tooltip({delay: 50});
 	$scope.currentGoal = "0"
 	// GETTING BADGES
@@ -305,7 +346,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	// var userbadgeRef = userobjectsRef.child("badges");
 	// $scope.userbadges = $firebaseArray(userbadgeRef);	
 	// $scope.allbadges = $firebaseArray(badgeRef);
-
+	
 
 	var userGoalRef = userobjectsRef.child("goals");
 	var goalRef = userGoalRef.child("goal");
@@ -316,12 +357,35 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
 	var userId = $scope.userId;
 	var userobjectsRef = userRef.child(userId);
-	var userGoalRef = userobjectsRef.child("goals");
+	var userGoalsRef = userobjectsRef.child("goals");
+	$scope.goalsArray = $firebaseArray(userGoalsRef);
 	var userbadgeRef = userobjectsRef.child("badges");
 	var specificGoalRef = userGoalRef.child($scope.currentGoal);
 	var schedule = specificGoalRef.child("schedule");
+  var schedObj = $firebaseObject(schedule);
 	var timeRef = specificGoalRef.child("totaltime");
 	var logs = specificGoalRef.child("logs");
+  var weekRef = logs.child(week);
+  var dayRef = weekRef.child(day);
+  var dayObj = $firebaseObject(dayRef);
+    
+    dayObj.$bindTo($scope, "dayObj").then(function() {
+      $scope.dayObj.$value;
+      schedObj.$bindTo($scope, "schedObj").then(function(){
+        var schedTime = $scope.schedObj[day].hours;
+        var schedTimeMilli = schedTime * 3600000;
+
+        // function that controls whether the daily goal is shown or hidden
+        // depending on whether that goal has been met already or not
+        $scope.showDailyGoal = function() {
+          if($scope.dayObj.$value >= schedTimeMilli) {
+            return false;
+          } else {
+            return true;
+          }
+        };
+      });
+    });
 	// var specificLog = logs.child("log");
 	
 	// array of user's badges
@@ -341,15 +405,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   $scope.scheduleArray = $firebaseArray(schedule);
   console.log($scope.scheduleArray);
 
-  // Get today's date and convert to milliseconds
-  var today = new Date();
-  var milliseconds = today.getTime();
-  // console.log(milliseconds);
-  var todayis = today.getDay();
-  // console.log(todayis);
-  $scope.date = milliseconds;
-  $scope.currDay = todayis;
-
   // 
   var hoursCsv = Papa.unparse($scope.logArray, {
     complete: function(results) {
@@ -358,17 +413,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   });
 
   console.log(hoursCsv);
-
-  // function that controls whether the daily goal is shown or hidden
-  // depending on whether that goal has been met already or not
-  $scope.showDailyGoal = function() {
-    return true;
-    // if(todays log time == todays log goal ){
-    //   return false;  
-    // } else {
-    //   return false
-    // }
-  };
 
 
   // START BAR CHART -----------------------------------------------------------------
@@ -646,7 +690,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
     }
 
 
-
     $scope.doneTimer = function() {
   		var today = new Date();
   		var date = today.getDate();
@@ -662,12 +705,13 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   		console.log(date);
   		console.log(day);
   		console.log(week);
-  		
+		
+		console.log($scope.totaltime);
   		var timeObj = $firebaseObject(timeRef);
   	    timeObj.$bindTo($scope, "totaltime").then(function() {
   			var totalTime = $scope.totaltime.$value;
-    			var addedTime = $scope.currentTime.millis;
-    			$scope.totaltime.$value = totalTime + addedTime;
+			var addedTime = $scope.currentTime.millis;
+			$scope.totaltime.$value = totalTime + addedTime;
   			console.log("total is " + $scope.totaltime.$value); 
   			console.log("added amount is " + $scope.currentTime.millis);
   			var logObj = $firebaseObject(logs);
@@ -677,7 +721,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   				$scope.logs[week][day] = $scope.logs[week][day] + addedTime;
   			});
   		});
-
     }
     $scope.$on('timer-stopped', function (event, args) {
       console.log('timer-stopped args = ', args);

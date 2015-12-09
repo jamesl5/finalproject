@@ -1,40 +1,35 @@
-<h1 id="goalTitle">{{userGoals[0].goalname}}</h1>
+<div id="goalTitle" class="white deep-orange-text text-accent-1 text-center">
+		<h1 id="titleAct" class="dropdown-button" data-activates="dropdown1">{{userGoals[0].goalname}}</h1>
+	<ul id="dropdown1" class="dropdown-content" ng-repeat="goal in goals">
+		<li></li>
+	</ul> 
+	<h2 ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
+</div>
+<hr>
 
-<h2 id="dailyGoal" ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
-<div class="container">
-    <div class="row">
-    	<!-- Heatmap section -->
-    	<div class="col-xs-12 col-md-6">
-	        <div id="heatmap">
-	        	<h5 id="heatMapDate">{{date | date: "MMM yyyy"}}</h5>
-	        </div>
-    	</div>	
-    	<!-- Timer section -->
-        <div class="col-xs-12 col-md-6">
-
-			<div id = "time" ng-init="started = true; stopped = false; restarted = false; reset = false; done = false">
-
-				<timer interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
-				<timer interval="60" autostart="false">
-					<div class="progress">
-						<div class="progress-bar" role="progressbar" style="width: {{seconds*1.667}}%;"></div>
-					</div>
-				</timer>  
-
-
-				<div class="wrapper">
-					<a class="button button-border-action button-circle" ng-click="startTimer(); restarted = true; started = false; reset = false; done = false" ng-show="started">Start</a>
-
-					<a class="button button-border-highlight button-circle" ng-click="resumeTimer(); restarted = true; stopped = false" ng-show="stopped">Resume</a>
-
-					<a class="button button-border-caution button-circle" ng-click="stopTimer(); stopped = true; restarted = false" ng-show="restarted">Stop</a>
-
-					<a class="button button-border-primary button-circle" ng-click="resetTimer(); reset = true; stopped = false; restarted = false; started = true;">Reset</a>
-
-					<a class="button button-border-royal button-circle" ng-click="done = true; started = true; stopped = false; resetTimer(); doneTimer(); reset = true; restarted = false;">Done</a>
-				</div>
+<div id="graphs" class="container">
+	<div id="heatmap">
+    	<h5 id="heatMapDate">{{date | date: "MMM yyyy"}}</h5>
+    </div>
+	<div id="time" ng-init="started = true; stopped = false; restarted = false; reset = false; done = false">
+		<timer id="first" interval="60" autostart="false">{{hours}} hour{{hoursS}} : {{minutes}} minute{{minutesS}} : {{seconds}} second{{secondsS}}</timer>
+		<timer id="first" interval="60" autostart="false">
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" style="width: {{seconds*1.667}}%;"></div>
 			</div>
-        </div>
+		</timer>   
+		<div class="wrapper">
+			<a class="button button-border-action button-circle" ng-click="startTimer(); restarted = true; started = false; reset = false; done = false" ng-show="started">Start</a>
+
+			<a class="button button-border-highlight button-circle" ng-click="resumeTimer(); restarted = true; stopped = false" ng-show="stopped">Resume</a>
+
+			<a class="button button-border-caution button-circle" ng-click="stopTimer(); stopped = true; restarted = false" ng-show="restarted">Stop</a>
+
+			<a class="button button-border-primary button-circle" ng-click="resetTimer(); reset = true; stopped = false; restarted = false; started = true;">Reset</a>
+
+			<a class="button button-border-royal button-circle" ng-click="started = true; stopped = false; resetTimer(); doneTimer(); reset = true; restarted = false;">Done</a>
+			</div>
+		</div>
     </div>
 </div>
 
@@ -74,15 +69,10 @@
 <hr>
 
 <div class="container" id="badgelist" ng-show="userbadges.length>0">	
-    <h3>Badges:</h3>
-	<div ng-repeat="badge in userbadges" class="eachBadge" ng-mouseover="droplet()">
-		<p>{{allbadges.$getRecord(badge.$value).name}}</p>
+    <h3 class='deep-orange-text text-accent-1 text-center'>Badges</h3>
+    <h5 class="grey-text text-darken-1 text-center">click on a badge to see its name</h5>
+	<div ng-repeat="badge in userbadges" class="eachBadge {{'a' + badge['$id']}}" ng-mouseover="droplet(badge)">
 		<img class="badges" ng-src={{allbadges.$getRecord(badge.$value).url}}>
 	</div>
 </div>
-
-
-
-
-
 
