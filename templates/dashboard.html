@@ -1,8 +1,10 @@
-<div id="goalTitle" class="white deep-orange-text text-accent-1 text-center">
+<div id="goalTitle" class="white deep-orange-text text-accent-1 text-center" ng-init="showGoals=false" ng-click="showGoals=true">
 		<h1 id="titleAct" class="dropdown-button" data-activates="dropdown1">{{userGoals[0].goalname}}</h1>
-	<ul id="dropdown1" class="dropdown-content" ng-repeat="goal in goals">
-		<li></li>
-	</ul> 
+	
+	<div ng-show="showGoals">
+		<a class="button button-border-primary button-rounded" ng-repeat="goal in userGoals" ng-click="showGoals=false">{{goal.goalname}}</a>
+	</div>
+
 	<h2 ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
 </div>
 <hr>

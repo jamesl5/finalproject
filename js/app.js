@@ -689,6 +689,10 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         $scope.$broadcast('timer-reset');
     }
 
+    $scope.showGoals = function() {
+        $scope.showGoals = true;
+    }
+
 
     $scope.doneTimer = function() {
   		var today = new Date();
@@ -728,13 +732,10 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
     });
 
 	//Timer stuff end---------------------------------------------------------------
-  angular.module('ngrepeatSelect', [])
-   .controller('DashboardController', ['$scope', function($scope) {
-     $scope.data = {
-      repeatSelect: null
-     };
-  }]);
-});
+
+
+
+}); // end of dashboard controller
 
 
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
