@@ -289,7 +289,12 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
 
 	getStyleFun($scope);
+<<<<<<< HEAD
 
+=======
+  	angular.element('.tooltipped').tooltip({delay: 50});
+	$scope.currentGoal = "0"
+>>>>>>> signup-timer
 	// GETTING BADGES
 	$scope.Math = window.Math;
 	console.log($scope.userId);
@@ -316,7 +321,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	var userobjectsRef = userRef.child(userId);
 	var userGoalRef = userobjectsRef.child("goals");
 	var userbadgeRef = userobjectsRef.child("badges");
-	var specificGoalRef = userGoalRef.child("0");
+	var specificGoalRef = userGoalRef.child($scope.currentGoal);
 	var schedule = specificGoalRef.child("schedule");
 	var timeRef = specificGoalRef.child("totaltime");
 	var logs = specificGoalRef.child("logs");
@@ -635,8 +640,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         $scope.$broadcast('timer-reset');
     }
 
-	
-	 
+
 
     $scope.doneTimer = function() {
 		var timeObj = $firebaseObject(timeRef);
@@ -645,8 +649,8 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   			var addedTime = $scope.currentTime.millis;
   			$scope.totaltime.$value = totalTime + addedTime;
 			console.log("total is " + $scope.totaltime.$value); 
-			console.log("added amount is " + addedTime);
-		  });
+			console.log("added amount is " + $scope.currentTime.millis);
+		});
     }
     $scope.$on('timer-stopped', function (event, args) {
       console.log('timer-stopped args = ', args);
