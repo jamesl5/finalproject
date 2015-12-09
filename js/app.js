@@ -689,7 +689,10 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         $scope.$broadcast('timer-reset');
     }
 
-
+	var specificGoalRef = userGoalRef.child($scope.currentGoal);
+	var totaltimeRef = specificGoalRef.child("totaltime")
+	$scope.totaltime = $firebaseObject(totaltimeRef)
+	console.log($scope.totaltime)
     $scope.doneTimer = function() {
   		var today = new Date();
   		var date = today.getDate();
