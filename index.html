@@ -77,7 +77,7 @@
 	 		    <a href="#" data-activates="mobile-demo" class="button-collapse"><i id="hamburger" class="material-icons">menu</i></a>
 				<!-- show signup and login when user is not logged in -->
 			    <ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="!userId">
-				    <li><a class="white-text" ui-sref="signUp" id="signUp">Sign Up</a></li>
+				    <li><a class="white-text" ui-sref="signup" id="signUp">Sign Up</a></li>
 				    <li><a class="white-text" ui-sref="login" id="login">Login</a></li>
 				</ul>
 				<!-- show user name when user is logged in -->
@@ -87,7 +87,7 @@
 					<li><a class="white-text" ng-click="logOut()" id="logout">logout</a></li>
 				</ul>
 				<ul class="side-nav" id="mobile-demo">
-					<li ng-show="!userId"><a class="teal-text accent-4-text" id="signUp" ui-sref="signUp">sign up</a></li>
+					<li ng-show="!userId"><a class="teal-text accent-4-text" id="signUp" ui-sref="signup">sign up</a></li>
 				    <li ng-show="!userId"><a class="teal-text accent-4-text" id="login" ui-sref="login">login</a></li>
 				    <li ng-show="userId"><a ui-sref="dashboard" class="teal-text accent-4-text">hello {{users[userId].name.toLowerCase()}}</a></li>
 					<li ng-show="userId"><a ui-sref="newGoal" class="teal-text accent-4-text">Create New Goal</a></li>
