@@ -281,6 +281,10 @@ hr {
 	margin-top: 0;
 }
 
+.slider .indicators .indicator-item.active {
+	background-color: #00bfa5;
+}
+
 .graphLabel {
 	margin-top: 40px;
 	margin-bottom: 40px;
