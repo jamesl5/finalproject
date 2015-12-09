@@ -262,9 +262,12 @@ text.axis-worktime {
 	margin-top: 30px;
 }
 
-#heatRange {
-	text-align: center;
-	font-size: .8em;
+.hour:hover {
+	opacity: 0.7;
+}
+
+#heatMapDate {
+	margin-left: 40px;
 }
 
 .bar {
