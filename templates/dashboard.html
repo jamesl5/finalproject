@@ -4,9 +4,9 @@
 	<div ng-show="showGoals">
 		<a class="button button-border-primary button-rounded" ng-repeat="goal in userGoals" ng-click="showGoals=false">{{goal.goalname}}</a>
 	</div>
-
 	<h2 ng-show="showDailyGoal()">goal for today: {{scheduleArray[currDay].hours}} hours!</h2>
 </div>
+<div>{{userGoals[1].goalname}}</div>
 <hr>
 
 <div id="graphs" class="container">
