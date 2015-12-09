@@ -196,13 +196,6 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 		$http(req);
 	}
 
-	// new Tether({
-	// 	element: "#signUpPopUp",
-	// 	target: "#signUp",
-	// 	attachment: 'top center',
-	// 	targetAttachment: 'bottom center'
-	// });
-
 	new Tether({
 		element: "#loginPopUp",
 		target: "#login",
@@ -309,7 +302,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
 
 	getStyleFun($scope);
-  	angular.element('.tooltipped').tooltip({delay: 50});
+  angular.element('.tooltipped').tooltip({delay: 50});
 	$scope.currentGoal = "0"
 	// GETTING BADGES
 	$scope.Math = window.Math;
@@ -339,6 +332,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	$scope.goalsArray = $firebaseArray(userGoalsRef);
 	var userbadgeRef = userobjectsRef.child("badges");
 	var specificGoalRef = userGoalRef.child($scope.currentGoal);
+  var currentGoalObj = $firebaseObject(specificGoalRef);
 	var schedule = specificGoalRef.child("schedule");
   var schedObj = $firebaseObject(schedule);
 	var timeRef = specificGoalRef.child("totaltime");
@@ -346,25 +340,25 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   var weekRef = logs.child(week);
   var dayRef = weekRef.child(day);
   var dayObj = $firebaseObject(dayRef);
+  var logsObj = $firebaseObject(logs);
     
-    dayObj.$bindTo($scope, "dayObj").then(function() {
-      $scope.dayObj.$value;
-      schedObj.$bindTo($scope, "schedObj").then(function(){
-        var schedTime = $scope.schedObj[day].hours;
-        var schedTimeMilli = schedTime * 3600000;
+  dayObj.$bindTo($scope, "dayObj").then(function() {
+    $scope.dayObj.$value;
+    schedObj.$bindTo($scope, "schedObj").then(function(){
+      var schedTime = $scope.schedObj[day].hours;
+      var schedTimeMilli = schedTime * 3600000;
 
-        // function that controls whether the daily goal is shown or hidden
-        // depending on whether that goal has been met already or not
-        $scope.showDailyGoal = function() {
-          if($scope.dayObj.$value >= schedTimeMilli) {
-            return false;
-          } else {
-            return true;
-          }
-        };
-      });
+      // function that controls whether the daily goal is shown or hidden
+      // depending on whether that goal has been met already or not
+      $scope.showDailyGoal = function() {
+        if($scope.dayObj.$value >= schedTimeMilli) {
+          return false;
+        } else {
+          return true;
+        }
+      };
     });
-	// var specificLog = logs.child("log");
+  });
 	
 	// array of user's badges
 	$scope.userbadges = $firebaseArray(userbadgeRef);
@@ -382,15 +376,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   // array of days of the week which contain the user's daily time goals 
   $scope.scheduleArray = $firebaseArray(schedule);
   console.log($scope.scheduleArray);
-
-  // 
-  var hoursCsv = Papa.unparse($scope.logArray, {
-    complete: function(results) {
-      console.log("papa results are " + results);
-    }
-  });
-
-  console.log(hoursCsv);
 
 
   // START BAR CHART -----------------------------------------------------------------
@@ -419,6 +404,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   d3.tsv("../test_data/testdata.tsv", type, function(error, data) {
+    console.log(data);
     if(error) throw error;
 
     x.domain(data.map(function(d) { return d.days; }));
@@ -455,12 +441,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         .attr('y', function(d) { return y(d.value); })
         .attr("height", function(d) { return height - y(d.value); });
 
-    chart.selectAll(".bar")
-      .append("text")
-        .attr("x", 0) //x.rangeBand() / 2
-        .attr("y", 0) //function(d) { return height - y(d.value) - 3; }
-        .style('text-anchor', "middle")
-        .text(function(d) {return d.value});
   });
   function type(d) {
     d.value = +d.value; // coerce to number
@@ -524,7 +504,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
 
   var heatmapChart = function(tsvFile) {
-    d3.tsv("./test_data/hours.tsv",
+    d3.tsv("./test_data/hours1.tsv",
     function(d) {
       return {
         weeks: +d.weeks,
@@ -552,31 +532,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
           .attr("width", gridSize)
           .attr("height", gridSize)
           .style("fill", colors[0]);
-          // .on("mouseover", flash("hi!", "10"));
 
-          // function flash(name, dy) {
-          //   return function() {
-          //     console.log(name);
-
-          //     svg.append("text")
-          //         .attr("class", name)
-          //         // .attr("transform", "translate(" + d3.mouse(this) + ")")
-          //         .attr("dy", dy)
-          //         .attr("x", 15)
-          //         .attr("y", 18)
-          //         .text(name)
-          //       // .transition()
-          //       //   .duration(1500)
-          //       //   .style("opacity", 0)
-          //       //   .remove();
-          //   };
-          // }
-
-          // function unflash() {
-          //   return function() {
-          //     svg.select("text")
-          //   };
-          // }
 
       cards.transition().duration(2000)
           .style("fill", function(d) { return colorScale(d.value); });
@@ -622,9 +578,6 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
     });
   //  END HEATMAP-------------------------------------------------------------------
 
-  $scope.showText = function() {
-    console.log('show text');
-  }
 
   //Timer stuff --------------------------------------------------------------------
 	
