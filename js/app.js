@@ -46,19 +46,20 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
     if (authData) {
         $scope.userId = authData.uid;
     } 
-
+	$scope.newUserbadges = ["powerbadge"];
     // SignUp function
-    $scope.signUp = function() {
+	$scope.signUp = function() {
         // Create user
 		// Here, you set default values for users if there is any
 		$scope.create = false;
 		console.log("sign up");
-		userbadges = ["powerbadge"];
+		
+		console.log($scope.newUserbadges);
+		console.log($scope.goalTitle);
+		console.log(document.getElementById("Sunday").value);
         $scope.authObj.$createUser({
-			name: $scope.name,
             email: $scope.email,
-            password: $scope.password,
-			badges: usrbadges
+            password: $scope.password
         })
 
         // Once the user is created, call the logIn function
@@ -66,13 +67,32 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
 
         // Once logged in, set and save the user data
         .then(function(authData) {
+			console.log($scope.newUserbadges);
             $scope.userId = authData.uid;
             $scope.users[authData.uid] ={
-                name: $scope.name
+                name: $scope.name,
+				badges: $scope.newUserbadges,
+				goals: {
+					0: {
+						goalname: $scope.goalTitle,
+						schedule: {
+							0: {hours: document.getElementById("Sunday").value},
+							1: {hours: document.getElementById("Monday").value},
+							2: {hours: document.getElementById("Tuesday").value},
+							3: {hours: document.getElementById("Wednesday").value},
+							4: {hours: document.getElementById("Thursday").value},
+							5: {hours: document.getElementById("Friday").value},
+							6: {hours: document.getElementById("Saturday").value}
+						},
+						totaltime: 0
+					}
+				}
             }
             $scope.users.$save()
         })
-		.then($location.path('/dashboard'))
+		.then(function(){
+			location.reload();
+		})
         // Catch any errors
         .catch(function(error) {
             console.error("Error: ", error);
@@ -90,10 +110,13 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
     $scope.signIn = function() {
         $scope.logIn().then(function(authData){
             $scope.userId = authData.uid
+			console.log($scope.userId)
 			var id = $scope.userId;
 			$scope.badges = $scope.users[id].badges
+			
+        }).then(function(){
 			$location.path('/dashboard')
-        })
+		})
     }
 	
     // LogIn function
@@ -104,15 +127,12 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
         })
     }
 	
-	usrbadges = $scope.badges;
-	
     // LogOut function
     $scope.logOut = function() {
         $scope.authObj.$unauth()
         $scope.userId = false
 		$location.path('/')
 		$scope.badges = []
-		userbadges = [];
     }
 }
 
@@ -272,10 +292,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 
 	// GETTING BADGES
 	$scope.Math = window.Math;
-	var authData = $scope.authObj.$getAuth();
-	if (authData) {
-		$scope.userId = authData.uid;
-	}
+	console.log($scope.userId);
 	// rather than stringing all of the .childs together, we found it clearer to break
 	// each step into separate variables
 	var badgeRef = ref.child("allbadges");
@@ -618,26 +635,19 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
         $scope.$broadcast('timer-reset');
     }
 
-	 $scope.totaltime = $firebaseObject(timeRef);
 	
-	 var timeObj = $firebaseObject(timeRef);
+	 
 
     $scope.doneTimer = function() {
-	    //var time_values = new Array();
-	    //timeObj.$bindTo($scope, "totaltime").then(function() {
-        //$scope.totaltime = $firebaseObject(timeRef);
-  			var totalTime = $scope.totaltime.$value;
+		var timeObj = $firebaseObject(timeRef);
+	    timeObj.$bindTo($scope, "totaltime").then(function() {
+			var totalTime = $scope.totaltime.$value;
   			var addedTime = $scope.currentTime.millis;
-        //$scope.totaltime = DashboardController.totaltime;
   			$scope.totaltime.$value = totalTime + addedTime;
-
-        console.log("total is " + $scope.totaltime.$value); 
-        console.log("added amount is " + addedTime);
-		  //});
-      // $scope.totaltime = $firebaseObject(timeRef);
-      // var timeObj = $firebaseObject(timeRef);
-    };
-
+			console.log("total is " + $scope.totaltime.$value); 
+			console.log("added amount is " + addedTime);
+		  });
+    }
     $scope.$on('timer-stopped', function (event, args) {
       console.log('timer-stopped args = ', args);
 		  $scope.currentTime = args;
@@ -665,6 +675,11 @@ myApp.run(function ($rootScope, $state, $firebaseAuth) {
         return;
       }
 	  if(authData){
+		  var shouldGoDashboard = toState.name !== "dashboard";
+		  if(shouldGoDashboard){
+			$state.go('dashboard')
+			event.preventDefault();
+		}
 		  return;
 	  }
       
