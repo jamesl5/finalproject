@@ -2,8 +2,6 @@ var usrbadges = [];
 var myApp = angular.module('myApp', ['ui.router', 'firebase', 'angular-svg-round-progress', 'ui.bootstrap', 'timer'])
 var ref = new Firebase("https://info343final.firebaseio.com/");
 
-
-
 myApp.config(function($stateProvider) {
   $stateProvider
     .state('home', {
@@ -297,20 +295,28 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	$scope.goalArray = $firebaseArray(specificGoalRef);
 	console.log($scope.goalArray);
 	// array of a specific log containing log details
-	$scope.specificLog = $firebaseArray(specificLog);
-	console.log($scope.specificLog);
+	$scope.specificLogArray = $firebaseArray(specificLog);
+	console.log($scope.specificLogArray);
+  // array of days of the week which contain the user's daily time goals 
+  $scope.daysOfWeekArray = $firebaseArray(daysOfWeek);
+  console.log($scope.daysOfWeekArray);
 
-  // Testing dates, yo
+  // Get today's date and convert to milliseconds
   var today = new Date();
   var milliseconds = today.getTime();
+  var todayis = today.getDay();
+  console.log(todayis);
   $scope.date = milliseconds;
+  $scope.currDay = todayis;
 
+  // $scope.showDailyGoal = function() {
+  //   if(todays log time == todays log goal ){
+  //     return false;  
+  //   } else {
+  //     return false
+  //   }
+  // };
 
-  // var circleText = d3.select("#circleGraph")
-  //   .append("text")
-  //   .text('Hello')
-  //   .attr("x", 0)
-  //   .attr("y", 0)
 
   // START BAR CHART -----------------------------------------------------------------
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
