@@ -413,18 +413,14 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	$scope.allbadges = $firebaseArray(badgeRef);
 	// array of user's goals
 	$scope.userGoals = $firebaseArray(userGoalRef);
-	// console.log($scope.userGoals);
 	// array of all of user's logs
 	$scope.goalArray = $firebaseArray(specificGoalRef);
-	// console.log($scope.goalArray);
 	// array of a specific log containing log details
 	$scope.logArray = $firebaseArray(logs);
-	// console.log($scope.logArray);
-  // array of days of the week which contain the user's daily time goals 
-  $scope.scheduleArray = $firebaseArray(schedule);
-  // console.log($scope.scheduleArray);
+	// array of days of the week which contain the user's daily time goals 
+	$scope.scheduleArray = $firebaseArray(schedule);
 
-  // START BAR CHART -----------------------------------------------------------------
+  // Creates bar chart
   var margin = {top: 20, right: 30, bottom: 30, left: 40},
       width = 370 - margin.left - margin.right,
       height = 330 - margin.top - margin.bottom
@@ -492,10 +488,12 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
     d.value = +d.value; // coerce to number
     return d;
   }  
-  // END OF THE BARCHART ---------------------------------------------------------------------
 
 
-  // START HEATMAP -------------------------------------------------------------------------------
+  // Creates heatmap with d3
+  // reads in a svg file and uses that
+  // data to dynamically fill a calendar with
+  // gorgeous colors
   var margin = { top: 20, right: 0, bottom: 50, left: 40 },
       heatWidth = 400 - margin.left - margin.right,
       heatHeight = 385 - margin.top - margin.bottom,
@@ -622,59 +620,38 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
     .on("click", function(d) {
       heatmapChart(d);
     });
-  //  END HEATMAP-------------------------------------------------------------------
-
-  //Timer stuff --------------------------------------------------------------------
-	
-   /* // Create a firebaseObject of your users, and store this as part of $scope
-    $scope.users = $firebaseObject(userRef);
   
-    // Create authorization object that referes to firebase
-    $scope.authObj = $firebaseAuth(ref);
-  var authData = $scope.authObj.$getAuth();
-    if (authData) {
-        $scope.userId = authData.uid;
-    } 
-  console.log($scope.userId);
-  var userObjectsRef = userRef.child($scope.userId);
-  console.log(userObjectsRef);
-  var userGoalsRef = userObjectsRef.child("goals");
-  console.log(userGoalsRef);*/
-
-  // $scope.timerRunning = false;
-  // $scope.timerStopped = false;
-  // $scope.timerDone = false;
-  // $scope.started = true;
-  // $scope.stopped = false;
-  // $scope.restarted = false;
-  // $scope.done = true;
-  // $scope.reset = false;
-  
+  	// Starts timer
     $scope.startTimer = function (){
         $scope.$broadcast('timer-start');
     };
 
+    // Stops timer
     $scope.stopTimer = function (){
         $scope.$broadcast('timer-stop');
     };
 
+    // Restarts timer
     $scope.resumeTimer = function (){
         $scope.$broadcast('timer-resume');
     }
 
+    // Sets timer back to zero
     $scope.resetTimer= function (){
         $scope.$broadcast('timer-reset');
     }
 
+    // Shows goals on dashboard page
     $scope.showGoals = function() {
         $scope.showGoals = true;
     }
 
+    // Saves time to firebase when user says they are done
 	var specificGoalRef = userGoalRef.child($scope.currentGoal);
-	var totaltimeRef = specificGoalRef.child("totaltime")
-	$scope.totaltime = $firebaseObject(totaltimeRef)
-	console.log($scope.totaltime)
+	var totaltimeRef = specificGoalRef.child("totaltime");
+	$scope.totaltime = $firebaseObject(totaltimeRef);
 
+	// Sets all of the firebase values
     $scope.doneTimer = function() {
   		var today = new Date();
   		var date = today.getDate();
@@ -687,11 +664,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   		} else{
   		  week = Math.ceil(date/7);
   		}
-  		console.log(date);
-  		console.log(day);
-  		console.log(week);
-		
-		console.log($scope.totaltime);
+
   		var timeObj = $firebaseObject(timeRef);
   	    timeObj.$bindTo($scope, "totaltime").then(function() {
   			var totalTime = $scope.totaltime.$value;
@@ -712,13 +685,11 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 		  $scope.currentTime = args;
     });
 
-	//Timer stuff end---------------------------------------------------------------
 
 
+}); 
 
-}); // end of dashboard controller
-
-
+// Redirects user between different pages
 myApp.run(function ($rootScope, $state, $firebaseAuth) {
   
     $rootScope.$on('$stateChangeStart', function (event, toState, fromState) {
@@ -747,9 +718,9 @@ myApp.run(function ($rootScope, $state, $firebaseAuth) {
     });
 });
 
+// Collapses the navbar for mobile users
 window.onload = function () {
 	angular.element(".button-collapse").sideNav();
-	console.log("hello");
 }
 
 

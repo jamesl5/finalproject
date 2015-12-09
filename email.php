@@ -1,3 +1,11 @@
+<!-- 
+        Group 5
+         Info-343
+         Final Project
+         December 9, 2015
+         HTML for our login page
+ -->
+
 <?php 
         // My email
         $to = "katrinaezis@gmail.com";
