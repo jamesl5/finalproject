@@ -137,12 +137,12 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
     }
 }
 
-function getStyleFun($scope) {
+function getStyleFun($scope, num) {
 	$scope.getStyle = function(){
 	    var transform = ($scope.isSemi ? '' : 'translateY(-50%) ') + 'translateX(-50%)';
 
 	    return {
-	        'top': $scope.isSemi ? 'auto' : '60%',
+	        'top': $scope.isSemi ? 'auto' : num,
 	        'bottom': $scope.isSemi ? '5%' : 'auto',
 	        'left': '50%',
 	        'transform': transform,
@@ -171,7 +171,8 @@ myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArr
 myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $httpParamSerializer){
 	angular.element('.slider').slider({full_width: true});
 	angular.element('.parallax').parallax();
-	getStyleFun($scope);
+	var num = "50%";
+	getStyleFun($scope, num);
 
 	$scope.submitClick = function() {
 		var first_name = $scope.first_name;
@@ -289,6 +290,16 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
 
+	var num = "60%";
+	getStyleFun($scope, num);
+
+	// var drop = new Drop({
+	// 	target: document.querySelector('.titleAct'),
+	// 	content: '<div ng-repeat="user in goalsArray">{{user["goalname"]}}</div>',
+	// 	position: 'bottom center',
+	// 	openOn: 'click'
+	// });
+
   // Get today's date and convert to milliseconds
   var today = new Date();
   var milliseconds = today.getTime();
@@ -308,19 +319,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   $scope.date = milliseconds;
   $scope.currDay = day;
 
-	getStyleFun($scope);
-
-	$('.dropdown-button').dropdown({
-			inDuration: 300,
-			outDuration: 225,
-			constrain_width: true, // Does not change width of dropdown to that of the activator
-			hover: true, // Activate on hover
-			belowOrigin: true
-		// gutter: 50% // Spacing from edge
-		// Displays dropdown below the button
-		// alignment: 'left' // Displays dropdown with edge aligned to the left of button
-		}
-	);
+	
 
   	$scope.droplet = function(userbadge) {
   		var badgePopover = new Drop ({
@@ -359,6 +358,8 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	var userobjectsRef = userRef.child(userId);
 	var userGoalsRef = userobjectsRef.child("goals");
 	$scope.goalsArray = $firebaseArray(userGoalsRef);
+	console.log($scope.goalsArray);
+	console.log($scope.goalsArray.length);
 	var userbadgeRef = userobjectsRef.child("badges");
 	var specificGoalRef = userGoalRef.child($scope.currentGoal);
 	var schedule = specificGoalRef.child("schedule");
@@ -394,25 +395,25 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
 	$scope.allbadges = $firebaseArray(badgeRef);
 	// array of user's goals
 	$scope.userGoals = $firebaseArray(userGoalRef);
-	console.log($scope.userGoals);
+	// console.log($scope.userGoals);
 	// array of all of user's logs
 	$scope.goalArray = $firebaseArray(specificGoalRef);
-	console.log($scope.goalArray);
+	// console.log($scope.goalArray);
 	// array of a specific log containing log details
 	$scope.logArray = $firebaseArray(logs);
-	console.log($scope.logArray);
+	// console.log($scope.logArray);
   // array of days of the week which contain the user's daily time goals 
   $scope.scheduleArray = $firebaseArray(schedule);
-  console.log($scope.scheduleArray);
+  // console.log($scope.scheduleArray);
 
   // 
   var hoursCsv = Papa.unparse($scope.logArray, {
     complete: function(results) {
-      console.log("papa results are " + results);
+      // console.log("papa results are " + results);
     }
   });
 
-  console.log(hoursCsv);
+  // console.log(hoursCsv);
 
 
   // START BAR CHART -----------------------------------------------------------------
@@ -645,7 +646,7 @@ myApp.controller('DashboardController', function($scope, $firebase, $firebaseAut
   //  END HEATMAP-------------------------------------------------------------------
 
   $scope.showText = function() {
-    console.log('show text');
+    // console.log('show text');
   }
   //Timer stuff --------------------------------------------------------------------
 	
