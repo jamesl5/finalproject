@@ -87,25 +87,28 @@
 		</div>
 		<hr class="featurette-divider">
 		<div class="featurette">
-			<div class="featurette-image pull-left progress-wrapper">
-				<div id="circleStyleHome" class="progresss ng-cloak" ng-style="getStyle()">
-			        100/200
-			    </div>
-		        <div
-		            round-progress
-		            max="200"
-		            current="100"
-		            color="#45ccce"
-		            bgcolor="#eaeaea"
-		            radius="150"
-		            stroke="30"
-		            semi="false"
-		            rounded="true"
-		            clockwise="true"
-		            responsive="false"
-		            duration="800"
-		            animation="easeInOutQuart">
-		        </div>
+			<div class="featurette-image pull-left">
+		        <div id="circleGraph" class="container-fluid progress-wrapper">
+					<h5 class="graphLabel">lifetime progress</h5>
+					<div class="progresss" ng-style="getStyle()">
+						3500/10000
+					</div>
+			        <div
+			            round-progress
+			            max="10000"
+			            current="3500"
+			            color="#45ccce"
+			            bgcolor="#eaeaea"
+			            radius="150"
+			            stroke="30"
+			            semi="false"
+			            rounded="true"
+			            clockwise="true"
+			            responsive="false"
+			            duration="800"
+			            animation="easeInOutQuart">
+			        </div>
+				</div>
 			</div>
 			<h2 class="featurette-heading">Track Total Hours</h2>
 			<p class="lead">Track your total number of hours with our beautiful circle graph. It dynamically updates as you add more hours and tells you how close you are to becoming an expert!</p>
@@ -127,8 +130,8 @@
 
 <div class="colorBlock card-panel teal accent-4"></div>
 <div id="contactUsForm" class="container centerText" ng-show="formSubmit" ng-init="formSubmit=true">
-	<h2 class='text-center deep-orange-text text-accent-1'>Contact Us</h3>   <!-- id="contactus"-->
-	<h4>We're always connected</h4>
+	<h2 class='deep-orange-text text-accent-1'>Contact Us</h3>   <!-- id="contactus"-->
+	<h4 class="grey-text text-darken-1">We'd love to hear from you!</h4>
 	<div id="contactForm">
 		<div class="row">
 	    <form class="col s12" name="contactform">

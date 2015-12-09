@@ -31,139 +31,6 @@ myApp.config(function($stateProvider) {
     })
 });
 
-myApp.controller('SignUpController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
-	var name = $scope.name;
-	var email = $scope.email;
-	var password = $scope.password;
-   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
-   	$scope.weekArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-});
-
-myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
-	var name = $scope.name;
-	var email = $scope.email;
-	var password = $scope.password;
-   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
-});
-
-myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $httpParamSerializer){
-	angular.element('.slider').slider({full_width: true});
-	angular.element('.parallax').parallax();
-
-	$scope.submitClick = function() {
-		var first_name = $scope.first_name;
-		console.log(first_name);
-		var last_name = $scope.last_name;
-		console.log(last_name);
-		var email = $scope.email;
-		console.log(email);
-		var text = $scope.textarea1;
-		var req = {
-			method: 'POST', 
-			url: 'email.php',
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			},
-			data: $httpParamSerializer({
-				first_name: first_name,
-				last_name: last_name,
-				email: email,
-				textarea1: text
-			})
-		};
-		$http(req);
-	}
-
-	new Tether({
-		element: "#signUpPopUp",
-		target: "#signUp",
-		attachment: 'top center',
-		targetAttachment: 'bottom center'
-	});
-
-	new Tether({
-		element: "#loginPopUp",
-		target: "#login",
-		attachment: 'top center',
-		targetAttachment: 'bottom center'
-	});
-
-	var name = $scope.name;
-	var email = $scope.email;
-	var password = $scope.password;
-   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
-    
-    //CREATES THE BAR CHART
-    var margin = {top: 20, right: 30, bottom: 30, left: 40},
-        width = 370 - margin.left - margin.right,
-        height = 330 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
-
-    var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);    
-
-    var y = d3.scale.linear()
-        .range([height, 0]);
-
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient('bottom');
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient('left');
-
-    var chart = d3.select(".barChart")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append('g')
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    d3.csv("../test_data/testdata.csv", type, function(error, data) {
-      if(error) throw error;
-
-      x.domain(data.map(function(d) { return d.days; }));
-      y.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-      var barWidth = width / data.length;
-
-      chart.append('g')
-          .attr('class', 'x axis')
-          .attr('transform', 'translate(0,' + height + ")")
-          .call(xAxis);
-
-      chart.append('g')
-          .attr('class', 'y axis')
-          .call(yAxis)
-        .append('text')
-          .attr('transform', 'rotate(-90)')
-          .attr('y', -30)
-          .attr('x', -50)
-          .style('text-anchor', 'end')
-          .text('Hours');
-
-      chart.selectAll(".bar")
-          .data(data)
-        .enter().append("rect")
-          .attr('class', 'bar')
-          .attr('x', function(d) { return x(d.days); })
-          .attr('y', function(d) { return height; })
-          .attr('height', function(d) { return 0; })
-          // .attr('height', 0)
-          .attr("width", x.rangeBand())
-          .transition().delay(function (d, i) { return i * 100; })
-          .duration(1500)
-          .ease('elastic')
-          .attr('y', function(d) { return y(d.value); })
-          .attr("height", function(d) { return height - y(d.value); });
-    });
-    
-    function type(d) {
-      d.value = +d.value; // coerce to number
-      return d;
-    }  
-    // END OF THE BARCHART
-});
-
 function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http){
 	// Create a variable 'ref' to reference your firebase storage
     var userRef = ref.child("users");
@@ -249,7 +116,159 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
     }
 }
 
+function getStyleFun($scope) {
+	$scope.getStyle = function(){
+	    var transform = ($scope.isSemi ? '' : 'translateY(-50%) ') + 'translateX(-50%)';
+
+	    return {
+	        'top': $scope.isSemi ? 'auto' : '60%',
+	        'bottom': $scope.isSemi ? '5%' : 'auto',
+	        'left': '50%',
+	        'transform': transform,
+	        '-moz-transform': transform,
+	        '-webkit-transform': transform,
+	        'font-size': $scope.radius/3.5 + 'px'
+	    };
+	};
+}
+
+myApp.controller('SignUpController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+	var name = $scope.name;
+	var email = $scope.email;
+	var password = $scope.password;
+   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
+   	$scope.weekArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+});
+
+myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
+	var name = $scope.name;
+	var email = $scope.email;
+	var password = $scope.password;
+   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
+});
+
+myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location, $httpParamSerializer){
+	angular.element('.slider').slider({full_width: true});
+	angular.element('.parallax').parallax();
+	getStyleFun($scope);
+
+	$scope.submitClick = function() {
+		var first_name = $scope.first_name;
+		console.log(first_name);
+		var last_name = $scope.last_name;
+		console.log(last_name);
+		var email = $scope.email;
+		console.log(email);
+		var text = $scope.textarea1;
+		var req = {
+			method: 'POST', 
+			url: 'email.php',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			},
+			data: $httpParamSerializer({
+				first_name: first_name,
+				last_name: last_name,
+				email: email,
+				textarea1: text
+			})
+		};
+		$http(req);
+	}
+
+	// new Tether({
+	// 	element: "#signUpPopUp",
+	// 	target: "#signUp",
+	// 	attachment: 'top center',
+	// 	targetAttachment: 'bottom center'
+	// });
+
+	new Tether({
+		element: "#loginPopUp",
+		target: "#login",
+		attachment: 'top center',
+		targetAttachment: 'bottom center'
+	});
+
+	var name = $scope.name;
+	var email = $scope.email;
+	var password = $scope.password;
+   	logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAuth, $location, $http);
+    
+    //CREATES THE BAR CHART
+    var margin = {top: 20, right: 30, bottom: 30, left: 40},
+        width = 370 - margin.left - margin.right,
+        height = 330 - margin.top - margin.bottom; //these are random values - no math was done to figure them out
+
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);    
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient('bottom');
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left');
+
+    var chart = d3.select(".barChart")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append('g')
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    d3.csv("../test_data/testdata.csv", type, function(error, data) {
+      if(error) throw error;
+
+      x.domain(data.map(function(d) { return d.days; }));
+      y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+      var barWidth = width / data.length;
+
+      chart.append('g')
+          .attr('class', 'x axis')
+          .attr('transform', 'translate(0,' + height + ")")
+          .call(xAxis);
+
+      chart.append('g')
+          .attr('class', 'y axis')
+          .call(yAxis)
+        .append('text')
+          .attr('transform', 'rotate(-90)')
+          .attr('y', -30)
+          .attr('x', -50)
+          .style('text-anchor', 'end')
+          .text('Hours');
+
+      chart.selectAll(".bar")
+          .data(data)
+        .enter().append("rect")
+          .attr('class', 'bar')
+          .attr('x', function(d) { return x(d.days); })
+          .attr('y', function(d) { return height; })
+          .attr('height', function(d) { return 0; })
+          // .attr('height', 0)
+          .attr("width", x.rangeBand())
+          .transition().delay(function (d, i) { return i * 100; })
+          .duration(1500)
+          .ease('elastic')
+          .attr('y', function(d) { return y(d.value); })
+          .attr("height", function(d) { return height - y(d.value); });
+    });
+    
+    function type(d) {
+      d.value = +d.value; // coerce to number
+      return d;
+    }  
+    // END OF THE BARCHART
+});
+
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
+	getStyleFun($scope);
+
 	// GETTING BADGES
 	$scope.Math = window.Math;
 	var authData = $scope.authObj.$getAuth();
