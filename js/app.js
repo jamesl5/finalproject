@@ -289,12 +289,8 @@ myApp.controller('HomeController', function($scope, $firebaseAuth, $firebaseArra
 myApp.controller('DashboardController', function($scope, $firebase, $firebaseAuth, $firebaseArray, $firebaseObject, $location, $anchorScroll) {
 
 	getStyleFun($scope);
-<<<<<<< HEAD
-
-=======
   	angular.element('.tooltipped').tooltip({delay: 50});
 	$scope.currentGoal = "0"
->>>>>>> signup-timer
 	// GETTING BADGES
 	$scope.Math = window.Math;
 	console.log($scope.userId);
