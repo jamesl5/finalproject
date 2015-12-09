@@ -134,10 +134,8 @@ function logInSignUp(name, email, password, $scope, $firebaseObject, $firebaseAu
 			console.log($scope.userId)
 			var id = $scope.userId;
 			$scope.badges = $scope.users[id].badges
-			
-        }).then(function(){
-			$location.path('/dashboard')
-		})
+			location.reload();
+        })
     }
 	
     // LogIn function
@@ -198,9 +196,18 @@ myApp.controller('LoginController', function($scope, $firebaseAuth, $firebaseArr
 
 // Creates a new goal
 myApp.controller('NewGoalController', function($scope, $firebaseAuth, $firebaseArray, $firebaseObject, $http, $location) {
-	console.log($scope.userId);
-	/*var newGoal = {goals: {
-		0: {
+	$scope.weekArray = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	console.log($scope.userId); 
+	var userRef = ref.child("users");
+	var userId = $scope.userId;
+	var userobjectsRef = userRef.child(userId);
+	var userGoalsRef = userobjectsRef.child("goals");
+	console.log(userGoalsRef);
+	var goalsArray = $firebaseArray(userGoalsRef);
+	console.log(goalsArray);
+	console.log(goalsArray.length);
+	$scope.createGoal = function(){
+		goalsArray.$add({	
 			goalname: $scope.goalTitle,
 			schedule: {
 				0: {hours: document.getElementById("Sunday").value},
@@ -212,8 +219,8 @@ myApp.controller('NewGoalController', function($scope, $firebaseAuth, $firebaseA
 				6: {hours: document.getElementById("Saturday").value}
 			},
 			totaltime: 0
-		}
-	}}*/
+		});
+	}
 });
 
 // Controls the functionality of our home page

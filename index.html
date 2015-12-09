@@ -78,41 +78,23 @@
 				<!-- show signup and login when user is not logged in -->
 			    <ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="!userId">
 				    <li><a class="white-text" ui-sref="signUp" id="signUp">Sign Up</a></li>
-				    <li><a class="white-text" ng-click="enter=true; create=false" id="login">Login</a></li>
+				    <li><a class="white-text" ui-sref="login" id="login">Login</a></li>
 				</ul>
 				<!-- show user name when user is logged in -->
 				<ul id="nav-mobile" class="right hide-on-med-and-down" ng-show="userId">
 					<li><a ui-sref="dashboard" class="white-text">hello <span class="deep-orange-text text-accent-1">{{users[userId].name.toLowerCase()}}</span></a></li>
+					<li><a ui-sref="newGoal" class="white-text">Create New Goal</span></a></li>
 					<li><a class="white-text" ng-click="logOut()" id="logout">logout</a></li>
 				</ul>
 				<ul class="side-nav" id="mobile-demo">
 					<li ng-show="!userId"><a class="teal-text accent-4-text" id="signUp" ui-sref="signUp">sign up</a></li>
 				    <li ng-show="!userId"><a class="teal-text accent-4-text" id="login" ui-sref="login">login</a></li>
 				    <li ng-show="userId"><a ui-sref="dashboard" class="teal-text accent-4-text">hello {{users[userId].name.toLowerCase()}}</a></li>
-					<li ng-show="userId"><a class="teal-text accent-4-text" ui-sref="timer">timer</a></li>
+					<li ng-show="userId"><a ui-sref="newGoal" class="teal-text accent-4-text">Create New Goal</a></li>
 					<li ng-show="userId"><a class="teal-text accent-4-text" ng-click="logOut()" id="logout">logout</a></li>
 				</ul>
 		    </div>
 	    </nav>
-	</div>
-	<div ng-init="enter=false" ng-show="enter" id="loginPopUp" class="arrow_box">
-		<form name="loginForm" novalidate>
-			<div class="form-group">
-				<label>Email:</label>
-				<input name="email" type="email" class="form-control" ng-model="email" required></input>
-				<p ng-show="loginForm.email.$error.email">Not a valid email</p>
-			</div>
-
-			<div class="form-group">
-				<label>Password:</label>
-				<input name="password" type="password" class="form-control" ng-model="password" required></input>
-			</div>
-
-			<div class="form-group">
-				<button ng-click="enter=false" class="btn btn-primary">Cancel</button>
-				<button ng-click="signIn(); enter=false" ng-disabled="loginForm.email.$invalid || loginForm.password.$invalid" type="submit" class="btn btn-primary">Sign-in</button>
-			</div>
-		</form>
 	</div>
 
 	<div>

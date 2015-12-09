@@ -7,11 +7,24 @@
  -->
 
 <form name="signUpForm" novalidate>
-	<!-- Submit buttons: should only be active if certain inputs are valid -->
-	<div id="submitButtons" class="container">
-		<div class="form-group">
-			<button ng-click="create=false" class="btn btn-primary">Cancel</button>
-			<button ng-click="signUp()"  ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary">Create</button>
+		<div id="nameSelect" class="form-group container">
+			<label>Goal Title:</label>
+			<input name="goalTitle" type="text" ng-model="goalTitle" required></input>
+			<div class="container-fluid" id="hourSelect">
+				<div class="row">
+					<div class="col-md-3 col-xs-5" ng-repeat="n in weekArray" class="eachSelect">
+						<label>{{n}}</label>
+						<input id="{{n}}"  type="number" min="0" max="24"></input>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Submit buttons: should only be active if certain inputs are valid -->
+		<div id="submitButtons" class="container">
+			<div class="form-group">
+				<button ng-click="create=false" class="btn btn-primary">Cancel</button>
+				<button ng-click="createGoal()"  ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary">Create</button>
+			</div>
 		</div>
 	</div>
 </form>
