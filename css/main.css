@@ -312,6 +312,10 @@ rect.bordered {
 	 the default materialize height setting
 	-sets the slider div to have a lower z-index so that 
 	 the login/signup popups are still visible*/
+ .slider {
+ 	z-index: -100;
+ }
+
 .slider .indicators {
 	z-index: 100;
 	position: absolute;
@@ -323,11 +327,11 @@ rect.bordered {
 }
 
 .slider, .slides {
-	height: 700px !important;
+	height: 100vh !important;
 }
 
-div.slider {
-	z-index: -100;
+.slider img {
+	width: cover;
 }
 
 .slider .indicators .indicator-item.active {

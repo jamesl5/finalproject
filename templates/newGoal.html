@@ -14,7 +14,7 @@
 				<div class="row">
 					<div class="col-md-3 col-xs-5" ng-repeat="n in weekArray" class="eachSelect">
 						<label>{{n}}</label>
-						<input id="{{n}}"  type="number" min="0" max="24"></input>
+						<input id="{{n}}"  type="number" min="0" max="10"></input>
 					</div>
 				</div>
 			</div>
@@ -22,8 +22,8 @@
 		<!-- Submit buttons: should only be active if certain inputs are valid -->
 		<div id="submitButtons" class="container">
 			<div class="form-group">
-				<button ng-click="create=false" class="btn btn-primary">Cancel</button>
-				<button ng-click="createGoal()"  ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary">Create</button>
+				<button ng-click="create=false" ui-sref="dashboard" class="btn btn-primary">Cancel</button>
+				<button ng-click="createGoal()" ui-sref="dashboard"  ng-disabled="signUpForm.$invalid" type="submit" class="btn btn-primary">Create</button>
 			</div>
 		</div>
 	</div>
